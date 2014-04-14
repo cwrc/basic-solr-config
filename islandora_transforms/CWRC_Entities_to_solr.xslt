@@ -46,7 +46,7 @@
         <xsl:if test="$description/latitude and $description/longitude">
             <field>
                 <xsl:attribute name="name">
-                    <xsl:value-of select="concat($prefix, 'geoloc', '_s')"/>
+                    <xsl:value-of select="concat($local_prefix, 'geoloc', '_s')"/>
                 </xsl:attribute>
 
                 <xsl:value-of select="concat($description/latitude, ',', $description/longitude)"/>
@@ -57,7 +57,7 @@
         <xsl:if test="$description/countryName">
             <field>
                 <xsl:attribute name="name">
-                    <xsl:value-of select="concat($prefix, 'countryName', $suffix)"/>
+                    <xsl:value-of select="concat($local_prefix, 'countryName', $suffix)"/>
                 </xsl:attribute>
 
                 <xsl:value-of select="$description/countryName"/>
@@ -68,7 +68,7 @@
         <xsl:if test="$description/firstAdministrativeDivision">
             <field>
                 <xsl:attribute name="name">
-                    <xsl:value-of select="concat($prefix, 'firstAdministrativeDivision', $suffix)"/>
+                    <xsl:value-of select="concat($local_prefix, 'firstAdministrativeDivision', $suffix)"/>
                 </xsl:attribute>
 
                 <xsl:value-of select="$description/firstAdministrativeDivision"/>
@@ -79,7 +79,7 @@
         <xsl:if test="$description/featureClass">
             <field>
                 <xsl:attribute name="name">
-                    <xsl:value-of select="concat($prefix, 'featureClass', $suffix)"/>
+                    <xsl:value-of select="concat($local_prefix, 'featureClass', $suffix)"/>
                 </xsl:attribute>
 
                 <xsl:value-of select="$description/featureClass"/>
@@ -207,7 +207,7 @@
 
         <xsl:variable name="identity" select="$content/entity/person/identity"/>
         <xsl:variable name="description" select="$content/entity/person/description"/>
-        <xsl:variable name="local_prefix" select="concat($prefix, 'name_')"/>
+        <xsl:variable name="local_prefix" select="concat($prefix, 'person_')"/>
 
         <!-- ensure that the preferred name is first -->
         <xsl:apply-templates select="$identity/preferredForm">
