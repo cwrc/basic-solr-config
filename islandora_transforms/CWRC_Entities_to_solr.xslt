@@ -284,7 +284,7 @@
         <xsl:param name="suffix"/>
 
         <!-- birth date -->
-        <xsl:variable name="var_birthDate" select="(dateRange/fromDate|dateRange/toDate|dateSingle)[child::dateType/text()='birth']/standardDate"/>
+        <xsl:variable name="var_birthDate" select="(dateRange/fromDate[child::dateType/text()='birth']|dateSingle)/standardDate"/>
 
         <xsl:if test="$var_birthDate">
             <field>
@@ -302,7 +302,7 @@
         </xsl:if>
 
         <!-- death date -->
-        <xsl:variable name="var_deathDate" select="(dateRange/fromDate|dateRange/toDate|dateSingle)[child::dateType/text()='death']/standardDate"/>
+        <xsl:variable name="var_deathDate" select="(dateRange/toDate[child::dateType/text()='death']|dateSingle)/standardDate"/>
 
         <xsl:if test="$var_deathDate">
             <field>
