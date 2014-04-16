@@ -293,12 +293,14 @@
                 </xsl:attribute>
                 <xsl:value-of select="$var_birthDate"/>
             </field>
+            <!-- invalid dates - 2014-04-10 braking indexing
             <field>
                 <xsl:attribute name="name">
                     <xsl:value-of select="concat($prefix, 'birthDate', '_dt')"/>
                 </xsl:attribute>
                 <xsl:value-of select="$var_birthDate"/>
             </field>
+            -->
         </xsl:if>
 
         <!-- death date -->
@@ -311,12 +313,14 @@
                 </xsl:attribute>
                 <xsl:value-of select="$var_deathDate"/>
             </field>
+            <!-- invalid dates - 2014-04-10 braking indexing 
             <field>
                 <xsl:attribute name="name">
                     <xsl:value-of select="concat($prefix, 'deathDate', '_dt')"/>
                 </xsl:attribute>
                 <xsl:value-of select="$var_deathDate"/>
             </field>
+             -->
         </xsl:if>
 
 
