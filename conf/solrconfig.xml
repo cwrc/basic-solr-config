@@ -130,7 +130,7 @@
     -->
 
     <autoCommit> 
-      <maxDocs>1</maxDocs>
+      <maxDocs>100</maxDocs>
       <maxTime>1</maxTime>
     </autoCommit>
 
