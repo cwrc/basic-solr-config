@@ -17,7 +17,7 @@
 
 
     <!-- ********************************************************* -->
-    <!-- CWRC ORGANIZATION Entity solr index Fedora Datastream -->
+    <!-- CWRC PLACE Entity solr index Fedora Datastream -->
     <!-- ********************************************************* -->
     <xsl:template match="foxml:datastream[@ID='PLACE']/foxml:datastreamVersion[last()]" name="index_CWRC_PLACE_ENTITY">
 
@@ -28,6 +28,7 @@
 
         <xsl:variable name="identity" select="$content/entity/place/identity"/>
         <xsl:variable name="description" select="$content/entity/place/description"/>
+        <xsl:variable name="recordInfo" select="$content/entity/place/recordInfo"/>
         <xsl:variable name="local_prefix" select="concat($prefix, 'place_')"/>
 
         <!-- ensure that the preferred name is first -->
@@ -86,6 +87,19 @@
             </field>
         </xsl:if>
 
+        <!-- access condition -->
+        <xsl:call-template name="assemble_cwrc_access_condition">
+            <xsl:with-param name="prefix" select="$local_prefix"/>
+            <xsl:with-param name="content" select="$recordInfo/accessCondition"/>
+        </xsl:call-template>
+
+        <!-- project id -->
+        <xsl:call-template name="assemble_cwrc_project_id">
+            <xsl:with-param name="prefix" select="$local_prefix"/>
+            <xsl:with-param name="content" select="$recordInfo/originInfo/projectId"/>
+        </xsl:call-template>
+
+
     </xsl:template>
 
 
@@ -101,6 +115,7 @@
 
         <xsl:variable name="identity" select="$content/entity/organization/identity"/>
         <xsl:variable name="description" select="$content/entity/organization/description"/>
+        <xsl:variable name="recordInfo" select="$content/entity/organization/recordInfo"/>
         <xsl:variable name="local_prefix" select="concat($prefix, 'org_')"/>
 
 
@@ -116,6 +131,19 @@
             <xsl:with-param name="suffix" select="$suffix"/>
         </xsl:apply-templates>
 
+        <!-- access condition -->
+        <xsl:call-template name="assemble_cwrc_access_condition">
+            <xsl:with-param name="prefix" select="$local_prefix"/>
+            <xsl:with-param name="content" select="$recordInfo/accessCondition"/>
+        </xsl:call-template>
+
+        <!-- project id -->
+        <xsl:call-template name="assemble_cwrc_project_id">
+            <xsl:with-param name="prefix" select="$local_prefix"/>
+            <xsl:with-param name="content" select="$recordInfo/originInfo/projectId"/>
+        </xsl:call-template>
+
+
     </xsl:template>
 
 
@@ -123,7 +151,7 @@
     <!-- ********************************************************* -->
     <!-- CWRC TITLE Entity solr index Fedora Datastream -->
     <!-- ********************************************************* -->
-    <xsl:template match="foxml:datastream[@ID='TITLE']/foxml:datastreamVersion[last()]" name="index_CWRC_TITLE_ENTITY">
+    <xsl:template match="foxml:datastream[@ID='MODS']/foxml:datastreamVersion[last()]" name="index_CWRC_TITLE_ENTITY">
 
         <xsl:param name="content" select="."/>
         <xsl:param name="prefix" select="'cwrc_entity_'"/>
@@ -147,9 +175,6 @@
         </xsl:apply-templates>
 
 
-
-
-
         <!--
         Dates
         Monograph whole:
@@ -165,31 +190,46 @@
         issuance: /mods/relatedItem/originInfo/issuance with value equal to "continuing"
         -->
         <xsl:choose>
-            <xsl:when test="mods:originInfo/mods:issuance/text()='monographic'">
+            <xsl:when test="$identity/mods:originInfo/mods:issuance/text()='monographic'">
                 <!-- monograph whole -->
                 <xsl:call-template name="assemble_cwrc_title_formats">
                     <xsl:with-param name="prefix" select="$local_prefix"/>
-                    <xsl:with-param name="date" select="mods:originInfo/mods:dateIssued/text()"/>
+                    <xsl:with-param name="date" select="$identity/mods:originInfo/mods:dateIssued/text()"/>
                     <xsl:with-param name="format" select="'Monograph whole'"/>
                 </xsl:call-template>
             </xsl:when>
             <!-- monograph chapter -->
-            <xsl:when test="mods:relatedItem/mods:originInfo/mods:issuance/text()='monographic'">
+            <xsl:when test="$identity/mods:relatedItem/mods:originInfo/mods:issuance/text()='monographic'">
                 <xsl:call-template name="assemble_cwrc_title_formats">
                     <xsl:with-param name="prefix" select="$local_prefix"/>
-                    <xsl:with-param name="date" select="mods:relatedItem/mods:originInfo/mods:dateIssued/text()"/>
+                    <xsl:with-param name="date" select="$identity/mods:relatedItem/mods:originInfo/mods:dateIssued/text()"/>
                     <xsl:with-param name="format" select="'Monograph chapter'"/>
                 </xsl:call-template>
             </xsl:when>
             <!-- periodical article -->
-            <xsl:when test="mods:relatedItem/mods:originInfo/mods:issuance/text()='continuing'">
+            <xsl:when test="$identity/mods:relatedItem/mods:originInfo/mods:issuance/text()='continuing'">
                 <xsl:call-template name="assemble_cwrc_title_formats">
                     <xsl:with-param name="prefix" select="$local_prefix"/>
-                    <xsl:with-param name="date" select="mods:relatedItem/mods:part/mods:date/text()"/>
+                    <xsl:with-param name="date" select="$identity/mods:relatedItem/mods:part/mods:date/text()"/>
                     <xsl:with-param name="format" select="'Periodical article'"/>
                 </xsl:call-template>
             </xsl:when>
         </xsl:choose>
+
+        <!-- access condition -->
+        <xsl:call-template name="assemble_cwrc_access_condition">
+            <xsl:with-param name="prefix" select="$local_prefix"/>
+            <xsl:with-param name="content" select="$identity/mods:accessCondition/text()"/>
+        </xsl:call-template>
+
+        <!-- project id -->
+        <xsl:call-template name="assemble_cwrc_project_id">
+            <xsl:with-param name="prefix" select="$local_prefix"/>
+            <xsl:with-param name="content" select="$identity/mods:recordInfo/mods:recordContentSource/text()"/>
+        </xsl:call-template>
+
+
+
     </xsl:template>
 
 
@@ -207,6 +247,7 @@
 
         <xsl:variable name="identity" select="$content/entity/person/identity"/>
         <xsl:variable name="description" select="$content/entity/person/description"/>
+        <xsl:variable name="recordInfo" select="$content/entity/person/recordInfo"/>
         <xsl:variable name="local_prefix" select="concat($prefix, 'person_')"/>
 
         <!-- ensure that the preferred name is first -->
@@ -227,6 +268,19 @@
             <xsl:with-param name="prefix" select="$local_prefix"/>
             <xsl:with-param name="suffix" select="$suffix"/>
         </xsl:apply-templates>
+
+        <!-- access condition -->
+        <xsl:call-template name="assemble_cwrc_access_condition">
+            <xsl:with-param name="prefix" select="$local_prefix"/>
+            <xsl:with-param name="content" select="$recordInfo/accessCondition"/>
+        </xsl:call-template>
+
+        <!-- project id -->
+        <xsl:call-template name="assemble_cwrc_project_id">
+            <xsl:with-param name="prefix" select="$local_prefix"/>
+            <xsl:with-param name="content" select="$recordInfo/originInfo/projectId"/>
+        </xsl:call-template>
+
 
     </xsl:template>
 
@@ -459,13 +513,15 @@
         <xsl:param name="prefix"/>
         <xsl:param name="date"/>
         <xsl:param name="format"/>
+ 
         <field>
             <xsl:attribute name="name">
-                <xsl:value-of select="concat($prefix, 'date', '_dt')"/>
+                <xsl:value-of select="concat($prefix, 'date', '_ms')"/>
             </xsl:attribute>
 
             <xsl:value-of select="$date"/>
         </field>
+         
         <field>
             <xsl:attribute name="name">
                 <xsl:value-of select="concat($prefix, 'format', '_s')"/>
@@ -473,5 +529,43 @@
             <xsl:value-of select="$format"/>
         </field>
     </xsl:template>
+
+
+    <!-- generic entity: output the Project ID -->
+    <xsl:template name="assemble_cwrc_project_id">
+        <xsl:param name="prefix"/>
+        <xsl:param name="content"/>
+
+        <xsl:if test="$content">
+            <field>
+                <xsl:attribute name="name">
+                    <xsl:value-of select="concat($prefix, 'project_id', '_ms')"/>
+                </xsl:attribute>
+
+                <xsl:value-of select="$content"/>
+            </field>
+        </xsl:if>
+
+    </xsl:template>
+
+
+    <!-- generic entity: output the access condition -->
+    <xsl:template name="assemble_cwrc_access_condition">
+        <xsl:param name="prefix"/>
+        <xsl:param name="content"/>
+
+        <xsl:if test="$content">
+            <field>
+                <xsl:attribute name="name">
+                    <xsl:value-of select="concat($prefix, 'access_condition', '_ms')"/>
+                </xsl:attribute>
+
+                <xsl:value-of select="$content"/>
+            </field>
+        </xsl:if>
+
+    </xsl:template>
+
+
 
 </xsl:stylesheet>
