@@ -382,38 +382,37 @@
 
     <!-- assemble the person name from the component parts, if necessary -->
     <xsl:template name="assemble_cwrc_person_name">
-        <!-- does a surname exist -->
-        <xsl:variable name="is_surname_present" select="namePart/@partType='surname'"/>
-        <!-- does a forename exist -->
-        <xsl:variable name="is_forename_present" select="namePart/@partType='forename'"/>
-        <xsl:variable name="is_display_label" select="identity/displayLabel"/>
-
-
-        <xsl:choose>
-            <!-- displayLabel -->
-            <xsl:when test="$is_display_label">
-                <xsl:value-of select="normalize-space($is_display_label)"/>
-            </xsl:when>
-            <!-- surname and forename -->
-            <xsl:when test="$is_surname_present or $is_forename_present">
-                <xsl:if test="$is_forename_present">
-                    <xsl:value-of select="normalize-space(namePart[@partType='forename']/text())"/>
-                </xsl:if>
-                <xsl:if test="$is_forename_present and $is_surname_present">
-                    <xsl:text> </xsl:text>
-                </xsl:if>
-                <xsl:if test="$is_surname_present">
-                    <xsl:value-of select="normalize-space(namePart[@partType='surname']/text())"/>
-                </xsl:if>
-            </xsl:when>
-            <!-- namePart -->
-            <xsl:when test="namePart">
-                <xsl:value-of select="normalize-space(namePart)"/>
-            </xsl:when>
-            <xsl:otherwise>
-                <xsl:text/>
-            </xsl:otherwise>
-        </xsl:choose>
+         
+        <xsl:variable name="name">
+            
+            <!--
+                * see the CWRC entities schema for attribute values of the
+                * assumes the namePart element are in the proper order
+                * and does support the comma surname and givename format
+            -->
+            <xsl:for-each select="namePart">
+                <xsl:choose>
+                    <xsl:when test="@type='initials'">
+                        <xsl:text> (</xsl:text>
+                        <xsl:value-of select="displayForm"/>
+                        <xsl:text>) </xsl:text>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:value-of select="."/>                        
+                    </xsl:otherwise>
+                </xsl:choose>
+                <xsl:text> </xsl:text>
+            </xsl:for-each>
+            
+            <xsl:if test="displayForm">
+                <xsl:text> (</xsl:text>
+                <xsl:value-of select="displayForm"/>
+                <xsl:text>) </xsl:text>
+            </xsl:if>            
+        </xsl:variable>
+        
+        <xsl:value-of select="normalize-space($name)"/>
+        
     </xsl:template>
 
 
@@ -477,33 +476,38 @@
     <!-- reassemble the author name from a CWRC title entity -->
     <xsl:template name="assemble_cwrc_title_author">
 
-        <!-- does a surname exist -->
-        <xsl:variable name="is_surname_present" select="mods:namePart/@type='family'"/>
-        <!-- does a forename exist -->
-        <xsl:variable name="is_forename_present" select="mods:namePart/@type='given'"/>
-
-
-        <xsl:choose>
-            <!-- surname and forename -->
-            <xsl:when test="$is_surname_present or $is_forename_present">
-                <xsl:if test="$is_forename_present">
-                    <xsl:value-of select="normalize-space(mods:namePart[@type='given']/text())"/>
-                </xsl:if>
-                <xsl:if test="$is_forename_present and $is_surname_present">
-                    <xsl:text> </xsl:text>
-                </xsl:if>
-                <xsl:if test="$is_surname_present">
-                    <xsl:value-of select="normalize-space(mods:namePart[@type='family']/text())"/>
-                </xsl:if>
-            </xsl:when>
-            <!-- namePart -->
-            <xsl:when test="mods:namePart">
-                <xsl:value-of select="normalize-space(mods:namePart)"/>
-            </xsl:when>
-            <xsl:otherwise>
+        <!--
+            * based on the MODS to DC transform -  Version 1.3     2013-12-09
+        -->
+        <xsl:variable name="name">
+            <xsl:for-each select="mods:namePart[not(@type)]">
+                <xsl:value-of select="."/>
+                <xsl:text> </xsl:text>
+            </xsl:for-each>
+            <xsl:value-of select="mods:namePart[@type='family']"/>
+            <xsl:if test="mods:namePart[@type='given']">
+                <xsl:text>, </xsl:text>
+                <xsl:value-of select="mods:namePart[@type='given']"/>
+            </xsl:if>
+            <xsl:if test="mods:namePart[@type='date']">
+                <xsl:text>, </xsl:text>
+                <xsl:value-of select="mods:namePart[@type='date']"/>
                 <xsl:text/>
-            </xsl:otherwise>
-        </xsl:choose>
+            </xsl:if>
+            <xsl:if test="mods:displayForm">
+                <xsl:text> (</xsl:text>
+                <xsl:value-of select="mods:displayForm"/>
+                <xsl:text>) </xsl:text>
+            </xsl:if>
+            <xsl:for-each select="mods:role[mods:roleTerm[@type='text']!='creator']">
+                <xsl:text> (</xsl:text>
+                <xsl:value-of select="normalize-space(child::*)"/>
+                <xsl:text>) </xsl:text>
+            </xsl:for-each>
+        </xsl:variable>
+        
+        <xsl:value-of select="normalize-space($name)"/>
+        
     </xsl:template>
 
 

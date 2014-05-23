@@ -199,11 +199,27 @@
       <!-- TODO: would like to get rid of the need for the content param -->
       <xsl:for-each select="foxml:datastream">
         <xsl:choose>
+
           <xsl:when test="@CONTROL_GROUP='X'">
             <xsl:apply-templates select="foxml:datastreamVersion[last()]">
               <xsl:with-param name="content" select="foxml:datastreamVersion[last()]/foxml:xmlContent"/>
             </xsl:apply-templates>
+
+            <!-- CWRC 2014-05-23 -->
+            <!-- 
+              * CWRC Entities, titles specifically, use the MODS datastream and MODS schema
+              * this activates an XSLT mode to allow the MODS datastream to be indexed by 2
+              * separate XSLT includes (a) the Islandora MODS slurp and (b) the CWRC title entities
+              * without the mechanism, only 1 of the 2 XSLT included templates is used with other
+              * other being overridden
+              -->
+            <xsl:if test="@ID='MODS'">
+              <xsl:apply-templates select="foxml:datastreamVersion[last()]" mode="cwrc_entities">
+                <xsl:with-param name="content" select="foxml:datastreamVersion[last()]/foxml:xmlContent"/>
+              </xsl:apply-templates>
+            </xsl:if>
           </xsl:when>
+
           <xsl:when test="@CONTROL_GROUP='M' and foxml:datastreamVersion[last()][@MIMETYPE='text/xml' or @MIMETYPE='application/xml' or @MIMETYPE='application/rdf+xml' or @MIMETYPE='text/html']">
             <!-- TODO: should do something about mime type filtering
               text/plain should use the getDatastreamText extension because document will only work for xml docs
@@ -228,6 +244,7 @@
             
               </xsl:apply-templates>
             </xsl:if>
+
           </xsl:when>
           <!-- non-xml managed datastreams...
 
@@ -244,6 +261,10 @@
             <xsl:apply-templates select="foxml:datastreamVersion[last()]">
               <xsl:with-param name="content" select="normalize-space(exts:getDatastreamText($PID, $REPOSITORYNAME, @ID, $FEDORASOAP, $FEDORAUSER, $FEDORAPASS, $TRUSTSTOREPATH, $TRUSTSTOREPASS))"/>
           </xsl:apply-templates>
+
+
+
+
           </xsl:when>
         </xsl:choose>
       </xsl:for-each>
