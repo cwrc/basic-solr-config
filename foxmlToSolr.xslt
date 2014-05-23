@@ -222,10 +222,12 @@
               * without the mechanism, only 1 of the 2 XSLT included templates is used with other
               * other being overridden
               -->
+            <xsl:if test="@ID='MODS'">
               <xsl:apply-templates select="foxml:datastreamVersion[last()]" mode="cwrc_entities">
-              <xsl:with-param name="content" select="document(concat($PROT, '://', encoder:encode($FEDORAUSER), ':', encoder:encode($FEDORAPASS), '@', $HOST, ':', $PORT, '/fedora/objects/', $PID, '/datastreams/', @ID, '/content'))"/>
-            </xsl:apply-templates>
-
+                <xsl:with-param name="content" select="document(concat($PROT, '://', encoder:encode($FEDORAUSER), ':', encoder:encode($FEDORAPASS), '@', $HOST, ':', $PORT, '/fedora/objects/', $PID, '/datastreams/', @ID, '/content'))"/>
+            
+              </xsl:apply-templates>
+            </xsl:if>
           </xsl:when>
           <!-- non-xml managed datastreams...
 
