@@ -151,7 +151,7 @@
     <!-- ********************************************************* -->
     <!-- CWRC TITLE Entity solr index Fedora Datastream -->
     <!-- ********************************************************* -->
-    <xsl:template match="foxml:datastream[@ID='MODS']/foxml:datastreamVersion[last()]" name="index_CWRC_TITLE_ENTITY">
+    <xsl:template match="foxml:datastream[@ID='MODS']/foxml:datastreamVersion[last()]" name="index_CWRC_TITLE_ENTITY" mode="cwrc_entities">
 
         <xsl:param name="content" select="."/>
         <xsl:param name="prefix" select="'cwrc_entity_'"/>
@@ -163,17 +163,16 @@
 
         <!-- the preferred/authoritative title (name of title)-->
         <!-- variant titles -->
-        <xsl:apply-templates select="$identity/mods:titleInfo">
+        <xsl:apply-templates select="$identity/mods:titleInfo" mode="cwrc_entities">
             <xsl:with-param name="prefix" select="$local_prefix"/>
             <xsl:with-param name="suffix" select="$suffix"/>
         </xsl:apply-templates>
 
         <!-- ensure that the author name -->
-        <xsl:apply-templates select="$identity/mods:name">
+        <xsl:apply-templates select="$identity/mods:name" mode="cwrc_entities">
             <xsl:with-param name="prefix" select="$local_prefix"/>
             <xsl:with-param name="suffix" select="$suffix"/>
         </xsl:apply-templates>
-
 
         <!--
         Dates
@@ -192,7 +191,7 @@
         <xsl:choose>
             <xsl:when test="$identity/mods:originInfo/mods:issuance/text()='monographic'">
                 <!-- monograph whole -->
-                <xsl:call-template name="assemble_cwrc_title_formats">
+                <xsl:call-template name="assemble_cwrc_title_formats" >
                     <xsl:with-param name="prefix" select="$local_prefix"/>
                     <xsl:with-param name="date" select="$identity/mods:originInfo/mods:dateIssued/text()"/>
                     <xsl:with-param name="format" select="'Monograph whole'"/>
@@ -419,7 +418,7 @@
 
 
     <!-- CWRC perferred/authoritative or primary title forms -->
-    <xsl:template match="mods:titleInfo">
+    <xsl:template match="mods:titleInfo" mode="cwrc_entities">
         <xsl:param name="prefix"/>
         <xsl:param name="suffix"/>
 
@@ -440,7 +439,7 @@
     </xsl:template>
 
     <!-- CWRC title author(s) name forms -->
-    <xsl:template match="mods:name">
+    <xsl:template match="mods:name" mode="cwrc_entities">
         <xsl:param name="prefix"/>
         <xsl:param name="suffix"/>
 
