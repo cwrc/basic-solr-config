@@ -563,7 +563,37 @@
                     <xsl:value-of select="concat($prefix, 'access_condition', '_ms')"/>
                 </xsl:attribute>
 
-                <xsl:value-of select="$content"/>
+                <!-- <xsl:value-of select="$content"/> -->
+                
+                <xsl:for-each select="$content/child::node()">
+                    <xsl:choose>
+                        <xsl:when test="self::text()">
+                            <xsl:value-of select="."/>
+                        </xsl:when>
+                        <xsl:when test="self::*">
+                            <xsl:text>&lt;</xsl:text>
+                            <xsl:value-of select="name()" />
+                            <xsl:for-each select="./@*">
+                                <xsl:text> </xsl:text>
+                                <xsl:value-of select="name()"></xsl:value-of>
+                                <xsl:text>="</xsl:text>                      
+                                <xsl:value-of select="."></xsl:value-of>
+                                <xsl:text>"</xsl:text>
+                            </xsl:for-each>
+                            <xsl:text>&gt;</xsl:text>
+                            <xsl:value-of select="." />
+                            <xsl:text>&lt;/</xsl:text>
+                            <xsl:value-of select="name()" />
+                            <xsl:text>&gt;</xsl:text>
+                        </xsl:when>
+                    </xsl:choose>
+                </xsl:for-each>
+                
+                <xsl:if test="$content/@type and $content/@type!=''">
+                    <xsl:text> (</xsl:text>
+                    <xsl:value-of select="$content/@type"/>
+                    <xsl:text>) </xsl:text>
+                </xsl:if>
             </field>
         </xsl:if>
 
