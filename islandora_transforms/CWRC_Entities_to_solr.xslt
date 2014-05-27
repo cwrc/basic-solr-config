@@ -218,7 +218,7 @@
         <!-- access condition -->
         <xsl:call-template name="assemble_cwrc_access_condition">
             <xsl:with-param name="prefix" select="$local_prefix"/>
-            <xsl:with-param name="content" select="$identity/mods:accessCondition/text()"/>
+            <xsl:with-param name="content" select="$identity/mods:accessCondition"/>
         </xsl:call-template>
 
         <!-- project id -->
