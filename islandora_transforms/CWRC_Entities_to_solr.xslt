@@ -5,7 +5,7 @@
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:foxml="info:fedora/fedora-system:def/foxml#" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:mods="http://www.loc.gov/mods/v3" exclude-result-prefixes="mods">
     <!--
 
-    <xsl:include href="/usr/local/fedora/tomcat/webapps/fedoragsearch/WEB-INF/classes/fgsconfigFinal/index/FgsIndex/islandora_transforms/CWRC_GeoLoc.xslt"/>
+    <xsl:include href="/usr/local/fedora/tomcat/webapps/fedoragsearch/WEB-INF/classes/fgsconfigFinal/index/FgsIndex/islandora_transforms/CWRC_GeoLoc.xslt" />
 
     -->
 
@@ -246,13 +246,14 @@
         <!--
         * lookup geoloc
         *
+        -->
+        <!--
         <xsl:for-each select="$identity/mods:relatedItem/mods:originInfo/mods:placeTerm | $identity/mods:originInfo/mods:place/mods:placeTerm ">
             <xsl:call-template name="cwrc_lookup_geoloc">
-                <xsl:with-param name="text()" /> 
+                <xsl:with-param name="str_to_query_geoloc" select="text()" /> 
             </xsl:call-template>
         </xsl:for-each>
-            -->
-
+-->
 
     </xsl:template>
 
@@ -551,7 +552,7 @@
             <xsl:value-of select="$date"/>
             -->
             <!-- 
-              * fix weird orlando dates that are not ISO valid e.g. 2000-01- 2000--
+              * fix weird orlando dates that are not ISO valid e.g. 2000-01- 2000- -
               * XSLT version 2.0
             -->
             <!--            

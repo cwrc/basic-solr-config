@@ -11,10 +11,10 @@
     >
 
 
-    <xsl:variable name="PROT">http</xsl:variable>
-    <xsl:variable name="HOST">beta.cwrc.ca</xsl:variable>        
-    <xsl:variable name="PORT">80</xsl:variable>
-    <xsl:variable name="URN">/CWRC-MTP/geonames</xsl:variable>
+    <xsl:variable name="CWRC_GEOLOC_PROT">http</xsl:variable>
+    <xsl:variable name="CWRC_GEOLOC_HOST">beta.cwrc.ca</xsl:variable>        
+    <xsl:variable name="CWRC_GEOLOC_PORT">80</xsl:variable>
+    <xsl:variable name="CWRC_GEOLOC_URN">/CWRC-MTP/geonames</xsl:variable>
 
 
     <!--
@@ -24,7 +24,7 @@
     <xsl:template name="cwrc_lookup_geoloc">
         <xsl:param name="str_to_query_geoloc"/>
         <xsl:call-template name="cwrc_assemble_geoloc">
-            <xsl:with-param name="geoname_results" select="document(concat($PROT, '://', $HOST, ':', $PORT, $URN, '?query=', $str_to_query_geoloc))"/>
+            <xsl:with-param name="geoname_results" select="document(concat($CWRC_GEOLOC_PROT, '://', $CWRC_GEOLOC_HOST, ':', $CWRC_GEOLOC_PORT, $CWRC_GEOLOC_URN, '?query=', $str_to_query_geoloc))"/>
         </xsl:call-template>
     </xsl:template>
 
@@ -37,7 +37,7 @@
 
         <field>
             <xsl:attribute name="name">
-                <xsl:text>cwrc_genernal_place_geoloc_s</xsl:text>
+                <xsl:text>cwrc_general_place_geoloc_ms</xsl:text>
             </xsl:attribute>
 
             <xsl:choose>
@@ -54,7 +54,7 @@
 
         <field>
             <xsl:attribute name="name">
-                <xsl:text>cwrc_genernal_place_geoloc_debug_s</xsl:text>
+                <xsl:text>cwrc_general_place_geoloc_debug_ms</xsl:text>
             </xsl:attribute>
 
             <xsl:choose>
