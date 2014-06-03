@@ -2,7 +2,7 @@
 
 <!-- Basic CWRC Entities - transform for Solr -->
 
-<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:foxml="info:fedora/fedora-system:def/foxml#" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:mods="http://www.loc.gov/mods/v3" exclude-result-prefixes="mods">
+<xsl:stylesheet version="2.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:foxml="info:fedora/fedora-system:def/foxml#" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:mods="http://www.loc.gov/mods/v3" exclude-result-prefixes="mods">
 
     <!-- this template used to help test  -->
 
@@ -213,6 +213,17 @@
                     <xsl:with-param name="format" select="'Periodical article'"/>
                 </xsl:call-template>
             </xsl:when>
+            <xsl:otherwise>
+                <!-- 
+                    * 2014-06-02 - not every aligns with above conventions 
+                    * Middlebrow doesn't use the above 3 conventions 
+                -->
+                <xsl:call-template name="assemble_cwrc_title_formats">
+                    <xsl:with-param name="prefix" select="$local_prefix"/>
+                    <xsl:with-param name="date" select="$identity//mods:date/text()"/>
+                    <xsl:with-param name="format" select="''"/>
+                </xsl:call-template>
+            </xsl:otherwise>
         </xsl:choose>
 
         <!-- access condition -->
@@ -522,15 +533,20 @@
                 <xsl:value-of select="concat($prefix, 'date', '_ms')"/>
             </xsl:attribute>
 
-            <xsl:value-of select="$date"/>
+            <!-- 
+            * fix weird orlando dates
+            -->
+            <xsl:value-of select="replace($date, '-{1,2}$','')" />
         </field>
-         
-        <field>
-            <xsl:attribute name="name">
-                <xsl:value-of select="concat($prefix, 'format', '_s')"/>
-            </xsl:attribute>
-            <xsl:value-of select="$format"/>
-        </field>
+        
+        <xsl:if test="$format and $format!=''">
+            <field>
+                <xsl:attribute name="name">
+                    <xsl:value-of select="concat($prefix, 'format', '_s')"/>
+                </xsl:attribute>
+                <xsl:value-of select="$format"/>
+            </field>
+        </xsl:if>
     </xsl:template>
 
 
