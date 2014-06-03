@@ -2,7 +2,12 @@
 
 <!-- Basic CWRC Entities - transform for Solr -->
 
-<xsl:stylesheet version="2.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:foxml="info:fedora/fedora-system:def/foxml#" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:mods="http://www.loc.gov/mods/v3" exclude-result-prefixes="mods">
+<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:foxml="info:fedora/fedora-system:def/foxml#" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:mods="http://www.loc.gov/mods/v3" exclude-result-prefixes="mods">
+    <!--
+
+    <xsl:include href="/usr/local/fedora/tomcat/webapps/fedoragsearch/WEB-INF/classes/fgsconfigFinal/index/FgsIndex/islandora_transforms/CWRC_GeoLoc.xslt"/>
+
+    -->
 
     <!-- this template used to help test  -->
 
@@ -215,8 +220,8 @@
             </xsl:when>
             <xsl:otherwise>
                 <!-- 
-                    * 2014-06-02 - not every aligns with above conventions 
-                    * Middlebrow doesn't use the above 3 conventions 
+                * 2014-06-02 - not every aligns with above conventions 
+                * Middlebrow doesn't use the above 3 conventions 
                 -->
                 <xsl:call-template name="assemble_cwrc_title_formats">
                     <xsl:with-param name="prefix" select="$local_prefix"/>
@@ -238,6 +243,15 @@
             <xsl:with-param name="content" select="$identity/mods:recordInfo/mods:recordContentSource/text()"/>
         </xsl:call-template>
 
+        <!--
+        * lookup geoloc
+        *
+        <xsl:for-each select="$identity/mods:relatedItem/mods:originInfo/mods:placeTerm | $identity/mods:originInfo/mods:place/mods:placeTerm ">
+            <xsl:call-template name="cwrc_lookup_geoloc">
+                <xsl:with-param name="text()" /> 
+            </xsl:call-template>
+        </xsl:for-each>
+            -->
 
 
     </xsl:template>
@@ -533,13 +547,16 @@
                 <xsl:value-of select="concat($prefix, 'date', '_ms')"/>
             </xsl:attribute>
 
+            <xsl:value-of select="$date"/>
             <!-- 
-            * fix weird orlando dates
+              * fix weird orlando dates
             -->
+            <!--            
             <xsl:value-of select="replace($date, '-{1,2}$','')" />
+            -->
         </field>
-        
-        <xsl:if test="$format and $format!=''">
+
+        <xsl:if test="$format and $format!=''"> 
             <field>
                 <xsl:attribute name="name">
                     <xsl:value-of select="concat($prefix, 'format', '_s')"/>
