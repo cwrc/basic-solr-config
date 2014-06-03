@@ -2,7 +2,7 @@
 <!-- Basic CWRC Entities - transform for Solr -->
  
 <xsl:stylesheet 
-    version="1.0" 
+    version="2.0" 
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
     xmlns:foxml="info:fedora/fedora-system:def/foxml#" 
     xmlns:xlink="http://www.w3.org/1999/xlink" 
@@ -70,5 +70,38 @@
         <!-- <xsl:copy-of select="$geoname_results"/> -->
     </xsl:template>
 
+
+    <xsl:template name="cwrc_orlando_date_repair">
+      <xsl:param name="date" />
+
+          <!--
+            * fix weird orlando dates that are not ISO valid e.g. 2000-01- 2000- -
+            * XSLT version 2.0
+            -->
+            <!--
+            <xsl:value-of select="replace($date, '-{1,2}$','')" />
+            -->
+            <!--
+            * XSLT version 1.0
+            -->
+            <xsl:variable name="trim_date" select="normalize-space($date)"></xsl:variable>
+            <xsl:choose>
+                <xsl:when test="substring($trim_date,string-length($trim_date),string-length($trim_date))='-'">
+                    <xsl:variable name="remove_last_char" select="substring($trim_date,0,string-length($trim_date))" />
+                    <xsl:choose>
+                        <xsl:when test="substring($remove_last_char, string-length($remove_last_char), string-length($remove_last_char))='-'">
+                            <xsl:value-of select="substring($remove_last_char, 0, string-length($remove_last_char))" />
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:value-of select="$remove_last_char"/>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:value-of select="$trim_date"/>
+                </xsl:otherwise>
+            </xsl:choose>
+
+    </xsl:template>
 
 </xsl:stylesheet>

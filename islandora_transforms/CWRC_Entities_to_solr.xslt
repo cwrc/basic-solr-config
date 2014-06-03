@@ -247,13 +247,11 @@
         * lookup geoloc
         *
         -->
-        <!--
         <xsl:for-each select="$identity/mods:relatedItem/mods:originInfo/mods:placeTerm | $identity/mods:originInfo/mods:place/mods:placeTerm ">
             <xsl:call-template name="cwrc_lookup_geoloc">
                 <xsl:with-param name="str_to_query_geoloc" select="text()" /> 
             </xsl:call-template>
         </xsl:for-each>
--->
 
     </xsl:template>
 
@@ -561,23 +559,10 @@
             <!-- 
             * XSLT version 1.0
             -->
-            <xsl:variable name="trim_date" select="normalize-space($date)"></xsl:variable>
-            <xsl:choose>
-                <xsl:when test="substring($trim_date,string-length($trim_date),string-length($trim_date))='-'">
-                    <xsl:variable name="remove_last_char" select="substring(*,0,string-length($trim_date))" />
-                    <xsl:choose>
-                        <xsl:when test="substring($remove_last_char, string-length($remove_last_char), string-length($remove_last_char))='-'">
-                            <xsl:value-of select="substring($remove_last_char, 0, string-length($remove_last_char))" />
-                        </xsl:when>
-                        <xsl:otherwise>
-                            <xsl:value-of select="$remove_last_char"/>
-                        </xsl:otherwise>
-                    </xsl:choose>
-                </xsl:when>
-                <xsl:otherwise>
-                    <xsl:value-of select="$trim_date"/>
-                </xsl:otherwise>
-            </xsl:choose>
+            <xsl:call-template name="cwrc_orlando_date_repair">
+              <xsl:with-param name="date" select="$date" />
+            </xsl:call-template>
+
         </field>
 
         <xsl:if test="$format and $format!=''"> 

@@ -84,6 +84,8 @@
                 <xsl:attribute name="name">
                     <xsl:value-of select="concat($local_prefix, 'chronProse', $suffix)"/>
                 </xsl:attribute>
+                <xsl:value-of select="normalize-space($local_content/CHRONSTRUCT/DATE | $local_content/CHRONSTRUCT/DATERANGE | $local_content/CHRONSTRUCT/DATESTRUCT )"/>
+                <xsl:text>: </xsl:text>
                 <xsl:value-of select="normalize-space($local_content/CHRONSTRUCT/CHRONPROSE)"/>
             </field>
         </xsl:if>
@@ -180,19 +182,27 @@
 
 
     <xsl:template match="CHRONSTRUCT/DATE">
-        <xsl:value-of select="@VALUE"/>
+        <xsl:call-template name="cwrc_orlando_date_repair">
+          <xsl:with-param name="date" select="@VALUE" />
+        </xsl:call-template> 
     </xsl:template>
 
     <xsl:template match="CHRONSTRUCT/DATERANGE">
-        <xsl:value-of select="@FROM" />
+        <xsl:call-template name="cwrc_orlando_date_repair">
+          <xsl:with-param name="date" select="@FROM" />
+        </xsl:call-template> 
         <xsl:text> - </xsl:text>
-        <xsl:value-of select="@TO" />
+        <xsl:call-template name="cwrc_orlando_date_repair">
+          <xsl:with-param name="date" select="@TO" />
+        </xsl:call-template> 
     </xsl:template>
     
     
     <!-- TODO interprete the Orlando SEASON element --> 
     <xsl:template match="CHRONSTRUCT/DATESTRUCT">
-        <xsl:value-of select="@VALUE"/>
+        <xsl:call-template name="cwrc_orlando_date_repair">
+          <xsl:with-param name="date" select="@VALUE" />
+        </xsl:call-template> 
     </xsl:template>
 
 </xsl:stylesheet>
