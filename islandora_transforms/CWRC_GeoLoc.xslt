@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>                                                  
- 
 <!-- Basic CWRC Entities - transform for Solr -->
  
 <xsl:stylesheet 
@@ -48,7 +47,7 @@
                     <xsl:value-of select="$geoname_results/geonames/geoname[1]/lng"/>
                 </xsl:when>
                 <xsl:otherwise>
-                    <xsl:value-of>0,0</xsl:value-of>
+                    <xsl:text>0,0</xsl:text>
                 </xsl:otherwise>
             </xsl:choose>
         </field>

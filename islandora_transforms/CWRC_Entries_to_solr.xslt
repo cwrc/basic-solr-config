@@ -4,9 +4,7 @@
 
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:foxml="info:fedora/fedora-system:def/foxml#" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:mods="http://www.loc.gov/mods/v3" exclude-result-prefixes="mods">
 
-    <!--
     <xsl:include href="/usr/local/fedora/tomcat/webapps/fedoragsearch/WEB-INF/classes/fgsconfigFinal/index/FgsIndex/islandora_transforms/CWRC_GeoLoc.xslt"/>
-    -->
 
     <!-- this template used to help test  -->
 
@@ -54,28 +52,30 @@
                 <xsl:call-template name="assemble_orlando_place"/>
             </field>
             <!--
+                * Geo locate place
+                -->
             <xsl:call-template name="cwrc_lookup_geoloc">
                 <xsl:with-param name="str_to_query_geoloc">
-                    <xsl:chooose>
-                        <xsl:when select="./SETTLEMENT">
+                    <xsl:choose>
+                        <xsl:when test="./SETTLEMENT">
                             <xsl:call-template name="assemble_orlando_place_subelement">
                                 <xsl:with-param name="context" select="./SETTLEMENT" />
                             </xsl:call-template>
                         </xsl:when>
-                        <xsl:when select="./REGION">
+                        <xsl:when test="./REGION">
                             <xsl:call-template name="assemble_orlando_place_subelement">
                                 <xsl:with-param name="context" select="./REGION" />
                             </xsl:call-template>
                         </xsl:when>
-                        <xsl:when select="./GEOG">
+                        <xsl:when test="./GEOG">
                             <xsl:call-template name="assemble_orlando_place_subelement">
                                 <xsl:with-param name="context" select="./GEOG" />
                             </xsl:call-template>
                         </xsl:when>
                     </xsl:choose> 
                 </xsl:with-param>
-            </xsl:call-tamplate>
-                -->
+            </xsl:call-template>
+
         </xsl:for-each>
 
         <!-- Event CHRONPROST - -->
