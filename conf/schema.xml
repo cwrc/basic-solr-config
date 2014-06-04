@@ -375,12 +375,12 @@
 
 
 <!-- CWRC MODS = cwrc_general_label_et -->
-<copyField source="mods_titleInfo_title_ms" dest="cwrc_general_label_et" />
-<copyField source="mods_relatedItem_titleInfo_title_ms" dest="cwrc_general_label_et" />
-<!--
-<copyField source="mods_relatedItem_*_titleInfo_title_ms" dest="cwrc_general_label_et" />
--->
-<copyField source="mods_relatedItem_host_titleInfo_title_ms" dest="cwrc_general_label_et" />
+<copyField source="cwrc_entity_title_author_et" dest="cwrc_general_label_et" />
+<copyField source="cwrc_entity_title_uniformTitle_et" dest="cwrc_general_label_et" />
+<copyField source="cwrc_entity_title_variantTitle_et" dest="cwrc_general_label_et" />
+<copyField source="cwrc_entity_title_date_ms" dest="cwrc_general_label_et" />
+<copyField source="cwrc_general_place_mt" dest="cwrc_general_label_et" />
+
 
 <!-- CWRC MODS = place into cwrc_general_place_mt -->
 <copyField source="mods_originInfo_place_placeTerm_text_ms" dest="cwrc_general_place_mt" />
