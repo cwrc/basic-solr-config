@@ -247,11 +247,13 @@
         * lookup geoloc
         *
         -->
+        <!--
         <xsl:for-each select="$identity/mods:relatedItem/mods:originInfo/mods:placeTerm | $identity/mods:originInfo/mods:place/mods:placeTerm ">
             <xsl:call-template name="cwrc_lookup_geoloc">
                 <xsl:with-param name="str_to_query_geoloc" select="text()" /> 
             </xsl:call-template>
         </xsl:for-each>
+        -->
 
     </xsl:template>
 

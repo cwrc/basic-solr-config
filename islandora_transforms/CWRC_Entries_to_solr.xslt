@@ -54,6 +54,7 @@
             <!--
                 * Geo locate place
                 -->
+            <!--
             <xsl:call-template name="cwrc_lookup_geoloc">
                 <xsl:with-param name="str_to_query_geoloc">
                     <xsl:choose>
@@ -75,6 +76,7 @@
                     </xsl:choose> 
                 </xsl:with-param>
             </xsl:call-template>
+            -->
 
         </xsl:for-each>
 

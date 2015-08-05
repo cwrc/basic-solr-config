@@ -692,4 +692,8 @@
     -->
   </admin>
 
+
+  <!-- Fix Error: is using deprecated LUCENE_24 emulation. You should at some point declare and reindex to at least 3.0, because 2.x emulation is deprecated and will be removed in 4.0 -->
+  <luceneMatchVersion>3.6</luceneMatchVersion>
+
 </config>
