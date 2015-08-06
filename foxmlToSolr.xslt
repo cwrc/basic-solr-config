@@ -23,10 +23,10 @@
   xmlns:islandora-exts="xalan://ca.upei.roblib.DataStreamForXSLT"
             exclude-result-prefixes="exts"
   xmlns:encoder="xalan://java.net.URLEncoder"
-  xmlns:java="http://xml.apache.org/xalan/java">
-  <!--  Used for indexing other objects.
+  xmlns:java="http://xml.apache.org/xalan/java"
   xmlns:sparql="http://www.w3.org/2001/sw/DataAccess/rf1/result"
-  xmlns:xalan="http://xml.apache.org/xalan"> -->
+  xmlns:xalan="http://xml.apache.org/xalan"
+  >
 
   <xsl:output method="xml" indent="yes" encoding="UTF-8"/>
 
