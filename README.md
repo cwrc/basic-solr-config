@@ -7,10 +7,19 @@ If one wishes to index Drupal content and users, one might process the `conf/dat
 * `drupal_db_username`
 * `drupal_db_password`
 *
+__
+
+Assumption: start with the Islandora Solr and FedoraGSearch setup from 2013. These config files represent what changes from the default setup of Islandora.
 
 As of 2014-04-09 install location - 
 
-{$TOMCAT_HOME}/webapps/fedoragsearch/WEB-INF/classes/fgsconfigFinal/index/FgsIndex/
+FedoraGSearch
+* location to add config: {$TOMCAT_HOME}/webapps/fedoragsearch/WEB-INF/classes/fgsconfigFinal/index/FgsIndex/
+* includes: index.properties, foxmlToSolr.xslt, islandora_transforms
 
-{$FEDORA_HOME}/solr/conf/
+Apache Solr
+* location to add config: {$FEDORA_HOME}/solr/conf/
+* includes: conf              
 
+
+In a Multi-Core setup of Apache Solr, the configuration file location changes. For the Fedora Solr core, the see the multicore directory for details.
