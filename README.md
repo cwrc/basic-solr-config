@@ -16,6 +16,7 @@ As of 2014-04-09 install location -
 FedoraGSearch
 * location to add config: {$TOMCAT_HOME}/webapps/fedoragsearch/WEB-INF/classes/fgsconfigFinal/index/FgsIndex/
 * includes: index.properties, foxmlToSolr.xslt, islandora_transforms
+* some files contain hardcoded directories - be carful if moving from the Tomcat from the default location
 
 Apache Solr
 * location to add config: {$FEDORA_HOME}/solr/conf/
