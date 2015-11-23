@@ -192,6 +192,10 @@
         Periodical article:
         date: /mods/relatedItem/part/date
         issuance: /mods/relatedItem/originInfo/issuance with value equal to "continuing"
+        
+        Periodical issue:
+        date: /mods/originInfo/dateIssued
+        issuance: /mods/originInfo/issuance with value equal to "continuing"
         -->
         <xsl:choose>
             <xsl:when test="$identity/mods:originInfo/mods:issuance/text()='monographic'">
@@ -216,6 +220,14 @@
                     <xsl:with-param name="prefix" select="$local_prefix"/>
                     <xsl:with-param name="date" select="$identity/mods:relatedItem/mods:part/mods:date/text()"/>
                     <xsl:with-param name="format" select="'Periodical article'"/>
+                </xsl:call-template>
+            </xsl:when>
+            <!-- periodical issue -->
+            <xsl:when test="$identity/mods:originInfo/mods:issuance/text()='continuing'">
+                <xsl:call-template name="assemble_cwrc_title_formats">
+                    <xsl:with-param name="prefix" select="$local_prefix"/>
+                    <xsl:with-param name="date" select="$identity/mods:originInfo/mods:dateIssued/text()"/>
+                    <xsl:with-param name="format" select="'Periodical issue'"/>
                 </xsl:call-template>
             </xsl:when>
             <xsl:otherwise>
