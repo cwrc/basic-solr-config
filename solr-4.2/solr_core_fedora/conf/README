@@ -1,0 +1,13 @@
+tweak solrconfig.xml
+
+    <!-- Perform a <commit/> automatically under certain conditions:
+         maxDocs - number of updates since last commit is greater than this
+         maxTime - oldest uncommited update (in ms) is this long ago
+    <autoCommit>
+      <maxDocs>10000</maxDocs>
+      <maxTime>1000</maxTime>
+    </autoCommit>
+    -->
+
+
+
