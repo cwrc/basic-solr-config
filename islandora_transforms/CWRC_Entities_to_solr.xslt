@@ -104,6 +104,11 @@
             <xsl:with-param name="content" select="$recordInfo/originInfo/projectId"/>
         </xsl:call-template>
 
+        <!-- factuality -->
+        <xsl:call-template name="assemble_cwrc_factuality">
+            <xsl:with-param name="prefix" select="$local_prefix"/>
+            <xsl:with-param name="content" select="$description/factuality"/>
+        </xsl:call-template>
 
     </xsl:template>
 
@@ -148,6 +153,11 @@
             <xsl:with-param name="content" select="$recordInfo/originInfo/projectId"/>
         </xsl:call-template>
 
+        <!-- factuality -->
+        <xsl:call-template name="assemble_cwrc_factuality">
+            <xsl:with-param name="prefix" select="$local_prefix"/>
+            <xsl:with-param name="content" select="$description/factuality"/>
+        </xsl:call-template>
 
     </xsl:template>
 
@@ -255,6 +265,36 @@
             <xsl:with-param name="content" select="$identity/mods:recordInfo/mods:recordContentSource/text()"/>
         </xsl:call-template>
 
+
+        <!-- langauge facet -->
+        <xsl:variable name="local_language_code" select="$local_content/$identity/mods:language/languageTerm[@type='code'][1]/text()" />
+        <xsl:variable name="local_language_text" select="$local_content/$identity/mods:language/languageTerm[@type='text'][1]/text()" />
+        <xsl:if test="${local_language_code}">
+
+            <xsl:call-template name="assemble_cwrc_basic_field">
+                <xsl:with-param name="field_name" select="concat($local_prefix, 'language_code', '_s')"/>
+                <xsl:with-param name="field_value" select="${local_language_code}"/>
+            </xsl:call-template>
+        </xsl:if>
+        <xsl:if test="${local_language_text}">
+            <xsl:call-template name="assemble_cwrc_basic_field">
+                <xsl:with-param name="field_name" select="concat($local_prefix, 'language_text', '_s')"/>
+                <xsl:with-param name="field_value" select="${local_language_text}"/>
+            </xsl:call-template>
+        </xsl:if>
+
+
+        <!-- genre -->
+        <xsl:apply-template select="$identity/mods:genre">
+            <xsl:with-param name="prefix" select="$local_prefix"/>
+        </xsl:call-template>
+
+
+
+        <!-- langauge facet -->
+
+
+
         <!--
         * lookup geoloc
         *
@@ -318,6 +358,11 @@
             <xsl:with-param name="content" select="$recordInfo/originInfo/projectId"/>
         </xsl:call-template>
 
+        <!-- factuality -->
+        <xsl:call-template name="assemble_cwrc_factuality">
+            <xsl:with-param name="prefix" select="$local_prefix"/>
+            <xsl:with-param name="content" select="$description/factuality"/>
+        </xsl:call-template>
 
     </xsl:template>
 
@@ -331,6 +376,22 @@
     <!-- ********************************************************* -->
     <!-- HELPER Templates -->
     <!-- ********************************************************* -->
+
+    <!-- Assemble basic field - single value -->
+    <xsl:template name="assemble_cwrc_basic_field">
+        <xsl:param name="field_value"/>
+        <xsl:param name="field_name"/>
+
+        <field>
+            <xsl:attribute name="name">
+                <xsl:value-of select="$field_name"/>
+            </xsl:attribute>
+
+            <xsl:value-of select="$field_value" />
+        </field>
+
+    </xsl:template>
+
 
     <!-- CWRC Person perferred name forms -->
     <xsl:template match="preferredForm">
@@ -642,6 +703,37 @@
         </xsl:if>
     </xsl:template>
 
+    <!-- title entity: output the Genre -->
+    <xsl:template select="mods:genre">
+        <xsl:param name="prefix"/>
+
+        <xsl:variable name="field_name">
+            <xsl:choose>
+                <xsl:when test="mods:genre[@type='format']">
+                    <xsl:text>genre_format</xsl:text>
+                </xsl:when>
+                <xsl:when test="mods:genre[@type='primaryGenre' or @type='secondaryGenre']">
+                    <xsl:text>genre_format</xsl:text>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:text>genre_folksonomic</xsl:text>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
+
+        <xsl:variable name="content" select="./text()" />
+        <xsl:if test="$content">
+            <field>
+                <xsl:attribute name="name">
+                    <xsl:value-of select="concat($prefix, $field_name, '_ms')"/>
+                </xsl:attribute>
+
+                <xsl:value-of select="$content"/>
+            </field>
+        </xsl:if>
+
+    </xsl:template>
+
 
     <!-- generic entity: output the Project ID -->
     <xsl:template name="assemble_cwrc_project_id">
@@ -659,6 +751,25 @@
         </xsl:if>
 
     </xsl:template>
+
+
+    <!-- generic entity: output the Factuality -->
+    <xsl:template name="assemble_cwrc_factuality">
+        <xsl:param name="prefix"/>
+        <xsl:param name="content"/>
+
+        <xsl:if test="$content">
+            <field>
+                <xsl:attribute name="name">
+                    <xsl:value-of select="concat($prefix, 'factuality', '_s')"/>
+                </xsl:attribute>
+
+                <xsl:value-of select="$content"/>
+            </field>
+        </xsl:if>
+
+    </xsl:template>
+
 
 
     <!-- generic entity: output the access condition -->
