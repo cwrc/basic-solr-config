@@ -130,7 +130,7 @@
     </xsl:variable>
 
 
-    <xsl:if test="$content">
+    <xsl:if test="$content != ''">
       <xsl:call-template name="indexField">
         <xsl:with-param name="value" select="$content" />
         <xsl:with-param name="name" select="concat($prefix, '_', 'facet_authority' , '_',$suffix)" />
