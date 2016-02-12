@@ -8,7 +8,10 @@
     <xsl:param name="newest"/>
     <xsl:param name="prefix"/>
     <xsl:param name="suffix">ms</xsl:param>
+
     <xsl:for-each select="$content//cwrc/workflow">
+
+      <!-- build current and superceded fields -->
       <xsl:apply-templates mode="slurping_WORKFLOW" select=".">
         <xsl:with-param name="prefix" select="$prefix"/>
         <xsl:with-param name="suffix">
@@ -32,8 +35,17 @@
           </xsl:choose>
         </xsl:with-param>
       </xsl:apply-templates>
+
+      <!-- build solr field for faceting on specific category and status pairs -->
+      <xsl:apply-templates mode="faceting_WORKFLOW" select=".">
+        <xsl:with-param name="prefix" select="$prefix"/>
+        <xsl:with-param name="suffix">
+      </xsl:apply-templates>
+
     </xsl:for-each>
+
   </xsl:template>
+
   <!-- Build up the list prefix with the element / attribute context. -->
   <xsl:template match="*" mode="slurping_WORKFLOW">
     <xsl:param name="prefix"/>
@@ -79,6 +91,7 @@
       <xsl:with-param name="suffix" select="$suffix"/>
     </xsl:apply-templates>
   </xsl:template>
+
   <!-- Index the given field name and value -->
   <xsl:template name="indexField">
     <xsl:param name="name"/>
@@ -90,6 +103,38 @@
       <xsl:value-of select="$value"/>
     </field>
   </xsl:template>
+
+  <!-- build solr field for faceting on specific category and status pairs -->
+  <xsl:template mode="faceting_WORKFLOW" match="workflow">
+    <xsl:param name="prefix"/>
+    <xsl:param name="suffix"/>
+
+    <xsl:call-template name="indexField">
+      <xsl:with-param name="name" select="concat(concat($prefix, 'facet_authority' , '_'),$suffix,'_')" />
+      <xsl:with-param name="value">
+        <xsl:choose>
+          <xsl:when test="@category='checked' and @status='c'">
+            <xsl:text>checked for accuracy</xsl:text>
+          </xsl:when>
+          <xsl:when test="@category='peer-reviewed/evaluated' and @status='c'">
+            <xsl:text>peer-reviewed</xsl:text>
+          </xsl:when>
+          <xsl:when test="@category='user-tagged' and @status='c'">
+            <xsl:text>public annotations</xsl:text>
+          </xsl:when>
+          <xsl:when test="@category='published' and @status='c'">
+            <xsl:text>published</xsl:text>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:text></xsl:text>
+          </xsl:otherwise>
+        </xsl:choose>
+      </xsl:with-param>
+    </xsl:call-template>
+
+  </xsl:template>
+
   <!-- Avoid using text alone. -->
   <xsl:template match="text()" mode="slurping_WORKFLOW"/>
+
 </xsl:stylesheet>
