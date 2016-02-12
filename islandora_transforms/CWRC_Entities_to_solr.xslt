@@ -106,7 +106,7 @@
 
         <!-- factuality -->
         <xsl:call-template name="assemble_cwrc_factuality">
-            <xsl:with-param name="prefix" select="$local_prefix"/>
+            <xsl:with-param name="prefix" select="$prefix"/>
             <xsl:with-param name="content" select="$description/factuality"/>
         </xsl:call-template>
 
@@ -155,7 +155,7 @@
 
         <!-- factuality -->
         <xsl:call-template name="assemble_cwrc_factuality">
-            <xsl:with-param name="prefix" select="$local_prefix"/>
+            <xsl:with-param name="prefix" select="$prefix"/>
             <xsl:with-param name="content" select="$description/factuality"/>
         </xsl:call-template>
 
@@ -305,11 +305,6 @@
         </xsl:apply-templates>
 
 
-
-        <!-- langauge facet -->
-
-
-
         <!--
         * lookup geoloc
         *
@@ -375,7 +370,7 @@
 
         <!-- factuality -->
         <xsl:call-template name="assemble_cwrc_factuality">
-            <xsl:with-param name="prefix" select="$local_prefix"/>
+            <xsl:with-param name="prefix" select="$prefix"/>
             <xsl:with-param name="content" select="$description/factuality"/>
         </xsl:call-template>
 
