@@ -37,9 +37,9 @@
       </xsl:apply-templates>
 
       <!-- build solr field for faceting on specific category and status pairs -->
-      <xsl:apply-templates mode="faceting_WORKFLOW" select=".">
-        <xsl:with-param name="prefix" select="$prefix"/>
-        <xsl:with-param name="suffix"/>
+      <xsl:apply-templates mode="faceting_WORKFLOW" select="activity">
+        <xsl:with-param name="prefix" select="local-name()" />
+        <xsl:with-param name="suffix" select="$suffix" />
       </xsl:apply-templates>
 
     </xsl:for-each>
@@ -105,32 +105,37 @@
   </xsl:template>
 
   <!-- build solr field for faceting on specific category and status pairs -->
-  <xsl:template mode="faceting_WORKFLOW" match="workflow">
+  <xsl:template mode="faceting_WORKFLOW" match="activity">
     <xsl:param name="prefix"/>
     <xsl:param name="suffix"/>
 
-    <xsl:call-template name="indexField">
-      <xsl:with-param name="name" select="concat(concat($prefix, 'facet_authority' , '_'),$suffix,'_')" />
-      <xsl:with-param name="value">
-        <xsl:choose>
-          <xsl:when test="@category='checked' and @status='c'">
-            <xsl:text>checked for accuracy</xsl:text>
-          </xsl:when>
-          <xsl:when test="@category='peer-reviewed/evaluated' and @status='c'">
-            <xsl:text>peer-reviewed</xsl:text>
-          </xsl:when>
-          <xsl:when test="@category='user-tagged' and @status='c'">
-            <xsl:text>public annotations</xsl:text>
-          </xsl:when>
-          <xsl:when test="@category='published' and @status='c'">
-            <xsl:text>published</xsl:text>
-          </xsl:when>
-          <xsl:otherwise>
-            <xsl:text></xsl:text>
-          </xsl:otherwise>
-        </xsl:choose>
-      </xsl:with-param>
-    </xsl:call-template>
+    <xsl:variable name="content">
+      <xsl:choose>
+         <xsl:when test="@category='checked' and @status='c'">
+           <xsl:text>checked for accuracy</xsl:text>
+         </xsl:when>
+         <xsl:when test="@category='peer-reviewed/evaluated' and @status='c'">
+           <xsl:text>peer-reviewed</xsl:text>
+         </xsl:when>
+         <xsl:when test="@category='user-tagged' and @status='c'">
+           <xsl:text>public annotations</xsl:text>
+         </xsl:when>
+         <xsl:when test="@category='published' and @status='c'">
+           <xsl:text>published</xsl:text>
+         </xsl:when>
+         <xsl:otherwise>
+           <xsl:text></xsl:text>
+         </xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+
+
+    <xsl:if test="$content">
+      <xsl:call-template name="indexField">
+        <xsl:with-param name="value" select="$content" />
+        <xsl:with-param name="name" select="concat($prefix, '_', 'facet_authority' , '_',$suffix)" />
+      </xsl:call-template>
+    </xsl:if>
 
   </xsl:template>
 
