@@ -39,7 +39,7 @@
       <!-- build solr field for faceting on specific category and status pairs -->
       <xsl:apply-templates mode="faceting_WORKFLOW" select=".">
         <xsl:with-param name="prefix" select="$prefix"/>
-        <xsl:with-param name="suffix">
+        <xsl:with-param name="suffix"/>
       </xsl:apply-templates>
 
     </xsl:for-each>
