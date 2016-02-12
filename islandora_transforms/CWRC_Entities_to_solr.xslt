@@ -739,10 +739,10 @@
 
         <xsl:variable name="field_name">
             <xsl:choose>
-                <xsl:when test="mods:genre[@type='format']">
+                <xsl:when test="@type='format'">
                     <xsl:text>genre_format</xsl:text>
                 </xsl:when>
-                <xsl:when test="mods:genre[@type='primaryGenre' or @type='subgenre']">
+                <xsl:when test="@type='primaryGenre' or @type='subgenre'">
                     <xsl:text>genre_primary_subgenre</xsl:text>
                 </xsl:when>
                 <xsl:otherwise>
