@@ -190,69 +190,96 @@
         </xsl:apply-templates>
 
         <!--
-        Dates
-        Monograph whole:
-        date: /mods/originInfo/dateIssued
+        Date location logic
+        - conditional checks based on priority, first checking monograph whole or periodical issue, then
+        monograph chapter, and then periodical article, and in each of these sections checking for dates
+        in this order: dateIssued, copyrightDate, and then dateCreated; finally, the part/date is checked
+        for periodical articles
+ 
+        Format logic:
+        - first check for issuance element value, and then check for the presense of the part element
+         Monograph whole:
         issuance: /mods/originInfo/issuance with value equal to "monographic"
-
         Monograph chapter:
-        date: /mods/relatedItem/originInfo/dateIssued/
         issuance: /mods/relatedItem/originInfo/issuance with value equal to "monographic"
-
         Periodical article:
-        date: /mods/relatedItem/part/date
         issuance: /mods/relatedItem/originInfo/issuance with value equal to "continuing"
-        
         Periodical issue:
-        date: /mods/originInfo/dateIssued
         issuance: /mods/originInfo/issuance with value equal to "continuing"
         -->
-        <xsl:choose>
-            <xsl:when test="$identity/mods:originInfo/mods:issuance/text()='monographic'">
-                <!-- monograph whole -->
-                <xsl:call-template name="assemble_cwrc_title_formats" >
-                    <xsl:with-param name="prefix" select="$local_prefix"/>
-                    <xsl:with-param name="date" select="$identity/mods:originInfo/mods:dateIssued/text()"/>
-                    <xsl:with-param name="format" select="'Monograph whole'"/>
-                </xsl:call-template>
-            </xsl:when>
+        <xsl:variable name="local_date">
+            <!-- * date location logic * -->
+            <!-- monograph whole or periodical issue -->
+            <xsl:choose>
+               <xsl:when test="$identity/mods:originInfo/mods:dateIssued/text()!=''">
+                   <xsl:value-of select="$identity/mods:originInfo/mods:dateIssued/text()"/>
+               </xsl:when>
+            </xsl:choose>
+            <xsl:choose>
+                <xsl:when test="$identity/mods:originInfo/mods:copyrightDate/text()!=''">
+                    <xsl:value-of select="$identity/mods:originInfo/mods:copyrightDate/text()"/>
+                </xsl:when>
+            </xsl:choose>
+            <xsl:choose>
+                <xsl:when test="$identity/mods:originInfo/mods:dateCreate/text()!=''">
+                    <xsl:value-of select="$identity/mods:originInfo/mods:dateCreated/text()"/>
+                </xsl:when>
+            </xsl:choose>
             <!-- monograph chapter -->
-            <xsl:when test="$identity/mods:relatedItem/mods:originInfo/mods:issuance/text()='monographic'">
-                <xsl:call-template name="assemble_cwrc_title_formats">
-                    <xsl:with-param name="prefix" select="$local_prefix"/>
-                    <xsl:with-param name="date" select="$identity/mods:relatedItem/mods:originInfo/mods:dateIssued/text()"/>
-                    <xsl:with-param name="format" select="'Monograph chapter'"/>
-                </xsl:call-template>
-            </xsl:when>
+            <xsl:choose>
+                <xsl:when test="$identity/mods:relatedItem/mods:originInfo/mods:dateIssued/text()!=''">
+                    <xsl:value-of select="$identity/mods:relatedItem/mods:originInfo/mods:dateIssued/text()"/>
+                </xsl:when>
+            </xsl:choose>
+            <xsl:choose>
+                <xsl:when test="$identity/mods:relatedItem/mods:originInfo/mods:copyrightDate/text()!=''">
+                    <xsl:value-of select="$identity/mods:relatedItem/mods:originInfo/mods:copyrightDate/text()"/>
+                </xsl:when>
+            </xsl:choose>
+            <xsl:choose>
+                <xsl:when test="$identity/mods:relatedItem/mods:originInfo/mods:dateCreate/text()!=''">
+                    <xsl:value-of select="$identity/mods:relatedItem/mods:originInfo/mods:dateCreated/text()"/>
+                </xsl:when>
+            </xsl:choose>
             <!-- periodical article -->
-            <xsl:when test="$identity/mods:relatedItem/mods:originInfo/mods:issuance/text()='continuing'">
-                <xsl:call-template name="assemble_cwrc_title_formats">
-                    <xsl:with-param name="prefix" select="$local_prefix"/>
-                    <xsl:with-param name="date" select="$identity/mods:relatedItem/mods:part/mods:date/text()"/>
-                    <xsl:with-param name="format" select="'Periodical article'"/>
-                </xsl:call-template>
+            <xsl:choose>
+                <xsl:when test="$identity/mods:relatedItem/mods:part/mods:date/text()!=''">
+                    <xsl:value-of select="$identity/mods:relatedItem/mods:part/mods:date/text()"/>
+                </xsl:when>
+            </xsl:choose>
+        </xsl:variable>
+        
+        <!-- * format conditional logic * -->
+        <xsl:variable name="local_format">
+            <xsl:choose>
+            <xsl:when test="$identity/mods:originInfo/mods:issuance/text()='monographic'">
+                <xsl:text>Monographic whole</xsl:text>
             </xsl:when>
-            <!-- periodical issue -->
             <xsl:when test="$identity/mods:originInfo/mods:issuance/text()='continuing'">
-                <xsl:call-template name="assemble_cwrc_title_formats">
-                    <xsl:with-param name="prefix" select="$local_prefix"/>
-                    <xsl:with-param name="date" select="$identity/mods:originInfo/mods:dateIssued/text()"/>
-                    <xsl:with-param name="format" select="'Periodical issue'"/>
-                </xsl:call-template>
+                <xsl:text>Periodical issue</xsl:text>
+            </xsl:when>
+            <xsl:when test="$identity/mods:relatedItem/mods:originInfo/mods:issuance/text()='monographic'">
+                <xsl:text>Monograph chapter</xsl:text>
+            </xsl:when>
+            <xsl:when test="$identity/mods:relatedItem/mods:originInfo/mods:issuance/text()='continuing'">
+                <xsl:text>Periodical article</xsl:text>
+            </xsl:when>
+            <xsl:when test="$identity/mods:relatedItem/mods:part/text()">
+                <xsl:text>Periodical article</xsl:text>
             </xsl:when>
             <xsl:otherwise>
-                <!-- 
-                * 2014-06-02 - not every aligns with above conventions 
-                * Middlebrow doesn't use the above 3 conventions 
-                -->
-                <xsl:call-template name="assemble_cwrc_title_formats">
-                    <xsl:with-param name="prefix" select="$local_prefix"/>
-                    <xsl:with-param name="date" select="$identity//mods:date/text()"/>
-                    <xsl:with-param name="format" select="''"/>
-                </xsl:call-template>
+                <xsl:text>Unknown</xsl:text>
             </xsl:otherwise>
-        </xsl:choose>
-
+            </xsl:choose>
+        </xsl:variable>
+        
+        
+         <xsl:call-template name="assemble_cwrc_title_formats">
+              <xsl:with-param name="prefix" select="$local_prefix"/>
+              <xsl:with-param name="date" select="$local_date"/>
+              <xsl:with-param name="format" select="$local_format"/>
+         </xsl:call-template>
+            
         <!-- access condition -->
         <xsl:call-template name="assemble_cwrc_access_condition">
             <xsl:with-param name="prefix" select="$local_prefix"/>
@@ -266,28 +293,16 @@
         </xsl:call-template>
 
 
-        <!-- langauge facet -->
-        <xsl:variable name="local_language_code" select="$local_content/$identity/mods:language/languageTerm[@type='code'][1]/text()" />
-        <xsl:variable name="local_language_text" select="$local_content/$identity/mods:language/languageTerm[@type='text'][1]/text()" />
-        <xsl:if test="${local_language_code}">
-
-            <xsl:call-template name="assemble_cwrc_basic_field">
-                <xsl:with-param name="field_name" select="concat($local_prefix, 'language_code', '_s')"/>
-                <xsl:with-param name="field_value" select="${local_language_code}"/>
-            </xsl:call-template>
-        </xsl:if>
-        <xsl:if test="${local_language_text}">
-            <xsl:call-template name="assemble_cwrc_basic_field">
-                <xsl:with-param name="field_name" select="concat($local_prefix, 'language_text', '_s')"/>
-                <xsl:with-param name="field_value" select="${local_language_text}"/>
-            </xsl:call-template>
-        </xsl:if>
-
+        <!-- language facet -->
+        <xsl:apply-templates select="$identity/mods:language/mods:languageTerm">
+            <xsl:with-param name="prefix" select="$local_prefix"/>
+        </xsl:apply-templates>
+       
 
         <!-- genre -->
-        <xsl:apply-template select="$identity/mods:genre">
+        <xsl:apply-templates select="$identity/mods:genre">
             <xsl:with-param name="prefix" select="$local_prefix"/>
-        </xsl:call-template>
+        </xsl:apply-templates>
 
 
 
@@ -703,8 +718,28 @@
         </xsl:if>
     </xsl:template>
 
+<!-- language template -->
+<xsl:template match="mods:language/mods:languageTerm">
+    <xsl:param name="prefix"/>
+    
+    <xsl:variable name="local_language_code" select="(.)[@type='code']/text()" />
+    <xsl:variable name="local_language_text" select="(.)[@type='text']/text()" />
+    <xsl:if test="$local_language_code">
+        <xsl:call-template name="assemble_cwrc_basic_field">
+            <xsl:with-param name="field_name" select="concat($prefix, 'language_code', '_s')"/>
+            <xsl:with-param name="field_value" select="$local_language_code"/>
+        </xsl:call-template>
+    </xsl:if>
+    <xsl:if test="$local_language_text">
+        <xsl:call-template name="assemble_cwrc_basic_field">
+            <xsl:with-param name="field_name" select="concat($prefix, 'language_text', '_s')"/>
+            <xsl:with-param name="field_value" select="$local_language_text"/>
+        </xsl:call-template>
+    </xsl:if>
+</xsl:template>
+
     <!-- title entity: output the Genre -->
-    <xsl:template select="mods:genre">
+    <xsl:template match="mods:genre">
         <xsl:param name="prefix"/>
 
         <xsl:variable name="field_name">
@@ -712,8 +747,8 @@
                 <xsl:when test="mods:genre[@type='format']">
                     <xsl:text>genre_format</xsl:text>
                 </xsl:when>
-                <xsl:when test="mods:genre[@type='primaryGenre' or @type='secondaryGenre']">
-                    <xsl:text>genre_format</xsl:text>
+                <xsl:when test="mods:genre[@type='primaryGenre' or @type='subgenre']">
+                    <xsl:text>genre_primary_subgenre</xsl:text>
                 </xsl:when>
                 <xsl:otherwise>
                     <xsl:text>genre_folksonomic</xsl:text>
