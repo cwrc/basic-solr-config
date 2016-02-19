@@ -305,6 +305,63 @@
         </xsl:apply-templates>
 
 
+
+        <!-- 
+            Date Facets
+            * primary: use the subject/temporal[@encoding='w3cdt' and 
+        -->
+        <xsl:variable name="cwrc_date_face_prefice" select="'cwrc_facet_'" />
+        <xsl:choose>
+            <xsl:when test="$identity/mods:subject/mods:temporal">
+                <xsl:variable name="pointDate">
+                    <xsl:if test="count($identity/mods:subject/mods:temporal)=1">
+                        <xsl:value-of select="$identity/mods:subject/mods:temporal/text()"/>
+                    </xsl:if>
+                </xsl:variable>
+                <xsl:variable name="fromDate">
+                    <xsl:if test="count($identity/mods:subject/mods:temporal)=2">
+                        <xsl:value-of select="$identity/mods:subject/mods:temporal[1]/text()"/>
+                    </xsl:if>
+                </xsl:variable>
+                <xsl:variable name="toDate">
+                    <xsl:if test="count($identity/mods:subject/mods:temporal)=2">
+                        <xsl:value-of select="$identity/mods:subject/mods:temporal[2]/text()"/>
+                    </xsl:if>
+                </xsl:variable>
+                <!-- build Solr field -->
+                <xsl:call-template name="solr_field_date_facet">
+                    <xsl:with-param name="prefix" select="$cwrc_date_face_prefice"/>
+                    <xsl:with-param name="pointDate" select="$pointDate"/>
+                    <xsl:with-param name="fromDate" select="$fromDate"/>
+                    <xsl:with-param name="toDate" select="$toDate"/>
+                    <xsl:with-param name="textDate" select="''"/>
+                </xsl:call-template>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:variable name='date_nodes' select="
+                    $identity/mods:originInfo/mods:dateIssued/text()
+                    | $identity/mods:originInfo/mods:copyrightDate/text()
+                    | $identity/mods:originInfo/mods:dateCreate/text()
+                    | $identity/mods:relatedItem/mods:originInfo/mods:dateIssued/text()
+                    | $identity/mods:relatedItem/mods:originInfo/mods:copyrightDate/text()
+                    | $identity/mods:relatedItem/mods:originInfo/mods:dateCreate/text()
+                    | $identity/mods:relatedItem/mods:part/mods:date/text()
+                    " />
+                <xsl:if test="count($date_nodes)>0">
+                    <xsl:for-each select="$date_nodes">
+                        <xsl:call-template name="solr_field_date_facet">
+                            <xsl:with-param name="prefix" select="'$cwrc_date_face_prefice'"/>
+                            <xsl:with-param name="pointDate" select="."/>
+                            <xsl:with-param name="fromDate" select="''"/>
+                            <xsl:with-param name="toDate" select="''"/>
+                            <xsl:with-param name="textDate" select="''"/>
+                        </xsl:call-template>
+                    </xsl:for-each>
+                </xsl:if>
+                
+            </xsl:otherwise>
+        </xsl:choose>
+        
         <!--
         * lookup geoloc
         *

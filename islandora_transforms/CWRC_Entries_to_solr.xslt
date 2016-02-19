@@ -8,7 +8,7 @@
 
     <!-- this template used to help test  -->
 
-<!-- 
+    <!-- 
     <xsl:template match="/">
         <xsl:apply-templates select="/foxml:digitalObject/foxml:datastream[@ID='CWRC-CONTENT']/foxml:datastreamVersion[last()]">
             <xsl:with-param name="content" select="/foxml:digitalObject/foxml:datastream[@ID='CWRC-CONTENT']/foxml:datastreamVersion[last()]/foxml:xmlContent"/>
@@ -16,6 +16,291 @@
 
     </xsl:template>
 -->
+
+    <!-- ********************************************************* -->
+    <!--
+        CWRC entries and event conforming to the following schemas
+        * http://cwrc.ca/schemas/cwrc_entry.rng
+        * http://cwrc.ca/schemas/cwrc_tei_lite.rng
+        * http://cwrc.ca/schemas/orlando_biography.rng
+        * http://cwrc.ca/schemas/orlando_event.rng
+        * http://cwrc.ca/schemas/orlando_writing.rng
+        * 
+    -->
+    <!-- ********************************************************* -->
+    <xsl:template match="foxml:datastream[@ID='CWRC']/foxml:datastreamVersion[last()]" name="index_CWRC_ENTRY">
+        <xsl:param name="content" select="/"/>
+        <xsl:param name="prefix" select="'cwrc_entry_'"/>
+        <xsl:param name="suffix" select="'_et'"/>
+        <!-- 'edged' (edge n-gram) text, for auto-completion -->
+
+        <!-- allow facet on date content -->
+        <xsl:apply-templates select="$content/DATE | $content/DATERANGE | $content/DATESTRUCT | $content/tei:date" mode="date_facet">
+            <xsl:with-param name="prefix" select="cwrc_facet_"/>
+        </xsl:apply-templates>
+
+    </xsl:template>
+
+    <!-- 
+        * assume date in not in the Legacy Orlando format (e.g., YYYY-) and in the ISO8601 format (e.g. YYYY)
+        * key on @VALUE or text of element
+    -->
+    <xsl:template match="DATE" mode="date_facet">
+        <xsl:param name="prefix"/>
+
+        <!-- inspect date attributes -->
+        <xsl:variable name="pointDate">
+            <xsl:choose>
+                <xsl:when test="@VALUE!=''">
+                    <xsl:value-of select="@when"/>
+                </xsl:when>
+            </xsl:choose>
+        </xsl:variable>
+
+        <!-- build Solr field -->
+        <xsl:call-template name="solr_field_date_facet">
+            <xsl:with-param name="prefix" select="$prefix"/>
+            <xsl:with-param name="pointDate" select="$pointDate"/>
+            <xsl:with-param name="fromDate" select="''"/>
+            <xsl:with-param name="toDate" select="''"/>
+            <xsl:with-param name="textDate" select="./text()"/>
+        </xsl:call-template>
+
+    </xsl:template>
+
+    <!-- 
+        * assume date in not in the Legacy Orlando format (e.g., YYYY-) and in the ISO8601 format (e.g. YYYY)
+        * key on @TO / @FROM 
+        * assume date attributes required (no need to use text)
+    -->
+    <xsl:template match="DATERANGE" mode="date_facet">
+        <xsl:param name="prefix"/>
+
+        <xsl:variable name="fromDate">
+            <xsl:choose>
+                <xsl:when test="@FROM!=''">
+                    <xsl:value-of select="@FROM"/>
+                </xsl:when>
+            </xsl:choose>
+        </xsl:variable>
+
+        <xsl:variable name="toDate">
+            <xsl:choose>
+                <xsl:when test="@TO!=''">
+                    <xsl:value-of select="@TO"/>
+                </xsl:when>
+            </xsl:choose>
+        </xsl:variable>
+
+        <!-- build Solr field -->
+        <xsl:call-template name="solr_field_date_facet">
+            <xsl:with-param name="prefix" select="$prefix"/>
+            <xsl:with-param name="pointDate" select="''"/>
+            <xsl:with-param name="fromDate" select="$fromDate"/>
+            <xsl:with-param name="toDate" select="$toDate"/>
+            <xsl:with-param name="textDate" select="''"/>
+        </xsl:call-template>
+
+    </xsl:template>
+
+    <xsl:template match="DATESTRUCT" mode="date_facet">
+        <xsl:param name="prefix"/>
+
+        <!-- inspect date attributes -->
+        <xsl:variable name="pointDate">
+            <xsl:choose>
+                <xsl:when test="@VALUE!=''">
+                    <xsl:value-of select="@when"/>
+                </xsl:when>
+            </xsl:choose>
+        </xsl:variable>
+
+        <!-- build Solr field -->
+        <xsl:call-template name="solr_field_date_facet">
+            <xsl:with-param name="prefix" select="$prefix"/>
+            <xsl:with-param name="pointDate" select="$pointDate"/>
+            <xsl:with-param name="fromDate" select="''"/>
+            <xsl:with-param name="toDate" select="''"/>
+            <xsl:with-param name="textDate" select="''"/>
+        </xsl:call-template>
+
+    </xsl:template>
+
+
+    <!--
+        TEI date handler
+            * point date: 
+            ** @when | @when-custom | when-iso
+            * date range: 
+            ** @to | @to-custom | @to-iso | @notBefore | @notBefore-custom | @notBefore-iso
+            ** @from | @from-custom | @from-iso | @notAfter | @notAfter-custom | @notAfter-iso
+        -->
+
+    <xsl:template match="tei:date" mode="date_facet">
+        <xsl:param name="prefix"/>
+
+        <!-- inspect date attributes -->
+        <xsl:variable name="pointDate">
+            <xsl:choose>
+                <xsl:when test="@when!=''">
+                    <xsl:value-of select="@when"/>
+                </xsl:when>
+                <xsl:when test="@when-iso!=''">
+                    <xsl:value-of select="@when-iso"/>
+                </xsl:when>
+                <xsl:when test="@when-custom!=''">
+                    <xsl:value-of select="@when-custom"/>
+                </xsl:when>
+            </xsl:choose>
+        </xsl:variable>
+
+        <xsl:variable name="fromDate">
+            <xsl:choose>
+                <xsl:choose>
+                    <xsl:when test="@from!=''">
+                        <xsl:value-of select="@from"/>
+                    </xsl:when>
+                    <xsl:when test="@from-iso!=''">
+                        <xsl:value-of select="@from-iso"/>
+                    </xsl:when>
+                    <xsl:when test="@from-custom!=''">
+                        <xsl:value-of select="@from-custom"/>
+                    </xsl:when>
+                    <xsl:when test="@notBefore!=''">
+                        <xsl:value-of select="@notBefore"/>
+                    </xsl:when>
+                    <xsl:when test="@notBefore-iso!=''">
+                        <xsl:value-of select="@notBefore-iso"/>
+                    </xsl:when>
+                    <xsl:when test="@notBefore-custom!=''">
+                        <xsl:value-of select="@notBefore-custom"/>
+                    </xsl:when>
+                </xsl:choose>
+            </xsl:choose>
+        </xsl:variable>
+
+        <xsl:variable name="toDate">
+            <xsl:choose>
+                <xsl:when test="@to!=''">
+                    <xsl:value-of select="@to"/>
+                </xsl:when>
+                <xsl:when test="@to-iso!=''">
+                    <xsl:value-of select="@to-iso"/>
+                </xsl:when>
+                <xsl:when test="@to-custom!=''">
+                    <xsl:value-of select="@to-custom"/>
+                </xsl:when>
+                <xsl:when test="@notAfter!=''">
+                    <xsl:value-of select="@notAfter"/>
+                </xsl:when>
+                <xsl:when test="@notAfter-iso!=''">
+                    <xsl:value-of select="@notAfter-iso"/>
+                </xsl:when>
+                <xsl:when test="@notAfter-custom!=''">
+                    <xsl:value-of select="@notAfter-custom"/>
+                </xsl:when>
+            </xsl:choose>
+        </xsl:variable>
+
+        <!-- build Solr field -->
+        <xsl:call-template name="solr_field_date_facet">
+            <xsl:with-param name="prefix" select="$prefix"/>
+            <xsl:with-param name="pointDate" select="$pointDate"/>
+            <xsl:with-param name="fromDate" select="$fromDate"/>
+            <xsl:with-param name="toDate" select="$toDate"/>
+            <xsl:with-param name="textDate" select="./text()"/>
+        </xsl:call-template>
+
+    </xsl:template>
+
+    <!-- 
+        * build Solr field of type "class solr.DateRangeField" to facet on date within content
+        * solr.DateRangeField supports both point dates like TrieDateField and a "[ TO ]" syntax for ranges
+        * https://cwiki.apache.org/confluence/display/solr/Working+with+Dates
+    -->
+    <xsl:template name="solr_field_date_facet">
+        <xsl:param name="prefix"/>
+        <xsl:param name="pointDate"/>
+        <xsl:param name="fromDate"/>
+        <xsl:param name="toDate"/>
+        <xsl:param name="textDate"/>
+
+        <!-- if only textDate (i.e., no attribute) then discard and don't try to parse. -->
+
+        <!-- convert to ISO8601 -->
+        <xsl:variable name="local_pointDate">
+            <xsl:if test="$pointDate!=''">
+                <xsl:call-template name="get_ISO8601_date">
+                    <xsl:with-param name="date" select="$pointDate"/>
+                    <xsl:with-param name="pid" select="'not provided'"/>
+                    <xsl:with-param name="datastream" select="'not provided'"/>
+                </xsl:call-template>
+            </xsl:if>
+        </xsl:variable>
+
+        <xsl:variable name="local_fromDate">
+            <xsl:if test="$fromDate!=''">
+                <xsl:call-template name="get_ISO8601_date">
+                    <xsl:with-param name="date" select="$fromDate"/>
+                    <xsl:with-param name="pid" select="'not provided'"/>
+                    <xsl:with-param name="datastream" select="'not provided'"/>
+                </xsl:call-template>
+            </xsl:if>
+        </xsl:variable>
+
+        <xsl:variable name="local_toDate">
+            <xsl:if test="$toDate!=''">
+                <xsl:call-template name="get_ISO8601_date">
+                    <xsl:with-param name="date" select="$toDate"/>
+                    <xsl:with-param name="pid" select="'not provided'"/>
+                    <xsl:with-param name="datastream" select="'not provided'"/>
+                </xsl:call-template>
+            </xsl:if>
+        </xsl:variable>
+
+        <!-- build Solr field content value -->
+        <xsl:variable name="local_content">
+            <xsl:choose>
+                <xsl:when test="$local_pointDate!=''">
+                    <xsl:value-of select="$local_pointDate"/>
+                </xsl:when>
+                <xsl:when test="$local_fromDate!='' and $local_toDate!=''">
+                    <xsl:text>[</xsl:text>
+                    <xsl:value-of select="$local_fromDate"/>
+                    <xsl:text> TO </xsl:text>
+                    <xsl:value-of select="$local_toDate"/>
+                    <xsl:text>]</xsl:text>
+                </xsl:when>
+                <xsl:when test="$local_fromDate!=''">
+                    <xsl:text>[</xsl:text>
+                    <xsl:value-of select="$local_fromDate"/>
+                    <xsl:text> TO </xsl:text>
+                    <xsl:text>]</xsl:text>
+                </xsl:when>
+                <xsl:when test="$local_toDate!=''">
+                    <xsl:text>[</xsl:text>
+                    <xsl:text> TO </xsl:text>
+                    <xsl:value-of select="$local_toDate"/>
+                    <xsl:text>]</xsl:text>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:text/>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
+
+        <!-- output Solr field element -->
+        <xsl:if test="$local_content != ''">
+            <field>
+                <xsl:attribute name="name">
+                    <xsl:value-of select="concat($prefix, 'facet_date', '_mdt')"/>
+                </xsl:attribute>
+                <xsl:value-of select="$local_content"/>
+            </field>
+        </xsl:if>
+    </xsl:template>
+
+
 
 
     <!-- ********************************************************* -->
@@ -107,7 +392,7 @@
     <xsl:template name="assemble_orlando_place">
         <xsl:if test="ADDRESS">
             <xsl:call-template name="assemble_orlando_place_subelement">
-                <xsl:with-param name="context" select="ADDRESS" />
+                <xsl:with-param name="context" select="ADDRESS"/>
             </xsl:call-template>
             <xsl:if test="AREA or GEOG or REGION or SETTLEMENT or PLACENAME">
                 <xsl:text>, </xsl:text>
@@ -115,7 +400,7 @@
         </xsl:if>
         <xsl:if test="PLACENAME">
             <xsl:call-template name="assemble_orlando_place_subelement">
-                <xsl:with-param name="context" select="PLACENAME" />
+                <xsl:with-param name="context" select="PLACENAME"/>
             </xsl:call-template>
             <xsl:if test="AREA or GEOG or REGION or SETTLEMENT">
                 <xsl:text>, </xsl:text>
@@ -123,16 +408,16 @@
         </xsl:if>
         <xsl:if test="SETTLEMENT">
             <xsl:call-template name="assemble_orlando_place_subelement">
-                <xsl:with-param name="context" select="SETTLEMENT" />
+                <xsl:with-param name="context" select="SETTLEMENT"/>
             </xsl:call-template>
-            
+
             <xsl:if test="AREA or GEOG or REGION">
                 <xsl:text>, </xsl:text>
             </xsl:if>
         </xsl:if>
         <xsl:if test="REGION">
             <xsl:call-template name="assemble_orlando_place_subelement">
-                <xsl:with-param name="context" select="REGION" />
+                <xsl:with-param name="context" select="REGION"/>
             </xsl:call-template>
             <xsl:if test="AREA or GEOG">
                 <xsl:text>, </xsl:text>
@@ -140,7 +425,7 @@
         </xsl:if>
         <xsl:if test="GEOG">
             <xsl:call-template name="assemble_orlando_place_subelement">
-                <xsl:with-param name="context" select="GEOG" />
+                <xsl:with-param name="context" select="GEOG"/>
             </xsl:call-template>
             <xsl:if test="AREA">
                 <xsl:text>, </xsl:text>
@@ -148,9 +433,9 @@
         </xsl:if>
         <xsl:if test="AREA">
             <xsl:call-template name="assemble_orlando_place_subelement">
-                <xsl:with-param name="context" select="AREA" />
+                <xsl:with-param name="context" select="AREA"/>
             </xsl:call-template>
-            
+
         </xsl:if>
 
     </xsl:template>
@@ -167,7 +452,7 @@
     // of the tag is the 'REG' value
     -->
     <xsl:template name="assemble_orlando_place_subelement">
-        <xsl:param name="context" />
+        <xsl:param name="context"/>
         <!-- <xsl:value-of select="local-name($context)"/> -->
         <xsl:choose>
             <xsl:when test="$context/@CURRENT">
@@ -185,26 +470,26 @@
 
     <xsl:template match="CHRONSTRUCT/DATE">
         <xsl:call-template name="cwrc_orlando_date_repair">
-          <xsl:with-param name="date" select="@VALUE" />
-        </xsl:call-template> 
+            <xsl:with-param name="date" select="@VALUE"/>
+        </xsl:call-template>
     </xsl:template>
 
     <xsl:template match="CHRONSTRUCT/DATERANGE">
         <xsl:call-template name="cwrc_orlando_date_repair">
-          <xsl:with-param name="date" select="@FROM" />
-        </xsl:call-template> 
+            <xsl:with-param name="date" select="@FROM"/>
+        </xsl:call-template>
         <xsl:text> - </xsl:text>
         <xsl:call-template name="cwrc_orlando_date_repair">
-          <xsl:with-param name="date" select="@TO" />
-        </xsl:call-template> 
+            <xsl:with-param name="date" select="@TO"/>
+        </xsl:call-template>
     </xsl:template>
-    
-    
-    <!-- TODO interprete the Orlando SEASON element --> 
+
+
+    <!-- TODO interprete the Orlando SEASON element -->
     <xsl:template match="CHRONSTRUCT/DATESTRUCT">
         <xsl:call-template name="cwrc_orlando_date_repair">
-          <xsl:with-param name="date" select="@VALUE" />
-        </xsl:call-template> 
+            <xsl:with-param name="date" select="@VALUE"/>
+        </xsl:call-template>
     </xsl:template>
 
 </xsl:stylesheet>
