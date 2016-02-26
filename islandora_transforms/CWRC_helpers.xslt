@@ -16,6 +16,94 @@
 
 
 
+    <!-- 
+        * build Solr field of type "class solr.DateRangeField" to facet on date within content
+        * solr.DateRangeField supports both point dates like TrieDateField and a "[ TO ]" syntax for ranges
+        * https://cwiki.apache.org/confluence/display/solr/Working+with+Dates
+    -->
+    <xsl:template name="solr_field_date_facet">
+        <xsl:param name="prefix"/>
+        <xsl:param name="pointDate"/>
+        <xsl:param name="fromDate"/>
+        <xsl:param name="toDate"/>
+        <xsl:param name="textDate"/>
+        
+        <!-- if only textDate (i.e., no attribute) then discard and don't try to parse. -->
+        
+        <!-- convert to ISO8601 -->
+        <xsl:variable name="local_pointDate">
+            <xsl:if test="$pointDate!=''">
+                <xsl:call-template name="get_ISO8601_date">
+                    <xsl:with-param name="date" select="$pointDate"/>
+                    <xsl:with-param name="pid" select="'not provided'"/>
+                    <xsl:with-param name="datastream" select="'not provided'"/>
+                </xsl:call-template>
+            </xsl:if>
+        </xsl:variable>
+        
+        <xsl:variable name="local_fromDate">
+            <xsl:if test="$fromDate!=''">
+                <xsl:call-template name="get_ISO8601_date">
+                    <xsl:with-param name="date" select="$fromDate"/>
+                    <xsl:with-param name="pid" select="'not provided'"/>
+                    <xsl:with-param name="datastream" select="'not provided'"/>
+                </xsl:call-template>
+            </xsl:if>
+        </xsl:variable>
+        
+        <xsl:variable name="local_toDate">
+            <xsl:if test="$toDate!=''">
+                <xsl:call-template name="get_ISO8601_date">
+                    <xsl:with-param name="date" select="$toDate"/>
+                    <xsl:with-param name="pid" select="'not provided'"/>
+                    <xsl:with-param name="datastream" select="'not provided'"/>
+                </xsl:call-template>
+            </xsl:if>
+        </xsl:variable>
+        
+        <!-- build Solr field content value -->
+        <xsl:variable name="local_content">
+            <xsl:choose>
+                <xsl:when test="$local_pointDate!=''">
+                    <xsl:value-of select="$local_pointDate"/>
+                </xsl:when>
+                <xsl:when test="$local_fromDate!='' and $local_toDate!=''">
+                    <xsl:text>[</xsl:text>
+                    <xsl:value-of select="$local_fromDate"/>
+                    <xsl:text> TO </xsl:text>
+                    <xsl:value-of select="$local_toDate"/>
+                    <xsl:text>]</xsl:text>
+                </xsl:when>
+                <xsl:when test="$local_fromDate!=''">
+                    <xsl:text>[</xsl:text>
+                    <xsl:value-of select="$local_fromDate"/>
+                    <xsl:text> TO </xsl:text>
+                    <xsl:text>]</xsl:text>
+                </xsl:when>
+                <xsl:when test="$local_toDate!=''">
+                    <xsl:text>[</xsl:text>
+                    <xsl:text> TO </xsl:text>
+                    <xsl:value-of select="$local_toDate"/>
+                    <xsl:text>]</xsl:text>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:text/>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
+        
+        <!-- output Solr field element -->
+        <xsl:if test="$local_content != ''">
+            <field>
+                <xsl:attribute name="name">
+                    <xsl:value-of select="concat($prefix, 'facet_date', '_mdt')"/>
+                </xsl:attribute>
+                <xsl:value-of select="$local_content"/>
+            </field>
+        </xsl:if>
+    </xsl:template>
+    
+    
 
     <!--
     * Given an Orlando normalized narrative date
@@ -32,8 +120,10 @@
         <xsl:variable name="upper" select="'ABCDEFGHIJKLMNOPQRSTUVWXYZ'"/>
         <xsl:variable name="digit" select="'0123456789'"/>
 
-        <xsl:for-each select="tokenize($content, ' ')">
+        <!-- BROKEN XSLT version 1.0 -->
+        <!-- <xsl:for-each select="tokenize($content, ' ')">
             <xsl:sort select="position()" data-type="number" order="descending"/>
+             -->
 
             <xsl:variable name="date_no_comma_token">
                 <xsl:value-of select="translate(',',.,'')" />
@@ -90,10 +180,7 @@
                 </xsl:otherwise>
             </xsl:choose>
 
- 
-
-
-        </xsl:for-each>
+            <!-- </xsl:for-each> -->
 
     </xsl:template>
 

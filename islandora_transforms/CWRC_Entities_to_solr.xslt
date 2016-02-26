@@ -304,15 +304,13 @@
             <xsl:with-param name="prefix" select="$local_prefix"/>
         </xsl:apply-templates>
 
-
-
         <!-- 
             Date Facets
             * primary: use the subject/temporal[@encoding='w3cdt' and 
         -->
-        <xsl:variable name="cwrc_date_face_prefice" select="'cwrc_facet_'" />
+        <xsl:variable name="cwrc_date_facet_prefix" select="'cwrc_'" />
         <xsl:choose>
-            <xsl:when test="$identity/mods:subject/mods:temporal">
+            <xsl:when test="$identity/mods:subject/mods:temporal/text()!=''">
                 <xsl:variable name="pointDate">
                     <xsl:if test="count($identity/mods:subject/mods:temporal)=1">
                         <xsl:value-of select="$identity/mods:subject/mods:temporal/text()"/>
@@ -330,7 +328,7 @@
                 </xsl:variable>
                 <!-- build Solr field -->
                 <xsl:call-template name="solr_field_date_facet">
-                    <xsl:with-param name="prefix" select="$cwrc_date_face_prefice"/>
+                    <xsl:with-param name="prefix" select="$cwrc_date_facet_prefix"/>
                     <xsl:with-param name="pointDate" select="$pointDate"/>
                     <xsl:with-param name="fromDate" select="$fromDate"/>
                     <xsl:with-param name="toDate" select="$toDate"/>
@@ -350,7 +348,7 @@
                 <xsl:if test="count($date_nodes)>0">
                     <xsl:for-each select="$date_nodes">
                         <xsl:call-template name="solr_field_date_facet">
-                            <xsl:with-param name="prefix" select="'$cwrc_date_face_prefice'"/>
+                            <xsl:with-param name="prefix" select="$cwrc_date_facet_prefix"/>
                             <xsl:with-param name="pointDate" select="."/>
                             <xsl:with-param name="fromDate" select="''"/>
                             <xsl:with-param name="toDate" select="''"/>
