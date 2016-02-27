@@ -181,8 +181,10 @@
 
       <!-- special conditional CWRC period date facet -->
       <!-- set CWRC_PERIOD_DATE_USE_MODS_PERIOD if use the MODS record override -->
-       <xsl:variable name="CWRC_PERIOD_DATE_USE_MODS_PERIOD">
+      <xsl:variable name="CWRC_PERIOD_DATE_USE_MODS_PERIOD">
+          <!-- <xsl:value-of select="''" /> -->
         <xsl:choose>
+
           <!-- in-line datastream -->
           <xsl:when test="foxml:datastream[@ID='MODS' and @CONTROL_GROUP='X']/foxml:datastreamVersion[last()]/mods:mods/mods:subject/mods:temporal/text()!=''">
             <xsl:text>1</xsl:text>
@@ -200,6 +202,9 @@
           
         </xsl:choose>
       </xsl:variable>
+      <field name="CWRC_PERIOD_DATE_USE_MODS_PERIOD">
+        <xsl:value-of select="$CWRC_PERIOD_DATE_USE_MODS_PERIOD"/>
+      </field>
 
       <!-- THIS IS SPARTA!!!
         These lines call a matching template on every datastream id so that you only have to edit included files
