@@ -17,6 +17,26 @@
 
 
     <!-- 
+         test for the presence of the MODS temporal subject to 
+         determine whether to use it or the content dates
+    -->
+    <xsl:template match="foxml:datastream[@ID='MODS']/foxml:datastreamVersion[last()]" mode="cwrc_date_facet_period_source">
+
+        <xsl:param name="content" select="."/>
+
+        <xsl:choose>
+            <xsl:when test="$content/mods:mods/mods:subject/mods:temporal/text()!=''">
+                <xsl:text>1</xsl:text>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:text></xsl:text>
+            </xsl:otherwise>
+        </xsl:choose>
+
+    </xsl:template>
+
+
+    <!-- 
         * build Solr field of type "class solr.DateRangeField" to facet on date within content
         * solr.DateRangeField supports both point dates like TrieDateField and a "[ TO ]" syntax for ranges
         * https://cwiki.apache.org/confluence/display/solr/Working+with+Dates
@@ -96,7 +116,10 @@
         <xsl:if test="$local_content != ''">
             <field>
                 <xsl:attribute name="name">
+                    <!--
                     <xsl:value-of select="concat($prefix, 'facet_date', '_mdt')"/>
+                    -->
+                    <xsl:value-of select="concat($prefix, 'facet_date', '_mt')"/>
                 </xsl:attribute>
                 <xsl:value-of select="$local_content"/>
             </field>

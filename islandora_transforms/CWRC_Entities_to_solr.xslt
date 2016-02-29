@@ -312,18 +312,18 @@
         <xsl:choose>
             <xsl:when test="$identity/mods:subject/mods:temporal/text()!=''">
                 <xsl:variable name="pointDate">
-                    <xsl:if test="count($identity/mods:subject/mods:temporal)=1">
-                        <xsl:value-of select="$identity/mods:subject/mods:temporal/text()"/>
+                    <xsl:if test="$identity/mods:subject/mods:temporal[not(@point='start' or @point='end')]/text()!=''">
+                        <xsl:value-of select="$identity/mods:subject/mods:temporal[not(@point='start' or @point='end')]/text()"/>
                     </xsl:if>
                 </xsl:variable>
                 <xsl:variable name="fromDate">
-                    <xsl:if test="count($identity/mods:subject/mods:temporal)=2">
-                        <xsl:value-of select="$identity/mods:subject/mods:temporal[1]/text()"/>
+                    <xsl:if test="$identity/mods:subject/mods:temporal[@point='start']/text()!=''">
+                        <xsl:value-of select="$identity/mods:subject/mods:temporal[@point='start']/text()"/>
                     </xsl:if>
                 </xsl:variable>
                 <xsl:variable name="toDate">
-                    <xsl:if test="count($identity/mods:subject/mods:temporal)=2">
-                        <xsl:value-of select="$identity/mods:subject/mods:temporal[2]/text()"/>
+                    <xsl:if test="$identity/mods:subject/mods:temporal[@point='end']/text()!=''">
+                        <xsl:value-of select="$identity/mods:subject/mods:temporal[@point='end']/text()"/>
                     </xsl:if>
                 </xsl:variable>
                 <!-- build Solr field -->
@@ -332,7 +332,7 @@
                     <xsl:with-param name="pointDate" select="$pointDate"/>
                     <xsl:with-param name="fromDate" select="$fromDate"/>
                     <xsl:with-param name="toDate" select="$toDate"/>
-                    <xsl:with-param name="textDate" select="''"/>
+                    <xsl:with-param name="textDate" select="$identity/mods:subject/mods:temporal/text()"/>
                 </xsl:call-template>
             </xsl:when>
             <xsl:otherwise>

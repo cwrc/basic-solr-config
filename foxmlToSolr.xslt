@@ -181,27 +181,37 @@
 
       <!-- special conditional CWRC period date facet -->
       <!-- set CWRC_PERIOD_DATE_USE_MODS_PERIOD if use the MODS record override -->
+
+      <xsl:variable name="CWRC_PERIOD_MODS_DS" select="foxml:datastream[@ID='MODS']">
+
+      </xsl:variable>
       <xsl:variable name="CWRC_PERIOD_DATE_USE_MODS_PERIOD">
-          <!-- <xsl:value-of select="''" /> -->
+
         <xsl:choose>
 
           <!-- in-line datastream -->
-          <xsl:when test="foxml:datastream[@ID='MODS' and @CONTROL_GROUP='X']/foxml:datastreamVersion[last()]/mods:mods/mods:subject/mods:temporal/text()!=''">
-            <xsl:text>1</xsl:text>
+          <xsl:when test="$CWRC_PERIOD_MODS_DS[@CONTROL_GROUP='X']">
+              <xsl:apply-templates select="$CWRC_PERIOD_MODS_DS[@CONTROL_GROUP='X']/foxml:datastreamVersion[last()]" mode="cwrc_date_facet_period_source">
+                  <xsl:with-param name="content" select="$CWRC_PERIOD_MODS_DS[@CONTROL_GROUP='X']/foxml:datastreamVersion[last()]/foxml:xmlContent"/>
+              </xsl:apply-templates>
           </xsl:when>
           
           <!-- xml managed datastreams -->
-          <xsl:when test="foxml:datastream[@ID='MODS' and @CONTROL_GROUP='M' and foxml:datastreamVersion[last() and not(starts-with(@MIMETYPE, 'image') or starts-with(@MIMETYPE, 'audio') or starts-with(@MIMETYPE, 'video') or @MIMETYPE = 'application/pdf')]]/foxml:datastreamVersion[last()]/mods:mods/mods:subject/mods:temporal/text()!=''">
-            <xsl:text>1</xsl:text>
+          <xsl:when test="$CWRC_PERIOD_MODS_DS[@CONTROL_GROUP='M']">  
+              <xsl:apply-templates select="$CWRC_PERIOD_MODS_DS/foxml:datastreamVersion[last()]" mode="cwrc_date_facet_period_source">
+                  <xsl:with-param name="content" select="document(concat($PROT, '://', encoder:encode($FEDORAUSER), ':', encoder:encode($FEDORAPASS), '@', $HOST, ':', $PORT, '/fedora/objects/', $PID, '/datastreams/', @ID, '/content'))"/>
+              </xsl:apply-templates>
           </xsl:when>
           
           <!-- otherwse use content dates. Return: null equals false -->
           <xsl:otherwise>
-            <xsl:text></xsl:text>
+              <xsl:text></xsl:text>
           </xsl:otherwise>
           
         </xsl:choose>
+
       </xsl:variable>
+
       <field name="CWRC_PERIOD_DATE_USE_MODS_PERIOD">
         <xsl:value-of select="$CWRC_PERIOD_DATE_USE_MODS_PERIOD"/>
       </field>
