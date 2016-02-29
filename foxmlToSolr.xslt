@@ -1,32 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- We need all lower level namespaces to be declared here for exclude-result-prefixes attributes
      to be effective -->
-<xsl:stylesheet version="1.0"
-  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-  xmlns:zs="http://www.loc.gov/zing/srw/"
-  xmlns:foxml="info:fedora/fedora-system:def/foxml#"
-  xmlns:rel="info:fedora/fedora-system:def/relations-external#"
-  xmlns:fedora-model="info:fedora/fedora-system:def/model#"
-  xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-  xmlns:dc="http://purl.org/dc/elements/1.1/"
-  xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/"
-  xmlns:fedora="info:fedora/fedora-system:def/relations-external#"
-  xmlns:dwc="http://rs.tdwg.org/dwc/xsd/simpledarwincore/"
-  xmlns:uvalibdesc="http://dl.lib.virginia.edu/bin/dtd/descmeta/descmeta.dtd"
-  xmlns:uvalibadmin="http://dl.lib.virginia.edu/bin/admin/admin.dtd/"
-  xmlns:res="http://www.w3.org/2001/sw/DataAccess/rf1/result"
-  xmlns:eaccpf="urn:isbn:1-931666-33-4"
-  xmlns:xlink="http://www.w3.org/1999/xlink"
-  xmlns:tei="http://www.tei-c.org/ns/1.0"
-  xmlns:mods="http://www.loc.gov/mods/v3"
-  xmlns:exts="xalan://dk.defxws.fedoragsearch.server.GenericOperationsImpl"
-  xmlns:islandora-exts="xalan://ca.upei.roblib.DataStreamForXSLT"
-            exclude-result-prefixes="exts"
-  xmlns:encoder="xalan://java.net.URLEncoder"
-  xmlns:java="http://xml.apache.org/xalan/java"
-  xmlns:sparql="http://www.w3.org/2001/sw/DataAccess/rf1/result"
-  xmlns:xalan="http://xml.apache.org/xalan"
-  >
+<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:zs="http://www.loc.gov/zing/srw/" xmlns:foxml="info:fedora/fedora-system:def/foxml#" xmlns:rel="info:fedora/fedora-system:def/relations-external#" xmlns:fedora-model="info:fedora/fedora-system:def/model#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:fedora="info:fedora/fedora-system:def/relations-external#" xmlns:dwc="http://rs.tdwg.org/dwc/xsd/simpledarwincore/" xmlns:uvalibdesc="http://dl.lib.virginia.edu/bin/dtd/descmeta/descmeta.dtd" xmlns:uvalibadmin="http://dl.lib.virginia.edu/bin/admin/admin.dtd/" xmlns:res="http://www.w3.org/2001/sw/DataAccess/rf1/result" xmlns:eaccpf="urn:isbn:1-931666-33-4" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:mods="http://www.loc.gov/mods/v3" xmlns:exts="xalan://dk.defxws.fedoragsearch.server.GenericOperationsImpl" xmlns:islandora-exts="xalan://ca.upei.roblib.DataStreamForXSLT" exclude-result-prefixes="exts" xmlns:encoder="xalan://java.net.URLEncoder" xmlns:java="http://xml.apache.org/xalan/java" xmlns:sparql="http://www.w3.org/2001/sw/DataAccess/rf1/result" xmlns:xalan="http://xml.apache.org/xalan">
 
   <xsl:output method="xml" indent="yes" encoding="UTF-8"/>
 
@@ -63,7 +38,7 @@
      the paths may need to be updated if the standard install was not followed
      TODO: look into a way to make these paths relative -->
 
-     <!-- older gsearches (slurp_all_MODS_to_solr also contains an include that would need to be
+  <!-- older gsearches (slurp_all_MODS_to_solr also contains an include that would need to be
      altered if you use these)-->
 
   <!-- The name of the 'config' directory has changed in newer versions of fedoragsearch.
@@ -130,6 +105,7 @@
                 <xsl:with-param name="PID" select="$PID"/>
               </xsl:apply-templates>
             </add>
+
             <!-- Newspaper graph example.
             <xsl:variable name="graph">
               <xsl:call-template name="_traverse_graph">
@@ -178,6 +154,7 @@
               </xsl:for-each>
             </add>
            -->
+
           </xsl:when>
           <xsl:otherwise>
             <xsl:apply-templates select="/foxml:digitalObject" mode="unindexFedoraObject"/>
@@ -201,6 +178,44 @@
       <xsl:apply-templates select="foxml:objectProperties/foxml:property"/>
       <xsl:apply-templates select="/foxml:digitalObject" mode="index_object_datastreams"/>
 
+
+      <!-- special conditional CWRC period date facet -->
+      <!-- set CWRC_PERIOD_DATE_USE_MODS_PERIOD if use the MODS record override -->
+
+      <xsl:variable name="CWRC_PERIOD_MODS_DS" select="foxml:datastream[@ID='MODS']">
+
+      </xsl:variable>
+      <xsl:variable name="CWRC_PERIOD_DATE_USE_MODS_PERIOD">
+
+        <xsl:choose>
+
+          <!-- in-line datastream -->
+          <xsl:when test="$CWRC_PERIOD_MODS_DS[@CONTROL_GROUP='X']">
+              <xsl:apply-templates select="$CWRC_PERIOD_MODS_DS[@CONTROL_GROUP='X']/foxml:datastreamVersion[last()]" mode="cwrc_date_facet_period_source">
+                  <xsl:with-param name="content" select="$CWRC_PERIOD_MODS_DS[@CONTROL_GROUP='X']/foxml:datastreamVersion[last()]/foxml:xmlContent"/>
+              </xsl:apply-templates>
+          </xsl:when>
+          
+          <!-- xml managed datastreams -->
+          <xsl:when test="$CWRC_PERIOD_MODS_DS[@CONTROL_GROUP='M']">  
+              <xsl:apply-templates select="$CWRC_PERIOD_MODS_DS/foxml:datastreamVersion[last()]" mode="cwrc_date_facet_period_source">
+                  <xsl:with-param name="content" select="document(concat($PROT, '://', encoder:encode($FEDORAUSER), ':', encoder:encode($FEDORAPASS), '@', $HOST, ':', $PORT, '/fedora/objects/', $PID, '/datastreams/', @ID, '/content'))"/>
+              </xsl:apply-templates>
+          </xsl:when>
+          
+          <!-- otherwse use content dates. Return: null equals false -->
+          <xsl:otherwise>
+              <xsl:text></xsl:text>
+          </xsl:otherwise>
+          
+        </xsl:choose>
+
+      </xsl:variable>
+
+      <field name="CWRC_PERIOD_DATE_USE_MODS_PERIOD">
+        <xsl:value-of select="$CWRC_PERIOD_DATE_USE_MODS_PERIOD"/>
+      </field>
+
       <!-- THIS IS SPARTA!!!
         These lines call a matching template on every datastream id so that you only have to edit included files
         handles inline and managed datastreams
@@ -212,9 +227,11 @@
       <xsl:for-each select="foxml:datastream">
         <xsl:choose>
 
+          <!-- in-line datastream -->
           <xsl:when test="@CONTROL_GROUP='X'">
             <xsl:apply-templates select="foxml:datastreamVersion[last()]">
               <xsl:with-param name="content" select="foxml:datastreamVersion[last()]/foxml:xmlContent"/>
+              <xsl:with-param name="CWRC_PERIOD_DATE_USE_MODS_PERIOD" select="$CWRC_PERIOD_DATE_USE_MODS_PERIOD" />
             </xsl:apply-templates>
 
             <!-- CWRC 2014-05-23 -->
@@ -228,9 +245,12 @@
             <xsl:if test="@ID='MODS'">
               <xsl:apply-templates select="foxml:datastreamVersion[last()]" mode="cwrc_entities">
                 <xsl:with-param name="content" select="foxml:datastreamVersion[last()]/foxml:xmlContent"/>
+                <xsl:with-param name="CWRC_PERIOD_DATE_USE_MODS_PERIOD" select="$CWRC_PERIOD_DATE_USE_MODS_PERIOD" />
               </xsl:apply-templates>
             </xsl:if>
           </xsl:when>
+
+          <!-- managed datastream: different select method required -->
           <xsl:when test="@CONTROL_GROUP='M' and foxml:datastreamVersion[last()][@MIMETYPE='text/xml' or @MIMETYPE='application/xml' or @MIMETYPE='application/rdf+xml' or @MIMETYPE='text/html']">
             <!-- TODO: should do something about mime type filtering
               text/plain should use the getDatastreamText extension because document will only work for xml docs
@@ -239,7 +259,8 @@
               will this let us not use the content variable? -->
             <xsl:apply-templates select="foxml:datastreamVersion[last()]">
               <xsl:with-param name="content" select="document(concat($PROT, '://', encoder:encode($FEDORAUSER), ':', encoder:encode($FEDORAPASS), '@', $HOST, ':', $PORT, '/fedora/objects/', $PID, '/datastreams/', @ID, '/content'))"/>
-          </xsl:apply-templates>
+              <xsl:with-param name="CWRC_PERIOD_DATE_USE_MODS_PERIOD" select="$CWRC_PERIOD_DATE_USE_MODS_PERIOD" />
+            </xsl:apply-templates>
 
             <!-- CWRC 2014-05-23 -->
             <!-- 
@@ -252,7 +273,7 @@
             <xsl:if test="@ID='MODS'">
               <xsl:apply-templates select="foxml:datastreamVersion[last()]" mode="cwrc_entities">
                 <xsl:with-param name="content" select="document(concat($PROT, '://', encoder:encode($FEDORAUSER), ':', encoder:encode($FEDORAPASS), '@', $HOST, ':', $PORT, '/fedora/objects/', $PID, '/datastreams/', @ID, '/content'))"/>
-            
+                <xsl:with-param name="CWRC_PERIOD_DATE_USE_MODS_PERIOD" select="$CWRC_PERIOD_DATE_USE_MODS_PERIOD" />
               </xsl:apply-templates>
             </xsl:if>
 
@@ -300,12 +321,14 @@
         reindexed). -->
       <xsl:variable name="ancestors">
         <xsl:call-template name="get-ancestors">
-          <xsl:with-param name="PID" select="$PID" />
+          <xsl:with-param name="PID" select="$PID"/>
         </xsl:call-template>
       </xsl:variable>
 
       <xsl:for-each select="xalan:nodeset($ancestors)//sparql:obj[@uri != concat('info:fedora/', $PID)]">
-        <field name="ancestors_ms"><xsl:value-of select="substring-after(@uri, '/')"/></field>
+        <field name="ancestors_ms">
+          <xsl:value-of select="substring-after(@uri, '/')"/>
+        </field>
       </xsl:for-each>
 
     </doc>
