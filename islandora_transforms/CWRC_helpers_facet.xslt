@@ -2,8 +2,9 @@
 <xsl:stylesheet 
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
     xmlns:xs="http://www.w3.org/2001/XMLSchema"
-    xmlns:java="http://xml.apache.org/xslt/java" 
-    exclude-result-prefixes="xs"
+    xmlns:SimpleDateFormat="java.text.SimpleDateFormat" 
+    xmlns:Date="java.util.Date" 
+    exclude-result-prefixes="SimpleDateFormat Date xs"
     version="1.0"
     >
 
@@ -140,7 +141,7 @@
         create multiple intervals between the to_date and from_date
         * if from is greater than to date then don't try to correct
     -->
-    <xsl:template name="cwrc_create_intervals_from_to_date">
+    <xsl:template name="cwrc_create_intervals_from_to_date" xmlns:date="java:java.util.Date">
         <xsl:param name="from_date" />
         <xsl:param name="to_date" />
     
@@ -161,8 +162,10 @@
         <xsl:variable name="toYear">
             <xsl:choose>
                 <xsl:when test="$tmpToYear=''">
-                    <!-- <xsl:value-of select="java:format(java:java.text.SimpleDateFormat.new('yyyy'), java:java.util.Date.new())"/> -->
-                    <xsl:text>2016</xsl:text>
+                    <!-- get today's year -->
+                    <xsl:variable name="s" select="SimpleDateFormat:new('yyyy')"/>
+                    <xsl:variable name="date" select="Date:new()"/>
+                    <xsl:value-of select="SimpleDateFormat:format($s,$date)"/>
                 </xsl:when>
                 <xsl:otherwise>
                     <xsl:value-of select="$tmpToYear"/>
