@@ -91,7 +91,7 @@
                 </xsl:call-template>
             </xsl:if>
         </xsl:variable>
-        
+
         <!-- build Solr field content value -->
             <xsl:choose>
                 <xsl:when test="$local_pointDate!=''">
@@ -228,7 +228,7 @@
     <xsl:value-of select="concat($prefix, 'facet_date', '_mdt')"/>
     -->
 
-    <!-- output Solr field element -->
+        <!-- output Solr field element -->
         <xsl:if test="$local_content != ''">
             <field>
                 <xsl:attribute name="name">
@@ -250,7 +250,11 @@
         <!-- start year -->
         <xsl:variable name="fromYear">
             <xsl:call-template name="cwrc_date_interval_start">
-                <xsl:with-param name="year_str" select="$from_date"/>
+                <xsl:with-param name="year_str">
+                    <xsl:call-template name="cwrc_create_ISO_8601_to_BCE_AD_year">
+                        <xsl:with-param name="point_date" select="$from_date"/>
+                    </xsl:call-template>
+                </xsl:with-param>
             </xsl:call-template>
         </xsl:variable>
         
@@ -267,7 +271,9 @@
                     <xsl:value-of select="'2016'" />
                 </xsl:when>
                 <xsl:otherwise>
-                    <xsl:value-of select="$to_date"/>
+                    <xsl:call-template name="cwrc_create_ISO_8601_to_BCE_AD_year">
+                        <xsl:with-param name="point_date" select="$to_date"/>
+                    </xsl:call-template>
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
