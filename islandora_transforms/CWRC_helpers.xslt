@@ -178,7 +178,7 @@
 
         <xsl:call-template name="cwrc_write_solr_field">
             <xsl:with-param name="local_content">
-                <xsl:value-of select="concat($fromYear, ' TO ', $toYear)"/>
+                <xsl:value-of select="concat($fromYear, ' TO ', number($toYear)-1)"/>
             </xsl:with-param>
         </xsl:call-template>
         
@@ -232,7 +232,7 @@
         <xsl:if test="$local_content != ''">
             <field>
                 <xsl:attribute name="name">
-                   <xsl:value-of select="concat($prefix, 'facet_date', '_mt')"/>
+                   <xsl:value-of select="concat($prefix, 'facet_date', '_ms')"/>
                 </xsl:attribute>
                 <xsl:value-of select="$local_content"/>
             </field>
