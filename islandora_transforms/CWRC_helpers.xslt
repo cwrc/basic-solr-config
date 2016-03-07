@@ -300,7 +300,7 @@
         
         <xsl:choose>
             <xsl:when test="number($start_year) &lt;= number($end_year)">
-                <xsl:variable name="interval_end_year" select="number($start_year)+10-1"/>
+                <xsl:variable name="interval_end_year" select="format-number(number($start_year)+10-1,$cwrc_year_four_digit)"/>
                 <xsl:choose>
                     <xsl:when test="number($interval_end_year) &gt; number($end_year) and $open_ended_range!=''">
                         <xsl:call-template name="cwrc_write_solr_field">
@@ -319,7 +319,7 @@
                 </xsl:choose>
                 
                 <xsl:call-template name="cwrc_create_intervals_recursively">
-                    <xsl:with-param name="start_year" select="number($interval_end_year)+1"/>
+                    <xsl:with-param name="start_year" select="format-number(number($interval_end_year)+1,$cwrc_year_four_digit)"/>
                     <xsl:with-param name="end_year" select="$end_year"/>
                     <xsl:with-param name="open_ended_range" select="$open_ended_range"/>
                 </xsl:call-template>
@@ -360,7 +360,7 @@
         </xsl:variable>
         
         <!-- prepend 0 to make year 4 digits -->
-        <xsl:value-of select="format-number(number($yearStr), '#0000')"/>
+        <xsl:value-of select="format-number(number($yearStr),$cwrc_year_four_digit)"/>
         
     </xsl:template>
     
