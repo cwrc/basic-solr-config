@@ -12,10 +12,7 @@
     xmlns:xlink="http://www.w3.org/1999/xlink" 
     xmlns:mods="http://www.loc.gov/mods/v3" 
     xmlns:java="http://xml.apache.org/xalan/java" 
-    xmlns:SimpleDateFormat="java.text.SimpleDateFormat" 
-    xmlns:Date="java.util.Date" 
-    xmlns:date="java:java.util.Date"
-    exclude-result-prefixes="SimpleDateFormat Date java date mods"
+    exclude-result-prefixes="java mods"
     >
 
     <xsl:output method="xml"/>
@@ -178,7 +175,7 @@
 
         <xsl:call-template name="cwrc_write_solr_field">
             <xsl:with-param name="local_content">
-                <xsl:value-of select="concat($fromYear, ' TO ', number($toYear)-1)"/>
+                <xsl:value-of select="concat($fromYear, ' TO ', $toYear)"/>
             </xsl:with-param>
         </xsl:call-template>
         
@@ -263,12 +260,30 @@
             <xsl:choose>
                 <xsl:when test="$to_date=''">
                     <!-- get today's year -->
-                    <!--
-                    <xsl:variable name="s" select="java:java.text.SimpleDateFormat:new('yyyy')"/>
-                    <xsl:variable name="date" select="Date:new()"/>
-                    <xsl:value-of select="SimpleDateFormat:format($s,$date)"/>
--->
-                    <xsl:value-of select="'2016'" />
+                    <!-- This technique didn't work in the context of FedoraGSearch
+                         Error at xsl:variable on line 275 column 83 of 
+                         CWRC_helpers.xslt: XPST0017 XPath syntax error at 
+                         char 0 on line 275 in 
+                         {SimpleDateFormat:new('yyyy')}: 
+                         Cannot find a matching 1-argument function named {java.text.SimpleDateFormat}new().
+                         Note that direct calls to Java methods are not 
+                         available under Saxon-HE
+
+
+                        http://stackoverflow.com/questions/13136229/xslt-call-java-instance-method 
+                        http://cafeconleche.org/books/xmljava/chapters/ch17s03.html
+                        http://www.heber.it/?p=1053/
+                        xmlns:SimpleDateFormat="java.text.SimpleDateFormat" 
+                        xmlns:Date="java.util.Date" 
+                        xmlns:date="java:java.util.Date"
+                        <xsl:variable name="s" select="java:java.text.SimpleDateFormat:new('yyyy')"/>
+                        <xsl:variable name="date" select="Date:new()"/>
+                        <xsl:value-of select="SimpleDateFormat:format($s,$date)"/>
+                        might be due to how xalan was setup
+                        https://saxonica.plan.io/boards/3/topics/5389
+                    -->
+                    <!-- <xsl:value-of select="'2016'" /> -->
+                    <xsl:call-template name='get_todays_year' />
                 </xsl:when>
                 <xsl:otherwise>
                     <xsl:call-template name="cwrc_create_ISO_8601_to_BCE_AD_year">
@@ -300,7 +315,7 @@
         
         <xsl:choose>
             <xsl:when test="number($start_year) &lt;= number($end_year)">
-                <xsl:variable name="interval_end_year" select="number($start_year)+10-1"/>
+                <xsl:variable name="interval_end_year" select="format-number(number($start_year)+10-1,$cwrc_year_four_digit)"/>
                 <xsl:choose>
                     <xsl:when test="number($interval_end_year) &gt; number($end_year) and $open_ended_range!=''">
                         <xsl:call-template name="cwrc_write_solr_field">
@@ -319,7 +334,7 @@
                 </xsl:choose>
                 
                 <xsl:call-template name="cwrc_create_intervals_recursively">
-                    <xsl:with-param name="start_year" select="number($interval_end_year)+1"/>
+                    <xsl:with-param name="start_year" select="format-number(number($interval_end_year)+1,$cwrc_year_four_digit)"/>
                     <xsl:with-param name="end_year" select="$end_year"/>
                     <xsl:with-param name="open_ended_range" select="$open_ended_range"/>
                 </xsl:call-template>
@@ -360,7 +375,7 @@
         </xsl:variable>
         
         <!-- prepend 0 to make year 4 digits -->
-        <xsl:value-of select="format-number(number($yearStr), '#0000')"/>
+        <xsl:value-of select="format-number(number($yearStr),$cwrc_year_four_digit)"/>
         
     </xsl:template>
     
@@ -390,6 +405,7 @@
         <!-- replace last character with 0 or 9 (from and to respectively) -->
         <!-- start of date interval: use 'div 10' and floor -->
         <xsl:choose>
+            <!-- test if number -->
             <xsl:when test="string(number($year_str))!='NaN'">
                 <xsl:value-of select="format-number(floor(number($year_str) div 10)*10,$cwrc_year_four_digit)"/>
             </xsl:when>
@@ -407,7 +423,7 @@
         <!-- end of date interval: use 'div 10' and ceiling -->
         <xsl:choose>
             <xsl:when test="string(number($year_str))!='NaN'">
-                <xsl:value-of select="format-number(ceiling(number($year_str) div 10)*10,$cwrc_year_four_digit)"/>
+                <xsl:value-of select="format-number(ceiling(number($year_str) div 10)*10-1,$cwrc_year_four_digit)"/>
             </xsl:when>
             <xsl:otherwise>
                 <xsl:text/>

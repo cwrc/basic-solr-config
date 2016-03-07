@@ -11,4 +11,11 @@
 
     <xsl:value-of select="java:ca.discoverygarden.gsearch_extensions.JodaAdapter.transformForSolr($date, $pid, $datastream)"/>
   </xsl:template>
+
+
+  <xsl:template name="get_todays_year">
+    <xsl:value-of select="java:ca.discoverygarden.gsearch_extensions.JodaAdapter.getTodaysYear()" />
+  </xsl:template>
+
+
 </xsl:stylesheet>
