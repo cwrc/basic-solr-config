@@ -178,7 +178,7 @@
 
         <xsl:call-template name="cwrc_write_solr_field">
             <xsl:with-param name="local_content">
-                <xsl:value-of select="concat($fromYear, ' TO ', number($toYear)-1)"/>
+                <xsl:value-of select="concat($fromYear, ' TO ', $toYear)"/>
             </xsl:with-param>
         </xsl:call-template>
         
@@ -407,7 +407,7 @@
         <!-- end of date interval: use 'div 10' and ceiling -->
         <xsl:choose>
             <xsl:when test="string(number($year_str))!='NaN'">
-                <xsl:value-of select="format-number(ceiling(number($year_str) div 10)*10,$cwrc_year_four_digit)"/>
+                <xsl:value-of select="format-number(ceiling(number($year_str) div 10)*10-1,$cwrc_year_four_digit)"/>
             </xsl:when>
             <xsl:otherwise>
                 <xsl:text/>
