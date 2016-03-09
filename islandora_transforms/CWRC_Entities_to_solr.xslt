@@ -339,20 +339,21 @@
                 <xsl:variable name='date_nodes' select="
                     $identity/mods:originInfo/mods:dateIssued/text()
                     | $identity/mods:originInfo/mods:copyrightDate/text()
-                    | $identity/mods:originInfo/mods:dateCreate/text()
+                    | $identity/mods:originInfo/mods:dateCreated/text()
                     | $identity/mods:relatedItem/mods:originInfo/mods:dateIssued/text()
                     | $identity/mods:relatedItem/mods:originInfo/mods:copyrightDate/text()
-                    | $identity/mods:relatedItem/mods:originInfo/mods:dateCreate/text()
+                    | $identity/mods:relatedItem/mods:originInfo/mods:dateCreated/text()
                     | $identity/mods:relatedItem/mods:part/mods:date/text()
                     " />
+
                 <xsl:if test="count($date_nodes)>0">
                     <xsl:for-each select="$date_nodes">
                         <xsl:call-template name="solr_field_date_facet">
                             <xsl:with-param name="prefix" select="$cwrc_date_facet_prefix"/>
-                            <xsl:with-param name="pointDate" select="."/>
+                            <xsl:with-param name="pointDate" select="''"/>
                             <xsl:with-param name="fromDate" select="''"/>
                             <xsl:with-param name="toDate" select="''"/>
-                            <xsl:with-param name="textDate" select="''"/>
+                            <xsl:with-param name="textDate" select="current()"/>
                         </xsl:call-template>
                     </xsl:for-each>
                 </xsl:if>

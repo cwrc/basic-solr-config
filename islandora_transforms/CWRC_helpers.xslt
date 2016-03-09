@@ -90,7 +90,7 @@
         </xsl:variable>
 
         <xsl:variable name="local_textDate">
-            <xsl:if test="$textDate!='' and $local_pointDate!='' and $local_fromDate!='' and $local_toDate!=''">
+            <xsl:if test="$textDate!='' and $local_pointDate='' and $local_fromDate='' and $local_toDate=''">
                 <!-- try to interpret the text date -->
                 <xsl:call-template name="get_ISO8601_date">
                     <xsl:with-param name="date" select="$textDate"/>
