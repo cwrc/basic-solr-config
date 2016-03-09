@@ -89,6 +89,18 @@
             </xsl:if>
         </xsl:variable>
 
+        <xsl:variable name="local_textDate">
+            <xsl:if test="$textDate!=''">
+                <!-- try to interpret the text date -->
+                <xsl:call-template name="get_ISO8601_date">
+                    <xsl:with-param name="date" select="$textDate"/>
+                    <xsl:with-param name="pid" select="'not provided'"/>
+                    <xsl:with-param name="datastream" select="'not provided'"/>
+                </xsl:call-template>
+            </xsl:if>
+        </xsl:variable>
+
+
         <!-- build Solr field content value -->
             <xsl:choose>
                 <xsl:when test="$local_pointDate!=''">
@@ -131,6 +143,19 @@
                     <xsl:value-of select="$local_toDate"/>
                     <xsl:text>]</xsl:text>
                      -->
+                </xsl:when>
+                <xsl:when test="$local_textDate!=''">
+                    <xsl:call-template name="cwrc_convert_point_date_to_period">
+                        <xsl:with-param name="point_date" select="$local_textDate" />
+                    </xsl:call-template>
+                </xsl:when>
+                <xsl:when test="$local_textDate='' and $textDate!=''">
+                    <!-- text date not in an recognized format -->
+                    <!-- try interpreting as a Season -->
+                    <!-- "textDate='' and $local_pointDate='' and $local_fromDate='' and $local_toDate=''-->
+                    <xsl:call-template name="cwrc_season_date">
+                        <xsl:with-param name="src_date" select="$textDate" />
+                    </xsl:call-template>
                 </xsl:when>
                 <xsl:otherwise>
                     <xsl:text/>
@@ -259,6 +284,7 @@
         <xsl:variable name="toYear">
             <xsl:choose>
                 <xsl:when test="$to_date=''">
+                    <!-- requires https://github.com/cwrc/dgi_gsearch_extensions-->
                     <!-- get today's year -->
                     <!-- This technique didn't work in the context of FedoraGSearch
                          Error at xsl:variable on line 275 column 83 of 
@@ -430,7 +456,92 @@
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
+
+
+    <!-- given a date of the form: season 2010 (e.g. printemps 2012) convert to an Solr date interval field -->
+    <xsl:template name="cwrc_season_date">
+        <xsl:param name="src_date" />
         
+        <xsl:variable name="smallcase" select="'abcdefghijklmnopqrstuvwxyzé'" />
+        <xsl:variable name="uppercase" select="'ABCDEFGHIJKLMNOPQRSTUVWXYZÉ'" />
+        
+        <xsl:variable name="lower_src_date" select="translate($src_date,$uppercase,$smallcase)" />
+        
+        <xsl:choose>
+            <xsl:when test="contains($lower_src_date,'summer')">
+                <xsl:variable name="yearStr" select="normalize-space(substring-after($lower_src_date, 'summer'))" />
+                <xsl:call-template name="cwrc_convert_range_date_to_period">
+                    <xsl:with-param name="from_date" select="concat($yearStr,'-07')" />
+                    <xsl:with-param name="to_date" select="concat($yearStr,'-09')" />
+                </xsl:call-template>
+            </xsl:when>
+            <xsl:when test="contains($lower_src_date,'été')">
+                <xsl:variable name="yearStr" select="normalize-space(substring-after($lower_src_date, 'été'))" />
+                <xsl:call-template name="cwrc_convert_range_date_to_period">
+                    <xsl:with-param name="from_date" select="concat($yearStr,'-07')" />
+                    <xsl:with-param name="to_date" select="concat($yearStr,'-09')" />
+                </xsl:call-template>
+            </xsl:when>
+            <xsl:when test="contains($lower_src_date,'fall')">
+                <xsl:variable name="yearStr" select="normalize-space(substring-after($lower_src_date, 'fall'))" />
+                <xsl:call-template name="cwrc_convert_range_date_to_period">
+                    <xsl:with-param name="from_date" select="concat($yearStr,'-10')" />
+                    <xsl:with-param name="to_date" select="concat($yearStr,'-12')" />
+                </xsl:call-template>
+            </xsl:when>
+            <xsl:when test="contains($lower_src_date,'autumn')">
+                <xsl:variable name="yearStr" select="normalize-space(substring-after($lower_src_date, 'autumn'))" />
+                <xsl:call-template name="cwrc_convert_range_date_to_period">
+                    <xsl:with-param name="from_date" select="concat($yearStr,'-10')" />
+                    <xsl:with-param name="to_date" select="concat($yearStr,'-12')" />
+                </xsl:call-template>
+            </xsl:when>
+            <xsl:when test="contains($lower_src_date,'tomber')">
+                <xsl:variable name="yearStr" select="normalize-space(substring-after($lower_src_date, 'tomber'))" />
+                <xsl:call-template name="cwrc_convert_range_date_to_period">
+                    <xsl:with-param name="from_date" select="concat($yearStr,'-10')" />
+                    <xsl:with-param name="to_date" select="concat($yearStr,'-12')" />
+                </xsl:call-template>
+            </xsl:when>
+            <xsl:when test="contains($lower_src_date,'automne')">
+                <xsl:variable name="yearStr" select="normalize-space(substring-after($lower_src_date, 'automne'))" />
+                <xsl:call-template name="cwrc_convert_range_date_to_period">
+                    <xsl:with-param name="from_date" select="concat($yearStr,'-10')" />
+                    <xsl:with-param name="to_date" select="concat($yearStr,'-12')" />
+                </xsl:call-template>
+            </xsl:when>
+            <xsl:when test="contains($lower_src_date,'winter')">
+                <xsl:variable name="yearStr" select="normalize-space(substring-after($lower_src_date, 'winter'))" />
+                <xsl:call-template name="cwrc_convert_range_date_to_period">
+                    <xsl:with-param name="from_date" select="concat($yearStr,'-01')" />
+                    <xsl:with-param name="to_date" select="concat($yearStr,'-03')" />
+                </xsl:call-template>
+            </xsl:when>
+            <xsl:when test="contains($lower_src_date,'hiver')">
+                <xsl:variable name="yearStr" select="normalize-space(substring-after($lower_src_date, 'hiver'))" />
+                <xsl:call-template name="cwrc_convert_range_date_to_period">
+                    <xsl:with-param name="from_date" select="concat($yearStr,'-01')" />
+                    <xsl:with-param name="to_date" select="concat($yearStr,'-03')" />
+                </xsl:call-template>
+            </xsl:when>
+            <xsl:when test="contains($lower_src_date,'spring')">
+                <xsl:variable name="yearStr" select="normalize-space(substring-after($lower_src_date, 'spring'))" />
+                <xsl:call-template name="cwrc_convert_range_date_to_period">
+                    <xsl:with-param name="from_date" select="concat($yearStr,'-04')" />
+                    <xsl:with-param name="to_date" select="concat($yearStr,'-06')" />
+                </xsl:call-template>
+            </xsl:when>
+            <xsl:when test="contains($lower_src_date,'printempts')">
+                <xsl:variable name="yearStr" select="normalize-space(substring-after($lower_src_date, 'printemps'))" />
+                <xsl:call-template name="cwrc_convert_range_date_to_period">
+                    <xsl:with-param name="from_date" select="concat($yearStr,'-04')" />
+                    <xsl:with-param name="to_date" select="concat($yearStr,'-06')" />
+                </xsl:call-template>
+            </xsl:when>
+        </xsl:choose>
+    </xsl:template>
+
+
 
     <!--
     * Given an Orlando normalized narrative date
