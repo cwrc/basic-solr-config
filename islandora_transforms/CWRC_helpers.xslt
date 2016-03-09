@@ -90,7 +90,7 @@
         </xsl:variable>
 
         <xsl:variable name="local_textDate">
-            <xsl:if test="$textDate!=''">
+            <xsl:if test="$textDate!='' and $local_pointDate!='' and $local_fromDate!='' and $local_toDate!=''">
                 <!-- try to interpret the text date -->
                 <xsl:call-template name="get_ISO8601_date">
                     <xsl:with-param name="date" select="$textDate"/>
@@ -193,9 +193,19 @@
         
         <!-- end of date interval -->
         <xsl:variable name="toYear">
-            <xsl:call-template name="cwrc_date_interval_end">
-                <xsl:with-param name="year_str" select="$year_str"/>
-            </xsl:call-template>
+            <xsl:choose>
+                <xsl:when test="$year_str = $fromYear">
+                    <!-- nudge number: otherwise floor and ceiling return the same -->
+                    <xsl:call-template name="cwrc_date_interval_end">
+                        <xsl:with-param name="year_str" select="number($year_str)+.1"/>
+                    </xsl:call-template>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:call-template name="cwrc_date_interval_end">
+                        <xsl:with-param name="year_str" select="$year_str"/>
+                    </xsl:call-template>
+                </xsl:otherwise>
+            </xsl:choose>
         </xsl:variable>
 
         <xsl:call-template name="cwrc_write_solr_field">
