@@ -212,7 +212,7 @@
 
       </xsl:variable>
 
-      <field name="CWRC_PERIOD_DATE_USE_MODS_PERIOD">
+      <field name="cwrc_facet_date_is_subject_temporal_s">
         <xsl:value-of select="$CWRC_PERIOD_DATE_USE_MODS_PERIOD"/>
       </field>
 

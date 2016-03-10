@@ -47,9 +47,11 @@
         <xsl:param name="suffix" select="'_et'"/>
         <!-- 'edged' (edge n-gram) text, for auto-completion -->
 
+
         <!-- allow facet on date content only if not overridden by the CWRC_PERIOD_DATE_USE_MODS_PERIOD -->
-        <xsl:if test="$CWRC_PERIOD_DATE_USE_MODS_PERIOD!=''">
-            <xsl:apply-templates select="$content/DATE | $content/DATERANGE | $content/DATESTRUCT | $content/tei:date" mode="date_facet">
+        <xsl:if test="$CWRC_PERIOD_DATE_USE_MODS_PERIOD=''">
+
+            <xsl:apply-templates select="$content//DATE | $content//DATERANGE | $content//DATESTRUCT | $content//tei:date" mode="date_facet">
                 <xsl:with-param name="prefix" select="cwrc_facet_"/>
                 <xsl:with-param name="CWRC_PERIOD_DATE_USE_MODS_PERIOD" select="$CWRC_PERIOD_DATE_USE_MODS_PERIOD"/>
             </xsl:apply-templates>
@@ -68,7 +70,7 @@
         <xsl:variable name="pointDate">
             <xsl:choose>
                 <xsl:when test="@VALUE!=''">
-                    <xsl:value-of select="@when"/>
+                    <xsl:value-of select="@VALUE"/>
                 </xsl:when>
             </xsl:choose>
         </xsl:variable>
@@ -126,7 +128,7 @@
         <xsl:variable name="pointDate">
             <xsl:choose>
                 <xsl:when test="@VALUE!=''">
-                    <xsl:value-of select="@when"/>
+                    <xsl:value-of select="@VALUE"/>
                 </xsl:when>
             </xsl:choose>
         </xsl:variable>

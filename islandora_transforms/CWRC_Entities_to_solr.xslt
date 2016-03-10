@@ -110,6 +110,37 @@
             <xsl:with-param name="content" select="$description/factuality"/>
         </xsl:call-template>
 
+
+        <!-- date facets -->
+        <!-- if establishement then assume range otherwise treat as point date -->
+        <xsl:variable name="cwrc_date_facet_prefix" select="'cwrc_'" />
+        <xsl:variable name="fromDate" select="($description/existDates/dateSingle/standardDate[following-sibling::dateType/text()='establishment'])[1]/text()" />
+        <xsl:variable name="toDate" select="($description/existDates/dateSingle/standardDate[following-sibling::dateType/text()='dissolution'])[1]/text()" />
+        <xsl:variable name="facet_date_seq" select="$description/existDates/dateSingle/standardDate" />
+        <xsl:choose>
+            <xsl:when test="$fromDate!=''">
+                <!-- build Solr field -->
+                <xsl:call-template name="solr_field_date_facet">
+                    <xsl:with-param name="prefix" select="$cwrc_date_facet_prefix"/>
+                    <xsl:with-param name="pointDate" select="''"/>
+                    <xsl:with-param name="fromDate" select="$fromDate"/>
+                    <xsl:with-param name="toDate" select="$toDate"/>
+                    <xsl:with-param name="textDate" select="''"/>
+                </xsl:call-template>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:for-each select="$facet_date_seq">
+                    <xsl:call-template name="solr_field_date_facet">
+                        <xsl:with-param name="prefix" select="$cwrc_date_facet_prefix"/>
+                        <xsl:with-param name="pointDate" select="current()/text()"/>
+                        <xsl:with-param name="fromDate" select="''"/>
+                        <xsl:with-param name="toDate" select="''"/>
+                        <xsl:with-param name="textDate" select="''"/>
+                    </xsl:call-template>
+                </xsl:for-each>
+            </xsl:otherwise>
+        </xsl:choose>
+
     </xsl:template>
 
 
@@ -158,6 +189,37 @@
             <xsl:with-param name="prefix" select="$prefix"/>
             <xsl:with-param name="content" select="$description/factuality"/>
         </xsl:call-template>
+
+        <!-- date facets -->
+        <!-- if establishement then assume range otherwise treat as point date -->
+        <xsl:variable name="cwrc_date_facet_prefix" select="'cwrc_'" />
+        <xsl:variable name="fromDate" select="($description/existDates/dateSingle/standardDate[following-sibling::dateType/text()='establishment'])[1]/text()" />
+        <xsl:variable name="toDate" select="($description/existDates/dateSingle/standardDate[following-sibling::dateType/text()='dissolution'])[1]/text()" />
+        <xsl:variable name="facet_date_seq" select="$description/existDates/dateSingle/standardDate" />
+        <xsl:choose>
+            <xsl:when test="$fromDate!=''">
+                <!-- build Solr field -->
+                <xsl:call-template name="solr_field_date_facet">
+                    <xsl:with-param name="prefix" select="$cwrc_date_facet_prefix"/>
+                    <xsl:with-param name="pointDate" select="''"/>
+                    <xsl:with-param name="fromDate" select="$fromDate"/>
+                    <xsl:with-param name="toDate" select="$toDate"/>
+                    <xsl:with-param name="textDate" select="''"/>
+                </xsl:call-template>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:for-each select="$facet_date_seq">
+                    <xsl:call-template name="solr_field_date_facet">
+                        <xsl:with-param name="prefix" select="$cwrc_date_facet_prefix"/>
+                        <xsl:with-param name="pointDate" select="current()/text()"/>
+                        <xsl:with-param name="fromDate" select="''"/>
+                        <xsl:with-param name="toDate" select="''"/>
+                        <xsl:with-param name="textDate" select="''"/>
+                    </xsl:call-template>
+                </xsl:for-each>
+            </xsl:otherwise>
+        </xsl:choose>
+
 
     </xsl:template>
 
@@ -339,20 +401,21 @@
                 <xsl:variable name='date_nodes' select="
                     $identity/mods:originInfo/mods:dateIssued/text()
                     | $identity/mods:originInfo/mods:copyrightDate/text()
-                    | $identity/mods:originInfo/mods:dateCreate/text()
+                    | $identity/mods:originInfo/mods:dateCreated/text()
                     | $identity/mods:relatedItem/mods:originInfo/mods:dateIssued/text()
                     | $identity/mods:relatedItem/mods:originInfo/mods:copyrightDate/text()
-                    | $identity/mods:relatedItem/mods:originInfo/mods:dateCreate/text()
+                    | $identity/mods:relatedItem/mods:originInfo/mods:dateCreated/text()
                     | $identity/mods:relatedItem/mods:part/mods:date/text()
                     " />
+
                 <xsl:if test="count($date_nodes)>0">
                     <xsl:for-each select="$date_nodes">
                         <xsl:call-template name="solr_field_date_facet">
                             <xsl:with-param name="prefix" select="$cwrc_date_facet_prefix"/>
-                            <xsl:with-param name="pointDate" select="."/>
+                            <xsl:with-param name="pointDate" select="''"/>
                             <xsl:with-param name="fromDate" select="''"/>
                             <xsl:with-param name="toDate" select="''"/>
-                            <xsl:with-param name="textDate" select="''"/>
+                            <xsl:with-param name="textDate" select="current()"/>
                         </xsl:call-template>
                     </xsl:for-each>
                 </xsl:if>
@@ -428,6 +491,37 @@
             <xsl:with-param name="prefix" select="$prefix"/>
             <xsl:with-param name="content" select="$description/factuality"/>
         </xsl:call-template>
+
+
+        <!-- date facets -->
+        <!-- if then assume range otherwise treat as point date -->
+        <xsl:variable name="cwrc_date_facet_prefix" select="'cwrc_'" />
+        <xsl:variable name="fromDate" select="($description/existDates/dateSingle/standardDate[following-sibling::dateType/text()='birth'])[1]/text()" />
+        <xsl:variable name="toDate" select="($description/existDates/dateSingle/standardDate[following-sibling::dateType/text()='death'])[1]/text()" />
+        <xsl:variable name="facet_date_seq" select="$description/existDates/dateSingle/standardDate" />
+        <xsl:choose>
+            <xsl:when test="$fromDate!=''">
+                <!-- build Solr field -->
+                <xsl:call-template name="solr_field_date_facet">
+                    <xsl:with-param name="prefix" select="$cwrc_date_facet_prefix"/>
+                    <xsl:with-param name="pointDate" select="''"/>
+                    <xsl:with-param name="fromDate" select="$fromDate"/>
+                    <xsl:with-param name="toDate" select="$toDate"/>
+                    <xsl:with-param name="textDate" select="''"/>
+                </xsl:call-template>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:for-each select="$facet_date_seq">
+                    <xsl:call-template name="solr_field_date_facet">
+                        <xsl:with-param name="prefix" select="$cwrc_date_facet_prefix"/>
+                        <xsl:with-param name="pointDate" select="current()/text()"/>
+                        <xsl:with-param name="fromDate" select="''"/>
+                        <xsl:with-param name="toDate" select="''"/>
+                        <xsl:with-param name="textDate" select="''"/>
+                    </xsl:call-template>
+                </xsl:for-each>
+            </xsl:otherwise>
+        </xsl:choose>
 
     </xsl:template>
 
