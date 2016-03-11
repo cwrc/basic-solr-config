@@ -1,6 +1,6 @@
 This repo will holds a basic solr config, schema and xslt to use as a starting point for future projects.
 
-It is now dependent on the [discoverygarden GSearch extensions](https://github.com/discoverygarden/dgi_gsearch_extensions)--which includes the Joda time library.
+It is now dependent on the [discoverygarden GSearch extensions](https://github.com/cwrc/dgi_gsearch_extensions)--which includes the Joda time library. Please use the CWRC fork as it incorporates additional patterns for interpreting dates and converting into ISO 8601.
 
 If one wishes to index Drupal content and users, one might process the `conf/data-import-config.xml.erb` into `conf/data-import-config.xml`. It takes three parameters:
 * `drupal_dbname`
