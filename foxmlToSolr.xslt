@@ -199,7 +199,7 @@
           <!-- xml managed datastreams -->
           <xsl:when test="$CWRC_PERIOD_MODS_DS[@CONTROL_GROUP='M']">  
               <xsl:apply-templates select="$CWRC_PERIOD_MODS_DS/foxml:datastreamVersion[last()]" mode="cwrc_date_facet_period_source">
-                  <xsl:with-param name="content" select="document(concat($PROT, '://', encoder:encode($FEDORAUSER), ':', encoder:encode($FEDORAPASS), '@', $HOST, ':', $PORT, '/fedora/objects/', $PID, '/datastreams/', @ID, '/content'))"/>
+                  <xsl:with-param name="content" select="document(concat($PROT, '://', encoder:encode($FEDORAUSER), ':', encoder:encode($FEDORAPASS), '@', $HOST, ':', $PORT, '/fedora/objects/', $PID, '/datastreams/MODS/content'))"/>
               </xsl:apply-templates>
           </xsl:when>
           
