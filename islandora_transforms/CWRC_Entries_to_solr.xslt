@@ -40,7 +40,7 @@
         * 
     -->
     <!-- ********************************************************* -->
-    <xsl:template match="foxml:datastream[@ID='CWRC']/foxml:datastreamVersion[last()]" name="index_CWRC_ENTRY">
+    <xsl:template match="foxml:datastream[@ID='CWRC']/foxml:datastreamVersion[@MIMETYPE='text/xml' or @MIMETYPE='application/xml'][last()]" name="index_CWRC_ENTRY">
         <xsl:param name="content" select="/"/>
         <xsl:param name="CWRC_PERIOD_DATE_USE_MODS_PERIOD" select="''"/>
         <xsl:param name="prefix" select="'cwrc_entry_'"/>
