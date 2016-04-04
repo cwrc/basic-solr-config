@@ -57,6 +57,16 @@
             </xsl:apply-templates>
         </xsl:if>
 
+
+        <!-- index the XML content as text -->
+        <field>
+          <xsl:attribute name="name">
+            <xsl:value-of select="concat($prefix, '_ds_as_text', '_hlt')"/>
+          </xsl:attribute>
+          <xsl:apply-templates select="$content" mode="index_text_nodes_as_a_text_field"/>
+        </field>
+
+
     </xsl:template>
 
     <!-- 
