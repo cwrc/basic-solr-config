@@ -184,14 +184,14 @@
             </xsl:call-template>
         </xsl:variable>
         
-        <!-- start of date interval -->
+        <!-- start of Decade date interval -->
         <xsl:variable name="fromYear">
             <xsl:call-template name="cwrc_date_interval_start">
                 <xsl:with-param name="year_str" select="$year_str"/>
             </xsl:call-template>
         </xsl:variable>
         
-        <!-- end of date interval -->
+        <!-- end of Decade date interval -->
         <xsl:variable name="toYear">
             <xsl:choose>
                 <xsl:when test="$year_str = $fromYear">
@@ -208,12 +208,60 @@
             </xsl:choose>
         </xsl:variable>
 
+        <!-- Output Decade interval -->       
         <xsl:call-template name="cwrc_write_solr_field">
             <xsl:with-param name="local_content">
                 <xsl:value-of select="concat($fromYear, ' TO ', $toYear)"/>
             </xsl:with-param>
+            <xsl:with-param name="interval_length">
+                <xsl:number value="10" />
+            </xsl:with-param>
         </xsl:call-template>
-        
+
+
+        <!-- start of Century date interval -->
+        <xsl:variable name="fromCenturyYear">
+            <xsl:call-template name="cwrc_date_interval_start">
+                <xsl:with-param name="year_str" select="$year_str"/>
+                <xsl:with-param name="interval_length">
+                    <xsl:number value='100' />
+                </xsl:with-param>
+            </xsl:call-template>
+        </xsl:variable>
+
+        <!-- end of Century date interval -->
+        <xsl:variable name="toCenturyYear">
+            <xsl:choose>
+                <xsl:when test="$year_str = $fromYear">
+                    <!-- nudge number: otherwise floor and ceiling return the same -->
+                    <xsl:call-template name="cwrc_date_interval_end">
+                        <xsl:with-param name="year_str" select="number($year_str)+.1"/>
+                        <xsl:with-param name="interval_length">
+                            <xsl:number value='100' />
+                        </xsl:with-param>
+                    </xsl:call-template>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:call-template name="cwrc_date_interval_end">
+                        <xsl:with-param name="year_str" select="$year_str"/>
+                        <xsl:with-param name="interval_length">
+                            <xsl:number value='100' />
+                        </xsl:with-param>
+                    </xsl:call-template>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
+
+        <!-- Output Century interval -->       
+        <xsl:call-template name="cwrc_write_solr_field">
+            <xsl:with-param name="local_content">
+                <xsl:value-of select="concat($fromCenturyYear, ' TO ', $toCenturyYear)"/>
+            </xsl:with-param>
+            <xsl:with-param name="interval_length">
+                <xsl:number value="100" />
+            </xsl:with-param>
+        </xsl:call-template>
+
     </xsl:template>
     
     
@@ -255,6 +303,7 @@
     <xsl:template name="cwrc_write_solr_field">
         <xsl:param name="local_content"/>
         <xsl:param name="prefix" select="'cwrc_'"/>
+        <xsl:param name="interval_length" select="number('10')"/>
 
     <!--
     <xsl:value-of select="concat($prefix, 'facet_date', '_mdt')"/>
@@ -264,7 +313,7 @@
         <xsl:if test="$local_content != ''">
             <field>
                 <xsl:attribute name="name">
-                   <xsl:value-of select="concat($prefix, 'facet_date', '_ms')"/>
+                   <xsl:value-of select="concat($prefix, 'facet_date_', string($interval_length), '_ms')"/>
                 </xsl:attribute>
                 <xsl:value-of select="$local_content"/>
             </field>
@@ -328,7 +377,8 @@
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
-        
+
+        <!-- Decade --> 
         <xsl:call-template name="cwrc_create_intervals_recursively">
             <xsl:with-param name="start_year" select="$fromYear"/>
             <xsl:with-param name="end_year" select="$toYear"/>
@@ -339,7 +389,40 @@
                 </xsl:choose>
             </xsl:with-param>
         </xsl:call-template>
-        
+ 
+        <!-- Century --> 
+
+        <xsl:variable name="fromCentury">
+            <xsl:call-template name="cwrc_date_interval_start">
+                <xsl:with-param name="year_str" select="$fromYear"/>
+                <xsl:with-param name="interval_length">
+                    <xsl:number value='100' />
+                </xsl:with-param>
+            </xsl:call-template>
+        </xsl:variable>
+        <xsl:variable name="toCentury">
+            <xsl:call-template name="cwrc_date_interval_end">
+                <xsl:with-param name="year_str" select="$toYear"/>
+                <xsl:with-param name="interval_length">
+                    <xsl:number value='100' />
+                </xsl:with-param>
+            </xsl:call-template>
+        </xsl:variable>
+  
+        <xsl:call-template name="cwrc_create_intervals_recursively">
+            <xsl:with-param name="start_year" select="$fromCentury"/>
+            <xsl:with-param name="end_year" select="$toYear"/>
+            <xsl:with-param name="open_ended_range">
+                <xsl:choose>
+                    <xsl:when test="$to_date=''">1</xsl:when>
+                    <xsl:otherwise/>
+                </xsl:choose>
+            </xsl:with-param>
+            <xsl:with-param name="interval_length">
+                <xsl:number value='100' />
+            </xsl:with-param>
+        </xsl:call-template>
+
     </xsl:template>
     
     
@@ -348,16 +431,21 @@
         <xsl:param name="start_year"/>
         <xsl:param name="end_year"/>
         <xsl:param name="open_ended_range"/>
+        <xsl:param name="interval_length" select="number('10')"/>
         
         <xsl:choose>
             <xsl:when test="number($start_year) &lt;= number($end_year)">
+              <!--
                 <xsl:variable name="interval_end_year" select="format-number(number($start_year)+10-1,$cwrc_year_four_digit)"/>
+              -->
+                <xsl:variable name="interval_end_year" select="format-number(number($start_year)+number($interval_length)-1,$cwrc_year_four_digit)"/>
                 <xsl:choose>
                     <xsl:when test="number($interval_end_year) &gt; number($end_year) and $open_ended_range!=''">
                         <xsl:call-template name="cwrc_write_solr_field">
                             <xsl:with-param name="local_content">
                                 <xsl:value-of select="concat($start_year, ' TO NOW')"/>
                             </xsl:with-param>
+                            <xsl:with-param name="interval_length" select="$interval_length"/>
                         </xsl:call-template>
                     </xsl:when>
                     <xsl:otherwise>
@@ -365,6 +453,7 @@
                             <xsl:with-param name="local_content">
                                 <xsl:value-of select="concat($start_year, ' TO ', $interval_end_year)"/>
                             </xsl:with-param>
+                            <xsl:with-param name="interval_length" select="$interval_length"/>
                         </xsl:call-template>
                     </xsl:otherwise>
                 </xsl:choose>
@@ -373,7 +462,9 @@
                     <xsl:with-param name="start_year" select="format-number(number($interval_end_year)+1,$cwrc_year_four_digit)"/>
                     <xsl:with-param name="end_year" select="$end_year"/>
                     <xsl:with-param name="open_ended_range" select="$open_ended_range"/>
+                    <xsl:with-param name="interval_length" select="$interval_length"/>
                 </xsl:call-template>
+              
             </xsl:when>
             <xsl:otherwise>
                 <xsl:text/>
@@ -437,13 +528,17 @@
     <!-- create the start of the interval -->
     <xsl:template name="cwrc_date_interval_start">
         <xsl:param name="year_str"/>
+        <xsl:param name="interval_length" select="number('10')"/>
         
         <!-- replace last character with 0 or 9 (from and to respectively) -->
         <!-- start of date interval: use 'div 10' and floor -->
         <xsl:choose>
             <!-- test if number -->
             <xsl:when test="string(number($year_str))!='NaN'">
+              <!--
                 <xsl:value-of select="format-number(floor(number($year_str) div 10)*10,$cwrc_year_four_digit)"/>
+              -->
+                <xsl:value-of select="format-number(floor(number($year_str) div $interval_length)*number($interval_length),$cwrc_year_four_digit)"/>
             </xsl:when>
             <xsl:otherwise>
                 <xsl:text/>
@@ -455,11 +550,15 @@
     <!-- create the end of the interval -->
     <xsl:template name="cwrc_date_interval_end">
         <xsl:param name="year_str"/>
+        <xsl:param name="interval_length" select="number('10')"/>
         
         <!-- end of date interval: use 'div 10' and ceiling -->
         <xsl:choose>
-            <xsl:when test="string(number($year_str))!='NaN'">
-                <xsl:value-of select="format-number(ceiling(number($year_str) div 10)*10-1,$cwrc_year_four_digit)"/>
+          <xsl:when test="string(number($year_str))!='NaN'">
+              <!--
+              <xsl:value-of select="format-number(ceiling(number($year_str) div 10)*10-1,$cwrc_year_four_digit)"/>
+              -->
+              <xsl:value-of select="format-number(ceiling(number($year_str) div $interval_length)*number($interval_length)-1,$cwrc_year_four_digit)"/>
             </xsl:when>
             <xsl:otherwise>
                 <xsl:text/>
