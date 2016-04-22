@@ -141,6 +141,16 @@
             </xsl:otherwise>
         </xsl:choose>
 
+
+        <!-- index the XML content as text -->
+        <field>
+          <xsl:attribute name="name">
+            <xsl:value-of select="concat($prefix, 'ds_as_text', '_hlt')"/>
+          </xsl:attribute>
+          <xsl:apply-templates select="$content" mode="index_text_nodes_as_a_text_field"/>
+        </field>
+
+
     </xsl:template>
 
 
@@ -219,6 +229,15 @@
                 </xsl:for-each>
             </xsl:otherwise>
         </xsl:choose>
+
+
+        <!-- index the XML content as text -->
+        <field>
+          <xsl:attribute name="name">
+            <xsl:value-of select="concat($prefix, 'ds_as_text', '_hlt')"/>
+          </xsl:attribute>
+          <xsl:apply-templates select="$content" mode="index_text_nodes_as_a_text_field"/>
+        </field>
 
 
     </xsl:template>
@@ -435,6 +454,16 @@
         </xsl:for-each>
         -->
 
+
+        <!-- index the XML content as text -->
+        <field>
+          <xsl:attribute name="name">
+            <xsl:value-of select="concat($prefix, 'ds_as_text', '_hlt')"/>
+          </xsl:attribute>
+          <xsl:apply-templates select="$content" mode="index_text_nodes_as_a_text_field"/>
+        </field>
+
+
     </xsl:template>
 
 
@@ -522,6 +551,16 @@
                 </xsl:for-each>
             </xsl:otherwise>
         </xsl:choose>
+
+
+        <!-- index the XML content as text -->
+        <field>
+          <xsl:attribute name="name">
+            <xsl:value-of select="concat($prefix, 'ds_as_text', '_hlt')"/>
+          </xsl:attribute>
+          <xsl:apply-templates select="$content" mode="index_text_nodes_as_a_text_field"/>
+        </field>
+
 
     </xsl:template>
 
