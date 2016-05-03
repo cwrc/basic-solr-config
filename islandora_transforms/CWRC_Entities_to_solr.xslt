@@ -47,6 +47,19 @@
             <xsl:with-param name="prefix" select="$local_prefix"/>
             <xsl:with-param name="suffix" select="$suffix"/>
         </xsl:apply-templates>
+        
+        <!-- Combination of the preferred and variants - local to current type-->
+        <xsl:apply-templates select="($identity/preferredForm | $identity/variantForms)" mode="cwrc_entities_combined">
+            <xsl:with-param name="prefix" select="$local_prefix"/>
+            <xsl:with-param name="suffix" select="$suffix"/>
+        </xsl:apply-templates>
+
+        <!-- Combination of the preferred and variants - common across entities  -->
+        <xsl:apply-templates select="($identity/preferredForm | $identity/variantForms)" mode="cwrc_entities_combined">
+            <xsl:with-param name="prefix" select="$prefix"/>
+            <xsl:with-param name="suffix" select="$suffix"/>
+        </xsl:apply-templates>
+        
 
         <!-- Descriptive Geo Location - latitude and longitude -->
         <xsl:if test="$description/latitude and $description/longitude">
@@ -94,16 +107,28 @@
 
         <!-- access condition -->
         <xsl:call-template name="assemble_cwrc_access_condition">
-            <xsl:with-param name="prefix" select="$local_prefix"/>
+            <xsl:with-param name="prefix" select="$prefix"/>
             <xsl:with-param name="content" select="$recordInfo/accessCondition"/>
         </xsl:call-template>
 
         <!-- project id -->
         <xsl:call-template name="assemble_cwrc_project_id">
-            <xsl:with-param name="prefix" select="$local_prefix"/>
+            <xsl:with-param name="prefix" select="$prefix"/>
             <xsl:with-param name="content" select="$recordInfo/originInfo/projectId"/>
         </xsl:call-template>
 
+        <!-- sameAs -->
+        <xsl:call-template name="cwrc_entity_simple_field">
+            <xsl:with-param name="field_content" select="$identity/sameAs" />
+            <xsl:with-param name="field_name" select="'sameAs'" />
+        </xsl:call-template>
+ 
+        <!-- entityId -->
+        <xsl:call-template name="cwrc_entity_simple_field">
+            <xsl:with-param name="field_content" select="$recordInfo/entityId" />
+            <xsl:with-param name="field_name" select="'sameAs'" />
+        </xsl:call-template>
+        
         <!-- factuality -->
         <xsl:call-template name="assemble_cwrc_factuality">
             <xsl:with-param name="prefix" select="$prefix"/>
@@ -182,18 +207,42 @@
             <xsl:with-param name="suffix" select="$suffix"/>
         </xsl:apply-templates>
 
+        <!-- Combination of the preferred and variants - local to current type-->
+        <xsl:apply-templates select="($identity/preferredForm | $identity/variantForms)" mode="cwrc_entities_combined">
+            <xsl:with-param name="prefix" select="$local_prefix"/>
+            <xsl:with-param name="suffix" select="$suffix"/>
+        </xsl:apply-templates>
+        
+        <!-- Combination of the preferred and variants - common across entities  -->
+        <xsl:apply-templates select="($identity/preferredForm | $identity/variantForms)" mode="cwrc_entities_combined">
+            <xsl:with-param name="prefix" select="$prefix"/>
+            <xsl:with-param name="suffix" select="$suffix"/>
+        </xsl:apply-templates>
+
         <!-- access condition -->
         <xsl:call-template name="assemble_cwrc_access_condition">
-            <xsl:with-param name="prefix" select="$local_prefix"/>
+            <xsl:with-param name="prefix" select="$prefix"/>
             <xsl:with-param name="content" select="$recordInfo/accessCondition"/>
         </xsl:call-template>
 
         <!-- project id -->
         <xsl:call-template name="assemble_cwrc_project_id">
-            <xsl:with-param name="prefix" select="$local_prefix"/>
+            <xsl:with-param name="prefix" select="$prefix"/>
             <xsl:with-param name="content" select="$recordInfo/originInfo/projectId"/>
         </xsl:call-template>
 
+        <!-- sameAs -->
+        <xsl:call-template name="cwrc_entity_simple_field">
+            <xsl:with-param name="field_content" select="$identity/sameAs" />
+            <xsl:with-param name="field_name" select="'sameAs'" />
+        </xsl:call-template>
+ 
+        <!-- entityId -->
+        <xsl:call-template name="cwrc_entity_simple_field">
+            <xsl:with-param name="field_content" select="$recordInfo/entityId" />
+            <xsl:with-param name="field_name" select="'sameAs'" />
+        </xsl:call-template>
+        
         <!-- factuality -->
         <xsl:call-template name="assemble_cwrc_factuality">
             <xsl:with-param name="prefix" select="$prefix"/>
@@ -264,11 +313,37 @@
             <xsl:with-param name="suffix" select="$suffix"/>
         </xsl:apply-templates>
 
+        <!-- combined titles - local to current entity type -->
+        <xsl:apply-templates select="$identity/mods:titleInfo/mods:title | $identity/mods:titleInfo/mods:relatedItem/mods:title" mode="cwrc_entities_combined">
+            <xsl:with-param name="prefix" select="$local_prefix"/>
+            <xsl:with-param name="suffix" select="$suffix"/>
+        </xsl:apply-templates>
+
+        <!-- combined titles - common field across all entities-->
+        <xsl:apply-templates select="$identity/mods:titleInfo/mods:title | $identity/mods:titleInfo/mods:relatedItem/mods:title" mode="cwrc_entities_combined">
+            <xsl:with-param name="prefix" select="$prefix"/>
+            <xsl:with-param name="suffix" select="$suffix"/>
+        </xsl:apply-templates>
+        
+
         <!-- ensure that the author name -->
         <xsl:apply-templates select="$identity/mods:name" mode="cwrc_entities">
             <xsl:with-param name="prefix" select="$local_prefix"/>
             <xsl:with-param name="suffix" select="$suffix"/>
         </xsl:apply-templates>
+
+        <!-- publisher -->
+        <xsl:apply-templates select="$identity/mods:originInfo/mods:publisher | $identity/mods:relatedItem/mods:originInfo/mods:publisher" mode="cwrc_entities">
+            <xsl:with-param name="prefix" select="$local_prefix"/>
+            <xsl:with-param name="suffix" select="$suffix"/>
+        </xsl:apply-templates>
+        
+        <!-- MODS Description -->
+        <xsl:apply-templates select="$identity/mods:tableOfContents | $identity/mods:relatedItem/mods:tableOfContents | $identity/mods:abstract | $identity/mods:relatedItem/mods:abstract | $identity/mods:note | $identity/mods:relatedItem/mods:note" mode="cwrc_entities">
+            <xsl:with-param name="prefix" select="$local_prefix"/>
+            <xsl:with-param name="suffix" select="$suffix"/>
+        </xsl:apply-templates>
+        
 
         <!--
         Date location logic
@@ -363,7 +438,7 @@
             
         <!-- access condition -->
         <xsl:call-template name="assemble_cwrc_access_condition">
-            <xsl:with-param name="prefix" select="$local_prefix"/>
+            <xsl:with-param name="prefix" select="$prefix"/>
             <xsl:with-param name="content" select="$identity/mods:accessCondition"/>
         </xsl:call-template>
 
@@ -496,6 +571,18 @@
             <xsl:with-param name="suffix" select="$suffix"/>
         </xsl:apply-templates>
 
+        <!-- Combination of the preferred and variants - local to current type-->
+        <xsl:apply-templates select="($identity/preferredForm | $identity/variantForms)" mode="cwrc_entities_combined">
+            <xsl:with-param name="prefix" select="$local_prefix"/>
+            <xsl:with-param name="suffix" select="$suffix"/>
+        </xsl:apply-templates>
+        
+        <!-- Combination of the preferred and variants - common across entities  -->
+        <xsl:apply-templates select="($identity/preferredForm | $identity/variantForms)" mode="cwrc_entities_combined">
+            <xsl:with-param name="prefix" select="$prefix"/>
+            <xsl:with-param name="suffix" select="$suffix"/>
+        </xsl:apply-templates>
+
         <!-- Descriptive Birthdate -->
         <!-- assume all date types are Birth or Death -->
         <xsl:apply-templates select="$description/existDates">
@@ -505,22 +592,33 @@
 
         <!-- access condition -->
         <xsl:call-template name="assemble_cwrc_access_condition">
-            <xsl:with-param name="prefix" select="$local_prefix"/>
+            <xsl:with-param name="prefix" select="$prefix"/>
             <xsl:with-param name="content" select="$recordInfo/accessCondition"/>
         </xsl:call-template>
 
         <!-- project id -->
         <xsl:call-template name="assemble_cwrc_project_id">
-            <xsl:with-param name="prefix" select="$local_prefix"/>
+            <xsl:with-param name="prefix" select="$prefix"/>
             <xsl:with-param name="content" select="$recordInfo/originInfo/projectId"/>
         </xsl:call-template>
 
+        <!-- sameAs -->
+        <xsl:call-template name="cwrc_entity_simple_field">
+            <xsl:with-param name="field_content" select="$identity/sameAs" />
+            <xsl:with-param name="field_name" select="'sameAs'" />
+        </xsl:call-template>
+
+        <!-- entityId -->
+        <xsl:call-template name="cwrc_entity_simple_field">
+            <xsl:with-param name="field_content" select="$recordInfo/entityId" />
+            <xsl:with-param name="field_name" select="'sameAs'" />
+        </xsl:call-template>
+        
         <!-- factuality -->
         <xsl:call-template name="assemble_cwrc_factuality">
             <xsl:with-param name="prefix" select="$prefix"/>
             <xsl:with-param name="content" select="$description/factuality"/>
         </xsl:call-template>
-
 
         <!-- date facets -->
         <!-- if then assume range otherwise treat as point date -->
@@ -625,6 +723,41 @@
         </xsl:for-each>
 
     </xsl:template>
+
+    <!-- CWRC entity combined forms -->
+    <xsl:template match="preferredForm | variantForms" mode="cwrc_entities_combined">
+        <xsl:param name="prefix"/>
+        <xsl:param name="suffix"/>
+        
+        <xsl:for-each select="preferredForm | variant">
+            
+            <field>
+                <xsl:attribute name="name">
+                    <xsl:value-of select="concat($prefix, 'combined', $suffix)"/>
+                </xsl:attribute>
+                
+                <xsl:call-template name="assemble_cwrc_person_name"/>
+            </field>
+            
+        </xsl:for-each>
+        
+    </xsl:template>
+    
+    <!-- Simple solr field -->
+    <xsl:template name="cwrc_entity_simple_field" mode="cwrc_entities_combined">
+        <xsl:param name="field_name"/>
+        <xsl:param name="field_content"/>
+        
+        <field>
+            <xsl:attribute name="name">
+                <xsl:value-of select="$field_name"/>
+            </xsl:attribute>
+            
+            <xsl:value-of select="$field_content" />
+        </field>
+        
+    </xsl:template>
+    
 
 
     <!-- Descriptive Birthdate -->
@@ -734,6 +867,22 @@
 
     </xsl:template>
 
+    <!-- CWRC  title forms -->
+    <xsl:template match="mods:titleInfo/mods:title" mode="cwrc_entities_combined">
+        <xsl:param name="prefix"/>
+        <xsl:param name="suffix"/>
+        
+        <field>
+            <xsl:attribute name="name">
+                <xsl:value-of select="concat($prefix, 'combined', $suffix)"/>
+            </xsl:attribute>
+            
+            <xsl:value-of select="./text()"/>
+            
+        </field>
+        
+    </xsl:template>
+
     <!-- CWRC title author(s) name forms -->
     <xsl:template match="mods:name" mode="cwrc_entities">
         <xsl:param name="prefix"/>
@@ -748,6 +897,56 @@
         </field>
 
     </xsl:template>
+
+
+    <!-- CWRC title: publisher -->
+    <xsl:template match="mods:publisher" mode="cwrc_entities">
+        <xsl:param name="prefix" />
+        <xsl:param name="suffix" />
+
+        <field>
+            <xsl:attribute name="name">
+                <xsl:value-of select="concat($prefix, 'publisher', $suffix)"/>
+            </xsl:attribute>
+
+            <xsl:value-of select="./text()"/>
+            
+        </field>
+        
+    </xsl:template>
+    
+    <!-- CWRC title: MODS Description -->
+    <xsl:template match="mods:tableOfContents | mods:abstract | mods:note" mode="cwrc_entities">
+        <xsl:param name="prefix" />
+        <xsl:param name="suffix" />
+
+        <field>
+            <xsl:attribute name="name">
+                <xsl:value-of select="concat($prefix, 'description', $suffix)"/>
+            </xsl:attribute>
+            
+            <xsl:value-of select="./text()"/>
+            
+        </field>
+        
+    </xsl:template>
+    
+    <!-- CWRC title: MODS Description -->
+    <xsl:template match="mods:tableOfContents | mods:abstract | mods:note" mode="cwrc_entities">
+        <xsl:param name="prefix" />
+        <xsl:param name="suffix" />
+        
+        <field>
+            <xsl:attribute name="name">
+                <xsl:value-of select="concat($prefix, 'description', $suffix)"/>
+            </xsl:attribute>
+            
+            <xsl:value-of select="./text()"/>
+            
+        </field>
+        
+    </xsl:template>
+    
 
 
     <!-- given a title entity figure out the type/format -->
