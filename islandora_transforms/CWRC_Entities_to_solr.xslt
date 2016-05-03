@@ -49,13 +49,13 @@
         </xsl:apply-templates>
         
         <!-- Combination of the preferred and variants - local to current type-->
-        <xsl:apply-templates select="($identity/preferredForm | $identity/variantForms)" mode="cwrc_entities_combined">
+        <xsl:apply-templates select="($identity/preferredForm | $identity/variantForms/variant)" mode="cwrc_entities_combined">
             <xsl:with-param name="prefix" select="$local_prefix"/>
             <xsl:with-param name="suffix" select="$suffix"/>
         </xsl:apply-templates>
 
         <!-- Combination of the preferred and variants - common across entities  -->
-        <xsl:apply-templates select="($identity/preferredForm | $identity/variantForms)" mode="cwrc_entities_combined">
+        <xsl:apply-templates select="($identity/preferredForm | $identity/variantForms/variant)" mode="cwrc_entities_combined">
             <xsl:with-param name="prefix" select="$prefix"/>
             <xsl:with-param name="suffix" select="$suffix"/>
         </xsl:apply-templates>
@@ -208,13 +208,13 @@
         </xsl:apply-templates>
 
         <!-- Combination of the preferred and variants - local to current type-->
-        <xsl:apply-templates select="($identity/preferredForm | $identity/variantForms)" mode="cwrc_entities_combined">
+        <xsl:apply-templates select="($identity/preferredForm | $identity/variantForms/variant)" mode="cwrc_entities_combined">
             <xsl:with-param name="prefix" select="$local_prefix"/>
             <xsl:with-param name="suffix" select="$suffix"/>
         </xsl:apply-templates>
         
         <!-- Combination of the preferred and variants - common across entities  -->
-        <xsl:apply-templates select="($identity/preferredForm | $identity/variantForms)" mode="cwrc_entities_combined">
+        <xsl:apply-templates select="($identity/preferredForm | $identity/variantForms/variant)" mode="cwrc_entities_combined">
             <xsl:with-param name="prefix" select="$prefix"/>
             <xsl:with-param name="suffix" select="$suffix"/>
         </xsl:apply-templates>
@@ -572,13 +572,13 @@
         </xsl:apply-templates>
 
         <!-- Combination of the preferred and variants - local to current type-->
-        <xsl:apply-templates select="($identity/preferredForm | $identity/variantForms)" mode="cwrc_entities_combined">
+        <xsl:apply-templates select="($identity/preferredForm | $identity/variantForms/variant)" mode="cwrc_entities_combined">
             <xsl:with-param name="prefix" select="$local_prefix"/>
             <xsl:with-param name="suffix" select="$suffix"/>
         </xsl:apply-templates>
         
         <!-- Combination of the preferred and variants - common across entities  -->
-        <xsl:apply-templates select="($identity/preferredForm | $identity/variantForms)" mode="cwrc_entities_combined">
+        <xsl:apply-templates select="($identity/preferredForm | $identity/variantForms/variant)" mode="cwrc_entities_combined">
             <xsl:with-param name="prefix" select="$prefix"/>
             <xsl:with-param name="suffix" select="$suffix"/>
         </xsl:apply-templates>
@@ -725,22 +725,19 @@
     </xsl:template>
 
     <!-- CWRC entity combined forms -->
-    <xsl:template match="preferredForm | variantForms" mode="cwrc_entities_combined">
+    <xsl:template match="preferredForm | variantForms/variant" mode="cwrc_entities_combined">
         <xsl:param name="prefix"/>
         <xsl:param name="suffix"/>
         
-        <xsl:for-each select="preferredForm | variant">
+        <field>
+            <xsl:attribute name="name">
+                <xsl:value-of select="concat($prefix, 'combined', $suffix)"/>
+            </xsl:attribute>
             
-            <field>
-                <xsl:attribute name="name">
-                    <xsl:value-of select="concat($prefix, 'combined', $suffix)"/>
-                </xsl:attribute>
-                
-                <xsl:call-template name="assemble_cwrc_person_name"/>
-            </field>
-            
-        </xsl:for-each>
-        
+            <xsl:call-template name="assemble_cwrc_person_name"/>
+        </field>
+          
+      
     </xsl:template>
     
     <!-- Simple solr field -->
