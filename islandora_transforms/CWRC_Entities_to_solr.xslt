@@ -120,13 +120,13 @@
         <!-- sameAs -->
         <xsl:call-template name="cwrc_entity_simple_field">
             <xsl:with-param name="field_content" select="$identity/sameAs" />
-            <xsl:with-param name="field_name" select="'sameAs'" />
+            <xsl:with-param name="field_name" select="concat($prefix,'sameAs','_ms')" />
         </xsl:call-template>
  
         <!-- entityId -->
         <xsl:call-template name="cwrc_entity_simple_field">
             <xsl:with-param name="field_content" select="$recordInfo/entityId" />
-            <xsl:with-param name="field_name" select="'sameAs'" />
+            <xsl:with-param name="field_name" select="concat($prefix,'entityId','_ms')" />
         </xsl:call-template>
         
         <!-- factuality -->
@@ -234,13 +234,13 @@
         <!-- sameAs -->
         <xsl:call-template name="cwrc_entity_simple_field">
             <xsl:with-param name="field_content" select="$identity/sameAs" />
-            <xsl:with-param name="field_name" select="'sameAs'" />
+            <xsl:with-param name="field_name" select="concat($prefix,'sameAs','_ms')" />
         </xsl:call-template>
  
         <!-- entityId -->
         <xsl:call-template name="cwrc_entity_simple_field">
             <xsl:with-param name="field_content" select="$recordInfo/entityId" />
-            <xsl:with-param name="field_name" select="'sameAs'" />
+            <xsl:with-param name="field_name" select="concat($prefix,'entityId','_ms')" />
         </xsl:call-template>
         
         <!-- factuality -->
@@ -605,13 +605,13 @@
         <!-- sameAs -->
         <xsl:call-template name="cwrc_entity_simple_field">
             <xsl:with-param name="field_content" select="$identity/sameAs" />
-            <xsl:with-param name="field_name" select="'sameAs'" />
+            <xsl:with-param name="field_name" select="concat($prefix,'sameAs','_ms')" />
         </xsl:call-template>
 
         <!-- entityId -->
         <xsl:call-template name="cwrc_entity_simple_field">
             <xsl:with-param name="field_content" select="$recordInfo/entityId" />
-            <xsl:with-param name="field_name" select="'sameAs'" />
+            <xsl:with-param name="field_name" select="concat($prefix,'entityId','_ms')" />
         </xsl:call-template>
         
         <!-- factuality -->
