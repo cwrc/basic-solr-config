@@ -529,6 +529,19 @@
         </xsl:for-each>
         -->
 
+        <!-- source of record -->
+        <xsl:call-template name="cwrc_entity_simple_field">
+          <xsl:with-param name="field_content" select="$identity/mods:recordInfo/mods:recordContentSource" />
+            <xsl:with-param name="field_name" select="concat($prefix,'project_id','_ms')" />
+        </xsl:call-template>
+
+        <!-- entityId -->
+        <xsl:call-template name="cwrc_entity_simple_field">
+          <xsl:with-param name="field_content" select="$identity/mods:identifier" />
+            <xsl:with-param name="field_name" select="concat($prefix,'entityId','_ms')" />
+        </xsl:call-template>
+        
+
 
         <!-- index the XML content as text -->
         <field>

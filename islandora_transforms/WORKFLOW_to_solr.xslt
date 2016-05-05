@@ -25,14 +25,15 @@
             </xsl:otherwise>
           </xsl:choose>
         </xsl:with-param>
-        <xsl:with-param name="date_suffix" select="'dt'" />
+        <xsl:with-param name="date_suffix" select="'mdt'" />
         <xsl:with-param name="date_suffix_current_superceded">
+          <!-- ToDo: unsure why 'dt' and 'ms" - why not 'dt' and 'mdt'? -->
           <xsl:choose>
             <xsl:when test="position() = last()">
               <xsl:value-of select="concat('current_', 'dt')"/>
             </xsl:when>
             <xsl:otherwise>
-              <xsl:value-of select="concat('superceded_', 'dt')"/>
+              <xsl:value-of select="concat('superceded_', 'ms')"/>
             </xsl:otherwise>
           </xsl:choose>
         </xsl:with-param>
