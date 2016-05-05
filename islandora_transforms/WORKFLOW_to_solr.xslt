@@ -14,7 +14,8 @@
       <!-- build current and superceded fields -->
       <xsl:apply-templates mode="slurping_WORKFLOW" select=".">
         <xsl:with-param name="prefix" select="$prefix"/>
-        <xsl:with-param name="suffix">
+        <xsl:with-param name="suffix" select="$suffix"/>
+        <xsl:with-param name="suffix_current_superceded">
           <xsl:choose>
             <xsl:when test="position() = last()">
               <xsl:value-of select="concat('current_', $suffix)"/>
@@ -50,14 +51,14 @@
   <xsl:template match="*" mode="slurping_WORKFLOW">
     <xsl:param name="prefix"/>
     <xsl:param name="suffix"/>
+    <xsl:param name="suffix_current_superceded"/>
     <xsl:param name="date_suffix"/>
     <xsl:variable name="this_prefix" select="concat($prefix, local-name(), '_')"/>
     <!-- Index Attributes -->
     <xsl:for-each select="@*">
       <xsl:choose>
         <xsl:when test="name()='date'">
-          <!--  modify date -->
-
+          <!--  date modified attribute -->
           <xsl:variable name="textValue">
             <xsl:call-template name="get_ISO8601_date">
               <xsl:with-param name='date' select="concat(., 'T',ancestor::node()/@time)" />
@@ -71,8 +72,14 @@
           </xsl:call-template>
         </xsl:when>
         <xsl:otherwise>
+          <!--  other attributes -->
           <xsl:call-template name="indexField">
             <xsl:with-param name="name" select="concat($this_prefix, local-name(), '_', $suffix)"/>
+            <xsl:with-param name="value" select="."/>
+          </xsl:call-template>
+          <!-- split current and superceded -->
+          <xsl:call-template name="indexField">
+            <xsl:with-param name="name" select="concat($this_prefix, local-name(), '_', $suffix_current_superceded)"/>
             <xsl:with-param name="value" select="."/>
           </xsl:call-template>
         </xsl:otherwise>
@@ -85,10 +92,17 @@
         <xsl:with-param name="name" select="concat($this_prefix, $suffix)"/>
         <xsl:with-param name="value" select="normalize-space(text())"/>
       </xsl:call-template>
+      <!-- split current and superceded -->
+      <xsl:call-template name="indexField">
+        <xsl:with-param name="name" select="concat($this_prefix, $suffix_current_superceded)"/>
+        <xsl:with-param name="value" select="normalize-space(text())"/>
+      </xsl:call-template>
     </xsl:if>
+    <!-- recursive call -->
     <xsl:apply-templates mode="slurping_WORKFLOW">
       <xsl:with-param name="prefix" select="$this_prefix"/>
       <xsl:with-param name="suffix" select="$suffix"/>
+      <xsl:with-param name="suffix" select="$suffix_current_superceded"/>
     </xsl:apply-templates>
   </xsl:template>
 
