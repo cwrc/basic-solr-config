@@ -741,7 +741,7 @@
     </xsl:template>
     
     <!-- Simple solr field -->
-    <xsl:template name="cwrc_entity_simple_field" mode="cwrc_entities_combined">
+    <xsl:template name="cwrc_entity_simple_field">
         <xsl:param name="field_name"/>
         <xsl:param name="field_content"/>
         
