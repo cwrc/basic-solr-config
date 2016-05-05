@@ -25,13 +25,14 @@
             </xsl:otherwise>
           </xsl:choose>
         </xsl:with-param>
-        <xsl:with-param name="date_suffix">
+        <xsl:with-param name="date_suffix" select="'dt'" />
+        <xsl:with-param name="date_suffix_current_superceded">
           <xsl:choose>
             <xsl:when test="position() = last()">
               <xsl:value-of select="concat('current_', 'dt')"/>
             </xsl:when>
             <xsl:otherwise>
-              <xsl:value-of select="concat('superceded_', $suffix)"/>
+              <xsl:value-of select="concat('superceded_', 'dt')"/>
             </xsl:otherwise>
           </xsl:choose>
         </xsl:with-param>
@@ -53,6 +54,8 @@
     <xsl:param name="suffix"/>
     <xsl:param name="suffix_current_superceded"/>
     <xsl:param name="date_suffix"/>
+    <xsl:param name="date_suffix_current_superceded"/>
+
     <xsl:variable name="this_prefix" select="concat($prefix, local-name(), '_')"/>
     <!-- Index Attributes -->
     <xsl:for-each select="@*">
@@ -68,6 +71,10 @@
           </xsl:variable>
           <xsl:call-template name="indexField">
             <xsl:with-param name="name" select="concat($this_prefix, local-name(), '_', $date_suffix)"/>
+            <xsl:with-param name="value" select="$textValue"/>
+          </xsl:call-template>
+          <xsl:call-template name="indexField">
+            <xsl:with-param name="name" select="concat($this_prefix, local-name(), '_', $date_suffix_current_superceded)"/>
             <xsl:with-param name="value" select="$textValue"/>
           </xsl:call-template>
         </xsl:when>
@@ -98,11 +105,14 @@
         <xsl:with-param name="value" select="normalize-space(text())"/>
       </xsl:call-template>
     </xsl:if>
+    
     <!-- recursive call -->
     <xsl:apply-templates mode="slurping_WORKFLOW">
       <xsl:with-param name="prefix" select="$this_prefix"/>
       <xsl:with-param name="suffix" select="$suffix"/>
       <xsl:with-param name="suffix_current_superceded" select="$suffix_current_superceded"/>
+      <xsl:with-param name="date_suffix" select="$date_suffix"/>
+      <xsl:with-param name="date_suffix_current_superceded" select="$date_suffix_current_superceded" />
     </xsl:apply-templates>
   </xsl:template>
 
