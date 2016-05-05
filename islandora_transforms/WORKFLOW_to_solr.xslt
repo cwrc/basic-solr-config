@@ -102,7 +102,7 @@
     <xsl:apply-templates mode="slurping_WORKFLOW">
       <xsl:with-param name="prefix" select="$this_prefix"/>
       <xsl:with-param name="suffix" select="$suffix"/>
-      <xsl:with-param name="suffix" select="$suffix_current_superceded"/>
+      <xsl:with-param name="suffix_current_superceded" select="$suffix_current_superceded"/>
     </xsl:apply-templates>
   </xsl:template>
 
