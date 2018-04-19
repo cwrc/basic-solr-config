@@ -2,7 +2,15 @@
 
 <!-- Basic CWRC Entities - transform for Solr -->
 
-<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:foxml="info:fedora/fedora-system:def/foxml#" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:mods="http://www.loc.gov/mods/v3" exclude-result-prefixes="mods">
+<xsl:stylesheet 
+  version="1.0" 
+  xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
+  xmlns:foxml="info:fedora/fedora-system:def/foxml#" 
+  xmlns:xlink="http://www.w3.org/1999/xlink" 
+  xmlns:mods="http://www.loc.gov/mods/v3" 
+  xmlns:tei="http://www.tei-c.org/ns/1.0"
+  exclude-result-prefixes="mods"
+  >
     <!--
 
     <xsl:include href="/usr/local/fedora/tomcat/webapps/fedoragsearch/WEB-INF/classes/fgsconfigFinal/index/FgsIndex/islandora_transforms/CWRC_GeoLoc.xslt" />
@@ -30,11 +38,52 @@
         <xsl:param name="prefix" select="'cwrc_entity_'"/>
         <xsl:param name="suffix" select="'_et'"/>
         <!-- 'edged' (edge n-gram) text, for auto-completion -->
+        
+        <xsl:variable name="local_prefix" select="concat($prefix, 'place_')"/>
+        <xsl:variable name="base_xpath" select="$content/tei:TEI/tei:text/tei:body/tei:listPlace/tei:place"/>
+
+        <!-- index the XML content as text -->
+        <field>
+          <xsl:attribute name="name">
+            <xsl:value-of select="concat($prefix, 'ds_as_text', '_hlt')"/>
+          </xsl:attribute>
+          <xsl:apply-templates select="$content" mode="index_text_nodes_as_a_text_field"/>
+        </field>
+
+        <!-- TEI preferred name: ensure that the preferred name is first - cwrc_entity_place_preferredForm_et  -->
+        <xsl:apply-templates select="$base_xpath/tei:placeName[@type='standard']" mode="cwrc_tei_place_entities">
+            <xsl:with-param name="field_name" select="concat($prefix, 'preferredForm', $suffix)"/>
+        </xsl:apply-templates>
+
+        <!-- TEI: variant forms of the name - cwrc_entity_place_variantForm_et  -->
+        <xsl:apply-templates select="$base_xpath/tei:placeName[@type='variant']" mode="cwrc_tei_place_entities">
+            <xsl:with-param name="field_name" select="concat($prefix, 'variantForm', $suffix)"/>
+        </xsl:apply-templates>
+
+        <!-- TEI: Combination of the preferred and variants - place only -  cwrc_entity_place_combined_et -->
+        <xsl:apply-templates select="$base_xpath/tei:placeName[@type='standard'] | $base_xpath/tei:placeName[@type='variant']" mode="cwrc_tei_place_entities_combined">
+            <xsl:with-param name="prefix" select="$local_prefix"/>
+            <xsl:with-param name="suffix" select="$suffix"/>
+        </xsl:apply-templates>
+
+
+        <!-- TEI: Combination of the preferred and variants - common across entities - cwrc_entity_combined_et -->
+        <xsl:apply-templates select="$base_xpath/tei:placeName[@type='standard'] | $base_xpath/tei:placeName[@type='variant']" mode="cwrc_tei_place_entities_combined">
+            <xsl:with-param name="prefix" select="$prefix"/>
+            <xsl:with-param name="suffix" select="$suffix"/>
+        </xsl:apply-templates>
+
+        <!-- access condition -->
+        <xsl:apply-templates select="$content/tei:TEI/tei:teiHeader/tei:fileDesc/tei:publicationStmt/tei:availability/tei:licence" mode="cwrc_tei_assemble_access_condition">
+            <xsl:with-param name="prefix" select="$prefix"/>
+        </xsl:apply-templates>
+
+
+
 
         <xsl:variable name="identity" select="$content/entity/place/identity"/>
         <xsl:variable name="description" select="$content/entity/place/description"/>
         <xsl:variable name="recordInfo" select="$content/entity/place/recordInfo"/>
-        <xsl:variable name="local_prefix" select="concat($prefix, 'place_')"/>
 
         <!-- ensure that the preferred name is first -->
         <xsl:apply-templates select="$identity/preferredForm">
@@ -166,16 +215,6 @@
             </xsl:otherwise>
         </xsl:choose>
 
-
-        <!-- index the XML content as text -->
-        <field>
-          <xsl:attribute name="name">
-            <xsl:value-of select="concat($prefix, 'ds_as_text', '_hlt')"/>
-          </xsl:attribute>
-          <xsl:apply-templates select="$content" mode="index_text_nodes_as_a_text_field"/>
-        </field>
-
-
     </xsl:template>
 
 
@@ -189,11 +228,53 @@
         <xsl:param name="suffix" select="'_et'"/>
         <!-- 'edged' (edge n-gram) text, for auto-completion -->
 
+        <xsl:variable name="local_prefix" select="concat($prefix, 'org_')"/>
+
+        <xsl:variable name="base_xpath" select="$content/tei:TEI/tei:text/tei:body/tei:listOrg/tei:org"/>
+
+        <!-- index the XML content as text -->
+        <field>
+          <xsl:attribute name="name">
+            <xsl:value-of select="concat($prefix, 'ds_as_text', '_hlt')"/>
+          </xsl:attribute>
+          <xsl:apply-templates select="$content" mode="index_text_nodes_as_a_text_field"/>
+        </field>
+
+        <!-- TEI preferred name: ensure that the preferred name is first - cwrc_entity_org_preferredForm_et  -->
+        <xsl:apply-templates select="$base_xpath/tei:orgName[@type='standard']" mode="cwrc_tei_org_entities">
+            <xsl:with-param name="field_name" select="concat($prefix, 'preferredForm', $suffix)"/>
+        </xsl:apply-templates>
+
+        <!-- TEI: variant forms of the name - cwrc_entity_org_variantForm_et  -->
+        <xsl:apply-templates select="$base_xpath/tei:orgName[@type='variant']" mode="cwrc_tei_org_entities">
+            <xsl:with-param name="field_name" select="concat($prefix, 'variantForm', $suffix)"/>
+        </xsl:apply-templates>
+
+        <!-- TEI: Combination of the preferred and variants - org only -  cwrc_entity_org_combined_et -->
+        <xsl:apply-templates select="$base_xpath/tei:orgName[@type='standard'] | $base_xpath/tei:orgName[@type='variant']" mode="cwrc_tei_org_entities_combined">
+            <xsl:with-param name="prefix" select="$local_prefix"/>
+            <xsl:with-param name="suffix" select="$suffix"/>
+        </xsl:apply-templates>
+
+
+        <!-- TEI: Combination of the preferred and variants - common across entities - cwrc_entity_combined_et -->
+        <xsl:apply-templates select="$base_xpath/tei:orgName[@type='standard'] | $base_xpath/tei:orgName[@type='variant']" mode="cwrc_tei_org_entities_combined">
+            <xsl:with-param name="prefix" select="$prefix"/>
+            <xsl:with-param name="suffix" select="$suffix"/>
+        </xsl:apply-templates>
+
+        <!-- access condition -->
+        <xsl:apply-templates select="$content/tei:TEI/tei:teiHeader/tei:fileDesc/tei:publicationStmt/tei:availability/tei:licence" mode="cwrc_tei_assemble_access_condition">
+            <xsl:with-param name="prefix" select="$prefix"/>
+        </xsl:apply-templates>
+
+
+
+
+        <!-- CWRC LEGACY ENTITIES -->
         <xsl:variable name="identity" select="$content/entity/organization/identity"/>
         <xsl:variable name="description" select="$content/entity/organization/description"/>
         <xsl:variable name="recordInfo" select="$content/entity/organization/recordInfo"/>
-        <xsl:variable name="local_prefix" select="concat($prefix, 'org_')"/>
-
 
         <!-- ensure that the preferred name is first -->
         <xsl:apply-templates select="$identity/preferredForm">
@@ -218,7 +299,7 @@
             <xsl:with-param name="prefix" select="$prefix"/>
             <xsl:with-param name="suffix" select="$suffix"/>
         </xsl:apply-templates>
-
+        
         <!-- access condition -->
         <xsl:call-template name="assemble_cwrc_access_condition">
             <xsl:with-param name="prefix" select="$prefix"/>
@@ -226,28 +307,36 @@
         </xsl:call-template>
 
         <!-- project id -->
+        <!--
         <xsl:call-template name="assemble_cwrc_project_id">
             <xsl:with-param name="prefix" select="$prefix"/>
             <xsl:with-param name="content" select="$recordInfo/originInfo/projectId"/>
         </xsl:call-template>
+        -->
 
         <!-- sameAs -->
+        <!--
         <xsl:call-template name="cwrc_entity_simple_field">
             <xsl:with-param name="field_content" select="$identity/sameAs" />
             <xsl:with-param name="field_name" select="concat($prefix,'sameAs','_ms')" />
         </xsl:call-template>
+        -->
  
         <!-- entityId -->
+        <!--
         <xsl:call-template name="cwrc_entity_simple_field">
             <xsl:with-param name="field_content" select="$recordInfo/entityId" />
             <xsl:with-param name="field_name" select="concat($prefix,'entityId','_ms')" />
         </xsl:call-template>
+        -->
         
         <!-- factuality -->
+        <!--
         <xsl:call-template name="assemble_cwrc_factuality">
             <xsl:with-param name="prefix" select="$prefix"/>
             <xsl:with-param name="content" select="$description/factuality"/>
         </xsl:call-template>
+        -->
 
         <!-- date facets -->
         <!-- if establishement then assume range otherwise treat as point date -->
@@ -279,14 +368,6 @@
             </xsl:otherwise>
         </xsl:choose>
 
-
-        <!-- index the XML content as text -->
-        <field>
-          <xsl:attribute name="name">
-            <xsl:value-of select="concat($prefix, 'ds_as_text', '_hlt')"/>
-          </xsl:attribute>
-          <xsl:apply-templates select="$content" mode="index_text_nodes_as_a_text_field"/>
-        </field>
 
 
     </xsl:template>
@@ -541,17 +622,6 @@
             <xsl:with-param name="field_name" select="concat($prefix,'entityId','_ms')" />
         </xsl:call-template>
         
-
-
-        <!-- index the XML content as text -->
-        <field>
-          <xsl:attribute name="name">
-            <xsl:value-of select="concat($prefix, 'ds_as_text', '_hlt')"/>
-          </xsl:attribute>
-          <xsl:apply-templates select="$content" mode="index_text_nodes_as_a_text_field"/>
-        </field>
-
-
     </xsl:template>
 
 
@@ -567,10 +637,58 @@
         <xsl:param name="suffix" select="'_et'"/>
         <!-- 'edged' (edge n-gram) text, for auto-completion -->
 
+        <xsl:variable name="local_prefix" select="concat($prefix, 'person_')"/>
+
+        <xsl:variable name="base_xpath" select="$content/tei:TEI/tei:text/tei:body/tei:listPerson/tei:person"/>
+
+        <!-- index the XML content as text -->
+        <field>
+          <xsl:attribute name="name">
+            <xsl:value-of select="concat($prefix, 'ds_as_text', '_hlt')"/>
+          </xsl:attribute>
+          <xsl:apply-templates select="$content" mode="index_text_nodes_as_a_text_field"/>
+        </field>
+
+
+        <!-- TEI preferred name: ensure that the preferred name is first - cwrc_entity_person_preferredForm_et  -->
+        <xsl:apply-templates select="$base_xpath/tei:persName[@type='standard']" mode="cwrc_tei_person_entities">
+            <xsl:with-param name="field_name" select="concat($prefix, 'preferredForm', $suffix)"/>
+        </xsl:apply-templates>
+
+        <!-- TEI: variant forms of the name - cwrc_entity_person_variantForm_et  -->
+        <xsl:apply-templates select="$base_xpath/tei:persName[@type='variant']" mode="cwrc_tei_person_entities">
+            <xsl:with-param name="field_name" select="concat($prefix, 'variantForm', $suffix)"/>
+        </xsl:apply-templates>
+
+        <!-- TEI: Combination of the preferred and variants - person only -  cwrc_entity_person_combined_et -->
+        <xsl:apply-templates select="$base_xpath/tei:persName[@type='standard'] | $base_xpath/tei:persName[@type='variant']" mode="cwrc_tei_person_entities_combined">
+            <xsl:with-param name="prefix" select="$local_prefix"/>
+            <xsl:with-param name="suffix" select="$suffix"/>
+        </xsl:apply-templates>
+
+
+        <!-- TEI: Combination of the preferred and variants - common across entities - cwrc_entity_combined_et -->
+        <xsl:apply-templates select="$base_xpath/tei:persName[@type='standard'] | $base_xpath/tei:persName[@type='variant']" mode="cwrc_tei_person_entities_combined">
+            <xsl:with-param name="prefix" select="$prefix"/>
+            <xsl:with-param name="suffix" select="$suffix"/>
+        </xsl:apply-templates>
+
+        <!-- access condition -->
+        <xsl:apply-templates select="$content/tei:TEI/tei:teiHeader/tei:fileDesc/tei:publicationStmt/tei:availability/tei:licence" mode="cwrc_tei_assemble_access_condition">
+            <xsl:with-param name="prefix" select="$prefix"/>
+        </xsl:apply-templates>
+
+
+
+        <!-- CWRC LEGACY ENTITIES -->
         <xsl:variable name="identity" select="$content/entity/person/identity"/>
         <xsl:variable name="description" select="$content/entity/person/description"/>
         <xsl:variable name="recordInfo" select="$content/entity/person/recordInfo"/>
         <xsl:variable name="local_prefix" select="concat($prefix, 'person_')"/>
+
+        <xsl:variable name="tei_identity" select="./TEI/text/body/listPerson/person"/>
+
+
 
         <!-- ensure that the preferred name is first -->
         <xsl:apply-templates select="$identity/preferredForm">
@@ -663,16 +781,6 @@
             </xsl:otherwise>
         </xsl:choose>
 
-
-        <!-- index the XML content as text -->
-        <field>
-          <xsl:attribute name="name">
-            <xsl:value-of select="concat($prefix, 'ds_as_text', '_hlt')"/>
-          </xsl:attribute>
-          <xsl:apply-templates select="$content" mode="index_text_nodes_as_a_text_field"/>
-        </field>
-
-
     </xsl:template>
 
 
@@ -701,6 +809,163 @@
 
     </xsl:template>
 
+    <!-- TEI Org name -->
+    <xsl:template match="tei:orgName" mode="cwrc_tei_org_entities">
+        <xsl:param name="field_name"/>
+
+        <field>
+            <xsl:attribute name="name">
+                <xsl:value-of select="$field_name"/>
+            </xsl:attribute>
+
+            <!-- ToDo: need expand to include the separated name (e.g., first/last) -->
+            <!-- <xsl:call-template name="assemble_cwrc_person_name"/> -->
+            <xsl:value-of select="tei:name/text()" />
+
+        </field>
+
+    </xsl:template>
+
+    <!-- TEI Org entity combined forms -->
+    <xsl:template match="tei:orgName" mode="cwrc_tei_org_entities_combined">
+        <xsl:param name="prefix"/>
+        <xsl:param name="suffix"/>
+        
+        <field>
+            <xsl:attribute name="name">
+                <xsl:value-of select="concat($prefix, 'combined', $suffix)"/>
+            </xsl:attribute>
+            
+            <!-- ToDo: need expand to include the separated name (e.g., first/last) -->
+            <!--
+            <xsl:call-template name="assemble_cwrc_person_name"/>
+            -->
+            <xsl:value-of select="tei:name/text()" />
+        </field>
+      
+    </xsl:template>
+
+    <!-- TEI Person name -->
+    <xsl:template match="tei:persName" mode="cwrc_tei_person_entities">
+        <xsl:param name="field_name"/>
+
+        <field>
+            <xsl:attribute name="name">
+                <xsl:value-of select="$field_name"/>
+            </xsl:attribute>
+
+            <!-- ToDo: need expand to include the separated name (e.g., first/last) -->
+            <!-- <xsl:call-template name="assemble_cwrc_person_name"/> -->
+            <xsl:value-of select="tei:name/text()" />
+
+        </field>
+
+    </xsl:template>
+
+    <!-- TEI Person entity combined forms -->
+    <xsl:template match="tei:persName" mode="cwrc_tei_person_entities_combined">
+        <xsl:param name="prefix"/>
+        <xsl:param name="suffix"/>
+        
+        <field>
+            <xsl:attribute name="name">
+                <xsl:value-of select="concat($prefix, 'combined', $suffix)"/>
+            </xsl:attribute>
+            
+            <!-- ToDo: need expand to include the separated name (e.g., first/last) -->
+            <!--
+            <xsl:call-template name="assemble_cwrc_person_name"/>
+            -->
+            <xsl:value-of select="tei:name/text()" />
+        </field>
+      
+    </xsl:template>
+
+    <!-- TEI Place name -->
+    <xsl:template match="tei:placeName" mode="cwrc_tei_place_entities">
+        <xsl:param name="field_name"/>
+
+        <field>
+            <xsl:attribute name="name">
+                <xsl:value-of select="$field_name"/>
+            </xsl:attribute>
+
+            <!-- ToDo: need expand to include the separated name (e.g., first/last) -->
+            <!-- <xsl:call-template name="assemble_cwrc_person_name"/> -->
+            <xsl:value-of select="tei:name/text()" />
+
+        </field>
+
+    </xsl:template>
+
+    <!-- TEI Person entity combined forms -->
+    <xsl:template match="tei:placeName" mode="cwrc_tei_place_entities_combined">
+        <xsl:param name="prefix"/>
+        <xsl:param name="suffix"/>
+        
+        <field>
+            <xsl:attribute name="name">
+                <xsl:value-of select="concat($prefix, 'combined', $suffix)"/>
+            </xsl:attribute>
+            
+            <!-- ToDo: need expand to include the separated name (e.g., first/last) -->
+            <!--
+            <xsl:call-template name="assemble_cwrc_person_name"/>
+            -->
+            <xsl:value-of select="tei:name/text()" />
+        </field>
+      
+    </xsl:template>
+
+
+
+
+    <!-- TEI generic solr field: access condition -->
+    <xsl:template match="tei:licence" mode="cwrc_tei_assemble_access_condition">
+        <xsl:param name="prefix"/>
+
+        <field>
+            <xsl:attribute name="name">
+                <xsl:value-of select="concat($prefix, 'access_condition', '_ms')"/>
+            </xsl:attribute>
+
+            <xsl:choose>
+                <xsl:when test="@target">
+                    <xsl:value-of select="@target" />
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:for-each select="child::node()">
+                        <xsl:choose>
+                            <xsl:when test="self::text()">
+                                <xsl:value-of select="."/>
+                            </xsl:when>
+                            <xsl:when test="self::*">
+                                <xsl:text>&lt;</xsl:text>
+                                <xsl:value-of select="name()" />
+                                <xsl:for-each select="./@*">
+                                    <xsl:text> </xsl:text>
+                                    <xsl:value-of select="name()"></xsl:value-of>
+                                    <xsl:text>="</xsl:text>                      
+                                    <xsl:value-of select="."></xsl:value-of>
+                                    <xsl:text>"</xsl:text>
+                                </xsl:for-each>
+                                <xsl:text>&gt;</xsl:text>
+                                <xsl:value-of select="." />
+                                <xsl:text>&lt;/</xsl:text>
+                                <xsl:value-of select="name()" />
+                                <xsl:text>&gt;</xsl:text>
+                            </xsl:when>
+                        </xsl:choose>
+                  </xsl:for-each>
+                </xsl:otherwise>
+            </xsl:choose>
+                
+        </field>
+
+    </xsl:template>
+
+
+<!-- ******************************************************* -->
 
     <!-- CWRC Person perferred name forms -->
     <xsl:template match="preferredForm">
