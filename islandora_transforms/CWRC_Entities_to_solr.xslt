@@ -744,7 +744,12 @@
             <xsl:with-param name="field_content" select="$recordInfo/entityId" />
             <xsl:with-param name="field_name" select="concat($prefix,'entityId','_ms')" />
         </xsl:call-template>
-        
+ 
+        <!-- descriptive notes -->
+        <xsl:apply-templates select="$description/descriptiveNotes/note">
+            <xsl:with-param name="prefix" select="$prefix"/>
+        </xsl:apply-templates>
+       
         <!-- factuality -->
         <xsl:call-template name="assemble_cwrc_factuality">
             <xsl:with-param name="prefix" select="$prefix"/>
@@ -1444,6 +1449,19 @@
 
     </xsl:template>
 
+    <!-- descriptive notes -->
+    <xsl:template match="descriptiveNotes/note">
+        <xsl:param name="prefix"/>
+
+        <field>
+            <xsl:attribute name="name">
+                <xsl:value-of select="concat($prefix, 'descriptive_note', '_ms')"/>
+            </xsl:attribute>
+
+            <xsl:value-of select="text()"/>
+        </field>
+
+    </xsl:template>
 
     <!-- generic entity: output the Factuality -->
     <xsl:template name="assemble_cwrc_factuality">
