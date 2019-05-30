@@ -26,6 +26,67 @@
         </xsl:apply-templates>
     </xsl:template>
 
+
+    <xsl:template match="mods:titleInfo" mode="cwrc_entities_mods">
+        <xsl:param name="local_prefix" select="'mods'" />
+
+        <xsl:apply-templates select="mods:title" mode="cwrc_entities_mods">
+            <xsl:with-param name="local_prefix" select="concat($local_prefix,'titleInfo')" />
+            <xsl:with-param name="field_root" select="'title'" />
+        </xsl:apply-templates>
+
+        <xsl:apply-templates select="mods:title[../@type='alternative']" mode="cwrc_entities_mods">
+            <xsl:with-param name="local_prefix" select="concat($local_prefix,'titleInfo')" />
+            <xsl:with-param name="field_root" select="'alternative_subTitle'" />
+        </xsl:apply-templates>
+
+        <xsl:apply-templates select="mods:subTitle" mode="cwrc_entities_mods">
+            <xsl:with-param name="local_prefix" select="concat($local_prefix,'titleInfo')" />
+            <xsl:with-param name="field_root" select="'subTitle'" />
+        </xsl:apply-templates>
+
+        <xsl:apply-templates select="@valueURI" mode="cwrc_entities_mods">
+            <xsl:with-param name="local_prefix" select="concat($local_prefix,'titleInfo')" />
+        </xsl:apply-templates>
+
+    </xsl:template>
+
+    <!-- title -->
+    <xsl:template match="mods:title | mods:subTitle" mode="cwrc_entities_mods">
+        <xsl:param name="local_prefix" select="'mods_titleinfo'" />
+        <xsl:param name="field_root" select="'field_root'" />
+
+        <field>
+	    <xsl:attribute name="name">
+	        <xsl:value-of select="concat($local_prefix, $field_root,'_s')" />
+	    </xsl:attribute>
+        
+	    <xsl:value-of select="text()"/>
+        </field>
+        <field>
+	    <xsl:attribute name="name">
+	        <xsl:value-of select="concat($local_prefix, '_anyTitle','_s')" />
+	    </xsl:attribute>
+        
+	    <xsl:value-of select="text()"/>
+        </field>
+    </xsl:template>
+
+    <!-- title -->
+    <xsl:template match="mods:titleInfo/@valueURI" mode="cwrc_entities_mods">
+        <xsl:param name="local_prefix" select="'mods_titleInfo'" />
+        
+        <field>
+	    <xsl:attribute name="name">
+	        <xsl:value-of select="concat($local_prefix, '_URI','_s')" />
+	    </xsl:attribute>
+        
+	    <xsl:value-of select="text()"/>
+        </field>
+    </xsl:template>
+
+
+    <!-- For each person name -->
     <!-- For each person name -->
     <xsl:template match="mods:name" mode="cwrc_entities_mods">
 
@@ -34,19 +95,22 @@
         <xsl:variable name="cwrc_author_name">
             <xsl:call-template name="assemble_cwrc_title_author"/>
         </xsl:variable>
-        
-        <field>
-            <xsl:attribute name="name">
-                <xsl:value-of select="concat($local_prefix, '_name','_s')" />
-            </xsl:attribute>
+      
+        <xsl:if test="$cwrc_author_name">  
+            <field>
+                <xsl:attribute name="name">
+                    <xsl:value-of select="concat($local_prefix, '_name','_s')" />
+                </xsl:attribute>
             
-            <xsl:value-of select="$cwrc_author_name"/>
-        </field>
+                <xsl:value-of select="$cwrc_author_name"/>
+            </field>
 
-        <xsl:apply-templates select="mods:role" mode="cwrc_entities_mods">
-            <xsl:with-param name="cwrc_author_name" select="$cwrc_author_name" />
-            <xsl:with-param name="local_prefix" select="'mods'" />
-        </xsl:apply-templates>
+            <xsl:apply-templates select="mods:role" mode="cwrc_entities_mods">
+                <xsl:with-param name="cwrc_author_name" select="$cwrc_author_name" />
+                <xsl:with-param name="local_prefix" select="'mods'" />
+            </xsl:apply-templates>
+
+        </xsl:if>
 
     </xsl:template>
 
