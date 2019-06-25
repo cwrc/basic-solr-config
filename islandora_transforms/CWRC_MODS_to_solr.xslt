@@ -22,12 +22,43 @@
 
     <!-- MODS root -->
     <xsl:template match="/">
+        <!-- handle titleInfo section -->
         <xsl:apply-templates select="mods:mods/mods:titleInfo" mode="cwrc_entities_mods">
             <xsl:with-param name="local_prefix" select="'mods'"/>
         </xsl:apply-templates>
+
+        <!-- handle name section -->
         <xsl:apply-templates select="mods:mods/mods:name" mode="cwrc_entities_mods">
             <xsl:with-param name="local_prefix" select="'mods'" />
         </xsl:apply-templates>
+
+        <!-- handle genre -->
+        <xsl:apply-templates select="mods:mods/mods:typeOfResource" mode="cwrc_entities_mods">
+            <xsl:with-param name="local_prefix" select="'mods'" />
+            <xsl:with-param name="local_field" select="'_to_do_zzzzzzzzzzzzzzzzzz'" />
+        </xsl:apply-templates>
+        <xsl:apply-templates select="mods:mods/mods:typeOfResource | mods:mods/mods:genre[@type='formatType']" mode="cwrc_entities_mods">
+            <xsl:with-param name="local_prefix" select="'mods'" />
+            <xsl:with-param name="local_field_root" select="'_genre'" />
+        </xsl:apply-templates>
+        <xsl:apply-templates select="/mods:mods/mods:genre[@type='formatType']" mode="cwrc_entities_mods">
+            <xsl:with-param name="local_prefix" select="'mods'" />
+            <xsl:with-param name="local_field_root" select="'_genre-format'" />
+        </xsl:apply-templates>
+        <xsl:apply-templates select="/mods:mods/mods:genre[@type='primaryGenre']" mode="cwrc_entities_mods">
+            <xsl:with-param name="local_prefix" select="'mods'" />
+            <xsl:with-param name="local_field_root" select="'_genre-primaryGenre'" />
+        </xsl:apply-templates>
+        <xsl:apply-templates select="/mods:mods/mods:genre[@type='subgenre']" mode="cwrc_entities_mods">
+            <xsl:with-param name="local_prefix" select="'mods'" />
+            <xsl:with-param name="local_field_root" select="'_genre_subgenre'" />
+        </xsl:apply-templates>
+        <xsl:apply-templates select="/mods:mods/mods:genre" mode="cwrc_entities_mods">
+            <xsl:with-param name="local_prefix" select="'mods'" />
+            <xsl:with-param name="local_field_root" select="'_genre-folksonomic'" />
+        </xsl:apply-templates>
+
+
     </xsl:template>
 
 
@@ -1041,7 +1072,19 @@
     </xsl:template>
 
 
+    <!-- genre section -->
+    <xsl:template match="mods:typeOfResource | mods:genre" mode="cwrc_entities_mods">
+        <xsl:param name="local_prefix" />
+        <xsl:param name="local_field_root" />
 
+        <xsl:call-template name="add_solr_field">
+            <xsl:with-param name="solr_field_key" select="concat($local_prefix, $local_field_root, '_s')" />
+            <xsl:with-param name="solr_field_value" select="text()" />
+        </xsl:call-template>
+
+    </xsl:template>
+
+    <!-- generic field -->
     <xsl:template name="add_solr_field" mode="cwrc_entities_mods">
         <xsl:param name="solr_field_key" select="'unknown'" />
         <xsl:param name="solr_field_value" select="'unknown'" />
