@@ -62,7 +62,16 @@
         <xsl:apply-templates select="mods:mods/originInfo" mode="cwrc_entities_mods">
             <xsl:with-param name="local_prefix" select="'mods_originInfo'" />
         </xsl:apply-templates>
+        
+        <!-- language -->
+        <xsl:apply-templates select="mods:language/mods:languageTerm" mode="cwrc_entities_mods">
+            <xsl:with-param name="local_field_name" select="'mods_language'"></xsl:with-param>
+        </xsl:apply-templates>
 
+        <!-- physicalDescription note -->
+        <xsl:apply-templates select="mods:physicalDescription/mods:note" mode="cwrc_entities_mods">
+            <xsl:with-param name="local_field_name" select="'mods_language'"></xsl:with-param>
+        </xsl:apply-templates>
     </xsl:template>
 
 
@@ -1102,10 +1111,30 @@
             <xsl:with-param name="local_field_name" select="concat($local_prefix,'_PlaceOfPublication-URI')" />
         </xsl:apply-templates>
 
+        <xsl:apply-templates select="mods:publisher">
+            <xsl:with-param name="local_filed_name" select="concat($local_prefix, '_publisher')"/>
+        </xsl:apply-templates>
+
+        <xsl:apply-templates select="mods:publisher/@valueURI">
+            <xsl:with-param name="locak_filed_name" select="concat($local_prefix, '_publisher-URI')"/>
+        </xsl:apply-templates>
+
+        <xsl:apply-templates select="mods:dateIssued">
+            <xsl:with-param name="local_filed_name" select="concat($local_prefix, '_dateIssued')"/>
+        </xsl:apply-templates>
+        
+        <xsl:apply-templates select="mods:edition">
+            <xsl:with-param name="local_filed_name" select="concat($local_prefix, '_edition')"/>
+        </xsl:apply-templates>
+
+        <xsl:apply-templates select="mods:issuance">
+            <xsl:with-param name="local_filed_name" select="concat($local_prefix, '_issuance')"/>
+        </xsl:apply-templates>        
+
     </xsl:template>
 
 
-
+    <!-- generic field -->
     <xsl:template match="* | @*" mode="cwrc_entities_mods">
         <xsl:param name="local_field_name" select="'unknown'" />
 
