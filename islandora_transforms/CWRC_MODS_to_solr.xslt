@@ -1299,39 +1299,39 @@
             <xsl:with-param name="local_field_name" select="concat($local_prefix,'_identifier-LCCN')" />
         </xsl:apply-templates>
 
-        <xsl:apply-templates select=".[@type='isan']" mode="cwrc_entities_mods">
+        <xsl:apply-templates select="current()[@type='isan']" mode="cwrc_entities_mods">
             <xsl:with-param name="local_field_name" select="concat($local_prefix,'_identifier-ISAN')" />
         </xsl:apply-templates>
 
-        <xsl:apply-templates select=".[@type='videorecording-identifier']" mode="cwrc_entities_mods">
+        <xsl:apply-templates select="current()[@type='videorecording-identifier']" mode="cwrc_entities_mods">
             <xsl:with-param name="local_field_name" select="concat($local_prefix,'_identifier-VideoRecording')" />
         </xsl:apply-templates>
 
-        <xsl:apply-templates select=".[@type='ean']" mode="cwrc_entities_mods">
+        <xsl:apply-templates select="current()[@type='ean']" mode="cwrc_entities_mods">
             <xsl:with-param name="local_field_name" select="concat($local_prefix,'_identifier-EAN')" />
         </xsl:apply-templates>
 
-        <xsl:apply-templates select=".[@type='upc']" mode="cwrc_entities_mods">
+        <xsl:apply-templates select="current()[@type='upc']" mode="cwrc_entities_mods">
             <xsl:with-param name="local_field_name" select="concat($local_prefix,'_identifier-UPC')" />
         </xsl:apply-templates>
 
-        <xsl:apply-templates select=".[@type='issue-number']" mode="cwrc_entities_mods">
+        <xsl:apply-templates select="current()[@type='issue-number']" mode="cwrc_entities_mods">
             <xsl:with-param name="local_field_name" select="concat($local_prefix,'_identifier-IssueNumber')" />
         </xsl:apply-templates>
 
-        <xsl:apply-templates select=".[@type='matix-number']" mode="cwrc_entities_mods">
+        <xsl:apply-templates select="current()[@type='matix-number']" mode="cwrc_entities_mods">
             <xsl:with-param name="local_field_name" select="concat($local_prefix,'_identifier-MatrixNumber')" />
         </xsl:apply-templates>
 
-        <xsl:apply-templates select=".[@type='isrc']" mode="cwrc_entities_mods">
+        <xsl:apply-templates select="current()[@type='isrc']" mode="cwrc_entities_mods">
             <xsl:with-param name="local_field_name" select="concat($local_prefix,'_identifier-ISRC')" />
         </xsl:apply-templates>
 
-        <xsl:apply-templates select=".[@type='iswc']" mode="cwrc_entities_mods">
+        <xsl:apply-templates select="current()[@type='iswc']" mode="cwrc_entities_mods">
             <xsl:with-param name="local_field_name" select="concat($local_prefix,'_identifier-ISWC')" />
         </xsl:apply-templates>
 
-        <xsl:apply-templates select=".[@type='grid']" mode="cwrc_entities_mods">
+        <xsl:apply-templates select="current()[@type='grid']" mode="cwrc_entities_mods">
             <xsl:with-param name="local_field_name" select="concat($local_prefix,'_identifier-GRID')" />
         </xsl:apply-templates>
 
