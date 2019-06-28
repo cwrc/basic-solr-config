@@ -32,7 +32,7 @@
             <xsl:with-param name="local_prefix" select="'mods'" />
         </xsl:apply-templates>
 
-        <!-- handle genre -->
+        <!-- handle typeOfResource -->
         <xsl:apply-templates select="mods:mods/mods:typeOfResource" mode="cwrc_entities_mods">
             <xsl:with-param name="local_prefix" select="'mods'" />
             <xsl:with-param name="local_field" select="'_to_do_zzzzzzzzzzzzzzzzzz'" />
@@ -41,6 +41,8 @@
             <xsl:with-param name="local_prefix" select="'mods'" />
             <xsl:with-param name="local_field_root" select="'_genre'" />
         </xsl:apply-templates>
+
+        <!-- genre -->
         <xsl:apply-templates select="mods:mods/mods:genre[@type='formatType']" mode="cwrc_entities_mods">
             <xsl:with-param name="local_prefix" select="'mods'" />
             <xsl:with-param name="local_field_root" select="'_genre-format'" />
@@ -64,13 +66,48 @@
         </xsl:apply-templates>
         
         <!-- language -->
-        <xsl:apply-templates select="mods:language/mods:languageTerm" mode="cwrc_entities_mods">
-            <xsl:with-param name="local_field_name" select="'mods_language'"></xsl:with-param>
+        <xsl:apply-templates select="mods:mods/mods:language/mods:languageTerm" mode="cwrc_entities_mods">
+            <xsl:with-param name="local_field_name" select="'mods_language'" />
         </xsl:apply-templates>
 
         <!-- physicalDescription note -->
-        <xsl:apply-templates select="mods:physicalDescription/mods:note" mode="cwrc_entities_mods">
-            <xsl:with-param name="local_field_name" select="'mods_language'"></xsl:with-param>
+        <xsl:apply-templates select="mods:mods/mods:physicalDescription/mods:note" mode="cwrc_entities_mods">
+            <xsl:with-param name="local_field_name" select="'mods_language'" />
+        </xsl:apply-templates>
+
+        <!-- abstract -->
+        <xsl:apply-templates select="mods:mods/mods:abstract" mode="cwrc_entities_mods">
+            <xsl:with-param name="local_field_name" select="'mods_abstract'"/>
+        </xsl:apply-templates>
+
+        <!-- scholarnote -->
+        <xsl:apply-templates select="mods:mods/mods:note[@type='scholarNote']" mode="cwrc_entities_mods">
+            <xsl:with-param name="local_field_name" select="'mods_scholarNote'"/>
+        </xsl:apply-templates>
+
+        <!-- researchNote -->
+        <xsl:apply-templates select="mods:mods/mods:note[@type='researchNote']" mode="cwrc_entities_mods">
+            <xsl:with-param name="local_field_name" select="'mods_researchNote'"/>
+        </xsl:apply-templates>
+        
+        <!-- note -->
+        <xsl:apply-templates select="mods:mods/mods:note[@type='scholarNote'] | mods:note[@type='researchNote']" mode="cwrc_entities_mods">
+            <xsl:with-param name="local_field_name" select="'mods_note'"/>
+        </xsl:apply-templates>
+
+        <!-- handle subject -->
+        <xsl:apply-templates select="mods:mods/subject" mode="cwrc_entities_mods">
+            <xsl:with-param name="local_prefix" select="'mods_subject'" />
+        </xsl:apply-templates>
+
+        <!-- handle related item -->
+        <xsl:apply-templates select="mods:mods/relatedItem" mode="cwrc_entities_mods">
+            <xsl:with-param name="local_prefix" select="'mods_relatedItem'" />
+        </xsl:apply-templates>
+
+        <!-- handle identifier -->
+        <xsl:apply-templates select="mods:mods/identifier" mode="cwrc_entities_mods">
+            <xsl:with-param name="local_prefix" select="'mods_identifier'" />
         </xsl:apply-templates>
     </xsl:template>
 
@@ -1098,9 +1135,8 @@
     </xsl:template>
 
 
-
     <!-- handle originInfo section -->
-    <xsl:template match="originInfo" mode="cwrc_entities_mods">
+    <xsl:template match="mods:originInfo" mode="cwrc_entities_mods">
         <xsl:param name="local_prefix" />
 
         <xsl:apply-templates select="mods:place/mods:placeTerm" mode="cwrc_entities_mods">
@@ -1132,6 +1168,146 @@
         </xsl:apply-templates>        
 
     </xsl:template>
+
+
+    <!-- handle subject section -->
+    <xsl:template match="mods:subject" mode="cwrc_entities_mods">
+        <xsl:param name="local_prefix" />
+
+        <xsl:apply-templates select="mods:topic" mode="cwrc_entities_mods">
+            <xsl:with-param name="local_field_name" select="concat($local_prefix,'_topic')" />
+        </xsl:apply-templates>
+
+        <xsl:apply-templates select="mods:topic/@valueURI" mode="cwrc_entities_mods">
+            <xsl:with-param name="local_field_name" select="concat($local_prefix,'_topic-URI')" />
+        </xsl:apply-templates>
+
+        <xsl:apply-templates select="mods:geographic">
+            <xsl:with-param name="local_filed_name" select="concat($local_prefix, '_geographic')"/>
+        </xsl:apply-templates>
+
+        <xsl:apply-templates select="mods:geographic/@valueURI">
+            <xsl:with-param name="locak_filed_name" select="concat($local_prefix, '_geographic-URI')"/>
+        </xsl:apply-templates>
+
+        <xsl:apply-templates select="mods:titleInfo">
+            <xsl:with-param name="local_filed_name" select="concat($local_prefix, '_titleInfo')"/>
+        </xsl:apply-templates>
+        
+        <xsl:apply-templates select="mods:titleInfo/@valueURI">
+            <xsl:with-param name="local_filed_name" select="concat($local_prefix, '_titleInfo-URI')"/>
+        </xsl:apply-templates>
+
+        <xsl:apply-templates select="mods:namePart">
+            <xsl:with-param name="local_filed_name" select="concat($local_prefix, '_namePart')"/>
+        </xsl:apply-templates>
+        
+        <xsl:apply-templates select="mods:namePart/@valueURI">
+            <xsl:with-param name="local_filed_name" select="concat($local_prefix, '_namePart-URI')"/>
+        </xsl:apply-templates>
+
+    </xsl:template>
+
+
+    <!-- handle relatedItem section -->
+    <xsl:template match="mods:relatedItem" mode="cwrc_entities_mods">
+        <xsl:param name="local_prefix" />
+
+        <xsl:apply-templates select="mods:name/@valueURI" mode="cwrc_entities_mods">
+            <xsl:with-param name="local_field_name" select="concat($local_prefix,'_name-URI')" />
+        </xsl:apply-templates>
+
+        <xsl:apply-templates select="
+                mods:identifier[@type='issue-number']
+                | mods:identifier[@type='matrix-number']
+                | mods:identifier[@type='ean-number']
+                | mods:identifier[@type='isbn-number']
+                | mods:identifier[@type='upc-number']
+            " mode="cwrc_entities_mods">
+            <xsl:with-param name="local_field_name" select="concat($local_prefix,'_uniqueIdentifier')" />
+        </xsl:apply-templates>
+
+        <xsl:apply-templates select="mods:identifier[@type='issue-number']">
+            <xsl:with-param name="local_filed_name" select="concat($local_prefix, '_issueNumber')"/>
+        </xsl:apply-templates>
+
+        <xsl:apply-templates select="mods:location">
+            <xsl:with-param name="locak_filed_name" select="concat($local_prefix, '_location')"/>
+        </xsl:apply-templates>
+
+   </xsl:template>
+
+
+    <!-- handle identifier section -->
+    <xsl:template match="mods:identifier" mode="cwrc_entities_mods">
+        <xsl:param name="local_prefix" />
+
+        <xsl:call-template name="add_solr_field">
+            <xsl:with-param name="solr_field_key" select="concat($local_prefix,'_identifier'" />
+            <xsl:with-param name="solr_field_value" select="text()" />
+        </xsl:call-template>
+
+        <xsl:apply-templates select=".[@type='uri']" mode="cwrc_entities_mods">
+            <xsl:with-param name="local_field_name" select="concat($local_prefix,'_identifier-URI')" />
+        </xsl:apply-templates>
+
+        <xsl:apply-templates select=".[@type='doi']" mode="cwrc_entities_mods">
+            <xsl:with-param name="local_field_name" select="concat($local_prefix,'_identifier-DOI')" />
+        </xsl:apply-templates>
+
+        <xsl:apply-templates select=".[@type='isbn']" mode="cwrc_entities_mods">
+            <xsl:with-param name="local_field_name" select="concat($local_prefix,'_identifier-ISBN')" />
+        </xsl:apply-templates>
+
+        <xsl:apply-templates select=".[@type='lccn']" mode="cwrc_entities_mods">
+            <xsl:with-param name="local_field_name" select="concat($local_prefix,'_identifier-LCCN')" />
+        </xsl:apply-templates>
+
+        <xsl:apply-templates select=".[@type='isan']" mode="cwrc_entities_mods">
+            <xsl:with-param name="local_field_name" select="concat($local_prefix,'_identifier-ISAN')" />
+        </xsl:apply-templates>
+
+        <xsl:apply-templates select=".[@type='videorecording-identifier']" mode="cwrc_entities_mods">
+            <xsl:with-param name="local_field_name" select="concat($local_prefix,'_identifier-VideoRecording')" />
+        </xsl:apply-templates>
+
+        <xsl:apply-templates select=".[@type='ean']" mode="cwrc_entities_mods">
+            <xsl:with-param name="local_field_name" select="concat($local_prefix,'_identifier-EAN')" />
+        </xsl:apply-templates>
+
+        <xsl:apply-templates select=".[@type='upc']" mode="cwrc_entities_mods">
+            <xsl:with-param name="local_field_name" select="concat($local_prefix,'_identifier-UPC')" />
+        </xsl:apply-templates>
+
+        <xsl:apply-templates select=".[@type='issue-number']" mode="cwrc_entities_mods">
+            <xsl:with-param name="local_field_name" select="concat($local_prefix,'_identifier-IssueNumber')" />
+        </xsl:apply-templates>
+
+        <xsl:apply-templates select=".[@type='matix-number']" mode="cwrc_entities_mods">
+            <xsl:with-param name="local_field_name" select="concat($local_prefix,'_identifier-MatrixNumber')" />
+        </xsl:apply-templates>
+
+        <xsl:apply-templates select=".[@type='isrc']" mode="cwrc_entities_mods">
+            <xsl:with-param name="local_field_name" select="concat($local_prefix,'_identifier-ISRC')" />
+        </xsl:apply-templates>
+
+        <xsl:apply-templates select=".[@type='iswc']" mode="cwrc_entities_mods">
+            <xsl:with-param name="local_field_name" select="concat($local_prefix,'_identifier-ISWC')" />
+        </xsl:apply-templates>
+
+        <xsl:apply-templates select=".[@type='grid']" mode="cwrc_entities_mods">
+            <xsl:with-param name="local_field_name" select="concat($local_prefix,'_identifier-GRID')" />
+        </xsl:apply-templates>
+
+   </xsl:template>
+
+
+
+
+
+
+
+
 
 
     <!-- generic field -->
