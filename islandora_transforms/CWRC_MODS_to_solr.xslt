@@ -1279,23 +1279,23 @@
         <xsl:param name="local_prefix" />
 
         <xsl:call-template name="add_solr_field">
-            <xsl:with-param name="solr_field_key" select="concat($local_prefix,'_identifier'" />
+            <xsl:with-param name="solr_field_key" select="concat($local_prefix,'_identifier')" />
             <xsl:with-param name="solr_field_value" select="text()" />
         </xsl:call-template>
 
-        <xsl:apply-templates select=".[@type='uri']" mode="cwrc_entities_mods">
+        <xsl:apply-templates select="current()[@type='uri']" mode="cwrc_entities_mods">
             <xsl:with-param name="local_field_name" select="concat($local_prefix,'_identifier-URI')" />
         </xsl:apply-templates>
 
-        <xsl:apply-templates select=".[@type='doi']" mode="cwrc_entities_mods">
+        <xsl:apply-templates select="current()[@type='doi']" mode="cwrc_entities_mods">
             <xsl:with-param name="local_field_name" select="concat($local_prefix,'_identifier-DOI')" />
         </xsl:apply-templates>
 
-        <xsl:apply-templates select=".[@type='isbn']" mode="cwrc_entities_mods">
+        <xsl:apply-templates select="current()[@type='isbn']" mode="cwrc_entities_mods">
             <xsl:with-param name="local_field_name" select="concat($local_prefix,'_identifier-ISBN')" />
         </xsl:apply-templates>
 
-        <xsl:apply-templates select=".[@type='lccn']" mode="cwrc_entities_mods">
+        <xsl:apply-templates select="current()[@type='lccn']" mode="cwrc_entities_mods">
             <xsl:with-param name="local_field_name" select="concat($local_prefix,'_identifier-LCCN')" />
         </xsl:apply-templates>
 
