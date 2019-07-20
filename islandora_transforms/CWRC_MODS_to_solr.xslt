@@ -34,8 +34,7 @@
 
         <!-- handle typeOfResource -->
         <xsl:apply-templates select="mods:mods/mods:typeOfResource" mode="cwrc_entities_mods">
-            <xsl:with-param name="local_prefix" select="'mods'" />
-            <xsl:with-param name="local_field" select="'_to_do_zzzzzzzzzzzzzzzzzz'" />
+            <xsl:with-param name="local_field_name" select="'mods_typeOfResource'" />
         </xsl:apply-templates>
         <xsl:apply-templates select="mods:mods/mods:typeOfResource | mods:mods/mods:genre[@type='formatType']" mode="cwrc_entities_mods">
             <xsl:with-param name="local_prefix" select="'mods'" />
@@ -68,6 +67,11 @@
         <!-- language -->
         <xsl:apply-templates select="mods:mods/mods:language/mods:languageTerm" mode="cwrc_entities_mods">
             <xsl:with-param name="local_field_name" select="'mods_language'" />
+        </xsl:apply-templates>
+
+        <!-- languageTerm -->
+        <xsl:apply-templates select="mods:mods/mods:physicalDescription/mods:form[@authority='marccategory']" mode="cwrc_entities_mods">
+            <xsl:with-param name="local_field_name" select="'mods_physicalDescription_form'" />
         </xsl:apply-templates>
 
         <!-- physicalDescription note -->
@@ -123,6 +127,11 @@
         <!-- accessCondition: Not 'use and reproduction' -->
         <xsl:apply-templates select="mods:mods/mods:accessCondition[@type!='use and reproduction' or not(@type)]" mode="cwrc_entities_mods">
             <xsl:with-param name="local_field_name" select="'mods_accessCondition-Not-UseAndReproduction'" />
+        </xsl:apply-templates>
+
+        <!-- recordInfo -->
+        <xsl:apply-templates select="mods:mods/mods:recordInfo" mode="cwrc_entities_mods">
+            <xsl:with-param name="local_field_name" select="'mods_recordInfo'" />
         </xsl:apply-templates>
 
         <!-- record content source -->
@@ -218,7 +227,7 @@
         </xsl:variable>
 
         <xsl:apply-templates select="@valueURI" mode="cwrc_entities_mods">
-            <xsl:with-param name="local_prefix" select="concat($local_prefix, '_name')" />
+            <xsl:with-param name="local_prefix" select="concat($local_prefix, '_name-URI')" />
         </xsl:apply-templates>
 
         <!-- use build the full name and output -->
@@ -1249,8 +1258,17 @@
     <xsl:template match="mods:relatedItem" mode="cwrc_entities_mods">
         <xsl:param name="local_prefix" />
 
-        <xsl:apply-templates select="mods:name/@valueURI" mode="cwrc_entities_mods">
-            <xsl:with-param name="local_field_name" select="concat($local_prefix,'_name-URI')" />
+	<xsl:apply-templates select="element()[@type='host']/modes:titleInfo/mods:title" mode="cwrc_entities_mods">
+            <xsl:with-param name="local_field_name" select="concat($local_prefix,'_ContainerOrHost')" />
+        </xsl:apply-templates>
+
+	<xsl:apply-templates select="element()[not(@type='host')]/modes:titleInfo/mods:title" mode="cwrc_entities_mods">
+            <xsl:with-param name="local_field_name" select="$local_prefix" />
+        </xsl:apply-templates>
+
+        <!-- handle name section -->
+        <xsl:apply-templates select="mods:name" mode="cwrc_entities_mods">
+            <xsl:with-param name="local_prefix" select="concat($local_prefix,'_name')" />
         </xsl:apply-templates>
 
         <xsl:apply-templates select="
@@ -1333,6 +1351,29 @@
 
         <xsl:apply-templates select="current()[@type='grid']" mode="cwrc_entities_mods">
             <xsl:with-param name="local_field_name" select="concat($local_prefix,'_identifier-GRID')" />
+        </xsl:apply-templates>
+
+    </xsl:template>
+
+
+    <!-- handle recordInfo section -->
+    <xsl:template match="mods:recordInfo" mode="cwrc_entities_mods">
+        <xsl:param name="local_prefix" />
+
+        <xsl:apply-templates select="mods:recordIdentifier" mode="cwrc_entities_mods">
+            <xsl:with-param name="local_field_name" select="concat($local_prefix,'_recordIdentifier')" />
+        </xsl:apply-templates>
+
+        <xsl:apply-templates select="mods:recordCreationDate" mode="cwrc_entities_mods">
+            <xsl:with-param name="local_field_name" select="concat($local_prefix,'_recordCreationDate')" />
+        </xsl:apply-templates>
+
+        <xsl:apply-templates select="mods:recordOrigin" mode="cwrc_entities_mods">
+            <xsl:with-param name="local_field_name" select="concat($local_prefix,'_recordOrigin')" />
+        </xsl:apply-templates>
+
+        <xsl:apply-templates select="mods:recordContentSource" mode="cwrc_entities_mods">
+            <xsl:with-param name="local_field_name" select="concat($local_prefix,'_recordContentSource')" />
         </xsl:apply-templates>
 
     </xsl:template>
