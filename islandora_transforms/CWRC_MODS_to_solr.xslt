@@ -323,7 +323,7 @@
         <xsl:if test="(parent::mods:name/@type = 'personal' or parent::mods:name/@type = 'corporate') and not(@type)">
             <xsl:call-template name="add_solr_field">
                 <xsl:with-param name="solr_field_key" select="concat($local_prefix, '-', parent::mods:name/@type, '_namePart-noType', '_s')" />
-                <xsl:with-param name="solr_field_value" select="mods:namePart[not(@type)]" />
+                <xsl:with-param name="solr_field_value" select="current()[not(@type)]/text()" />
             </xsl:call-template>
         </xsl:if>
 
@@ -1428,12 +1428,12 @@
     <!-- generic field -->
     <xsl:template match="text()" mode="cwrc_entities_mods">
         <xsl:param name="local_field_name" select="'unknown'" />
-        
+
         <xsl:call-template name="add_solr_field">
             <xsl:with-param name="solr_field_key" select="$local_field_name" />
             <xsl:with-param name="solr_field_value" select="." />
         </xsl:call-template>
-        
+
     </xsl:template>
 
     <!-- generic field -->
