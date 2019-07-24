@@ -215,6 +215,11 @@
     <xsl:template match="mods:titleInfo" mode="cwrc_entities_mods">
         <xsl:param name="local_prefix" select="'mods'" />
 
+        <xsl:apply-templates select="mods:title | mods:subTitle" mode="cwrc_entities_mods">
+            <xsl:with-param name="local_prefix" select="concat($local_prefix, '_titleInfo')" />
+            <xsl:with-param name="field_root" select="'_anyTitle'" />
+        </xsl:apply-templates>
+
         <xsl:apply-templates select="mods:title" mode="cwrc_entities_mods">
             <xsl:with-param name="local_prefix" select="concat($local_prefix, '_titleInfo')" />
             <xsl:with-param name="field_root" select="'_title'" />
@@ -241,20 +246,10 @@
         <xsl:param name="local_prefix" select="'mods_titleinfo'" />
         <xsl:param name="field_root" select="'field_root'" />
 
-        <field>
-            <xsl:attribute name="name">
-                <xsl:value-of select="concat($local_prefix, $field_root, '_s')" />
-            </xsl:attribute>
+        <xsl:apply-templates select="text()" mode="cwrc_entities_mods">
+            <xsl:with-param name="local_field_name" select="concat($local_prefix, $field_root, '_s')" />
+        </xsl:apply-templates>
 
-            <xsl:value-of select="text()" />
-        </field>
-        <field>
-            <xsl:attribute name="name">
-                <xsl:value-of select="concat($local_prefix, '_anyTitle', '_s')" />
-            </xsl:attribute>
-
-            <xsl:value-of select="text()" />
-        </field>
     </xsl:template>
 
     <!-- title URI-->
@@ -1430,6 +1425,16 @@
 
     </xsl:template>
 
+    <!-- generic field -->
+    <xsl:template match="text()" mode="cwrc_entities_mods">
+        <xsl:param name="local_field_name" select="'unknown'" />
+        
+        <xsl:call-template name="add_solr_field">
+            <xsl:with-param name="solr_field_key" select="$local_field_name" />
+            <xsl:with-param name="solr_field_value" select="." />
+        </xsl:call-template>
+        
+    </xsl:template>
 
     <!-- generic field -->
     <xsl:template name="add_solr_field">
