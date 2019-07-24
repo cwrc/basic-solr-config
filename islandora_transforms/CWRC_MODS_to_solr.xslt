@@ -231,7 +231,7 @@
         </xsl:apply-templates>
 
         <xsl:apply-templates select="@valueURI" mode="cwrc_entities_mods">
-            <xsl:with-param name="local_prefix" select="concat($local_prefix, 'titleInfo')"/>
+            <xsl:with-param name="local_prefix" select="concat($local_prefix, '_titleInfo')"/>
         </xsl:apply-templates>
 
     </xsl:template>
@@ -266,7 +266,7 @@
                 <xsl:value-of select="concat($local_prefix, '_URI', '_s')" />
             </xsl:attribute>
 
-            <xsl:value-of select="text()"></xsl:value-of>
+            <xsl:value-of select="."/>
         </field>
     </xsl:template>
 
@@ -1432,7 +1432,7 @@
 
 
     <!-- generic field -->
-    <xsl:template name="add_solr_field" mode="cwrc_entities_mods">
+    <xsl:template name="add_solr_field">
         <xsl:param name="solr_field_key" select="'unknown'" />
         <xsl:param name="solr_field_value" select="'unknown'" />
 
