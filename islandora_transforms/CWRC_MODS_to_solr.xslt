@@ -1277,28 +1277,28 @@
             <xsl:with-param name="local_field_name" select="concat($local_prefix,'_topic-URI')" />
         </xsl:apply-templates>
 
-        <xsl:apply-templates select="mods:geographic">
-            <xsl:with-param name="local_filed_name" select="concat($local_prefix, '_geographic')"/>
+        <xsl:apply-templates select="mods:geographic" mode="cwrc_entities_mods">
+            <xsl:with-param name="local_field_name" select="concat($local_prefix, '_geographic')"/>
         </xsl:apply-templates>
 
-        <xsl:apply-templates select="mods:geographic/@valueURI">
-            <xsl:with-param name="locak_filed_name" select="concat($local_prefix, '_geographic-URI')"/>
+        <xsl:apply-templates select="mods:geographic/@valueURI" mode="cwrc_entities_mods">
+            <xsl:with-param name="local_field_name" select="concat($local_prefix, '_geographic-URI')"/>
         </xsl:apply-templates>
 
-        <xsl:apply-templates select="mods:titleInfo">
-            <xsl:with-param name="local_filed_name" select="concat($local_prefix, '_titleInfo')"/>
+        <xsl:apply-templates select="mods:titleInfo" mode="cwrc_entities_mods">
+            <xsl:with-param name="local_field_name" select="concat($local_prefix, '_titleInfo')"/>
         </xsl:apply-templates>
 
-        <xsl:apply-templates select="mods:titleInfo/@valueURI">
-            <xsl:with-param name="local_filed_name" select="concat($local_prefix, '_titleInfo-URI')"/>
+        <xsl:apply-templates select="mods:titleInfo/@valueURI" mode="cwrc_entities_mods">
+            <xsl:with-param name="local_field_name" select="concat($local_prefix, '_titleInfo-URI')"/>
         </xsl:apply-templates>
 
-        <xsl:apply-templates select="mods:namePart">
-            <xsl:with-param name="local_filed_name" select="concat($local_prefix, '_namePart')"/>
+        <xsl:apply-templates select="mods:namePart" mode="cwrc_entities_mods">
+            <xsl:with-param name="local_field_name" select="concat($local_prefix, '_namePart')"/>
         </xsl:apply-templates>
 
-        <xsl:apply-templates select="mods:namePart/@valueURI">
-            <xsl:with-param name="local_filed_name" select="concat($local_prefix, '_namePart-URI')"/>
+        <xsl:apply-templates select="mods:namePart/@valueURI" mode="cwrc_entities_mods">
+            <xsl:with-param name="local_field_name" select="concat($local_prefix, '_namePart-URI')"/>
         </xsl:apply-templates>
 
     </xsl:template>
