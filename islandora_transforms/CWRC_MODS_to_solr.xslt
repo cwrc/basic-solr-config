@@ -276,7 +276,7 @@
         </xsl:variable>
 
         <xsl:apply-templates select="@valueURI" mode="cwrc_entities_mods">
-            <xsl:with-param name="local_prefix" select="concat($local_prefix, '_name-URI')" />
+            <xsl:with-param name="local_field_name" select="concat($local_prefix, '_name-URI')" />
         </xsl:apply-templates>
 
         <!-- use build the full name and output -->
@@ -1420,7 +1420,7 @@
 
         <xsl:call-template name="add_solr_field">
             <xsl:with-param name="solr_field_key" select="$local_field_name" />
-            <xsl:with-param name="solr_field_value" select="text()" />
+            <xsl:with-param name="solr_field_value" select="." />
         </xsl:call-template>
 
     </xsl:template>
