@@ -1,0 +1,3476 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mods 
+    xmlns="http://www.loc.gov/mods/v3" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/v3/mods-3-5.xsd"
+    >
+    <titleInfo valueURI="{value_uri}">
+        <title>{Chapter_title}</title>
+        <subTitle>{subTitle}</subTitle>
+    </titleInfo>
+    <titleInfo type="alternative" valueURI="{value_uri_alt}">
+        <title>{Chapter_title_alt}</title>
+        <subTitle>{subTitle_alt}</subTitle>        
+    </titleInfo>
+    
+    <name type="personal" valueURI="{name_value_url}">
+        <namePart type="family">{Family_name}</namePart>
+        <namePart type="given">{Given_name}</namePart>
+        <namePart>{Pseudonym}</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">aut</roleTerm>
+        </role>
+        <affiliation>name_affiliation</affiliation>
+    </name>
+
+    <name type="personal" valueURI="{value_url_2}">
+        <namePart type="family">{Family_name_2}</namePart>
+        <namePart type="given">{Given_name_2}</namePart>
+        <namePart>{Pseudonym_2}</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">aut</roleTerm>
+        </role>
+    </name>
+
+    <name type="personal">
+        <namePart type="given">Bob A.</namePart>
+        <namePart type="family">Vautour</namePart><namePart/>
+        <role><roleTerm authority="marcrelator" type="text">author</roleTerm></role><affiliation/><namePart type="date"/>
+    </name>
+
+    <name type="personal">
+        <namePart>POULIN, Louise</namePart>
+        <role><roleTerm type="text" authority="marcrealtor">Author</roleTerm></role>
+    </name> 
+    
+    <name type="corporate">
+        <namePart>Canada's Early Women Writers</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrealtor">author</roleTerm>
+        </role>
+        <affiliation>Simon Fraser University</affiliation>
+        <affiliation>Canadian Writing Research Collaboratory</affiliation>
+    </name>
+    <name type="personal">
+        <namePart>Emily Smith</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrealtor">contributor</roleTerm>
+        </role>
+    </name>
+
+    <name type="corporate" valueURI="{value_url_2}">
+        <namePart>corp</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">aut</roleTerm>
+        </role>
+    </name>
+    
+    <typeOfResource>text</typeOfResource>
+    
+    <genre authority="cwrc" type="format">genre_format</genre>
+    <genre authority="cwrc" type="primaryGenre">{Primary_genres}</genre>
+    <genre authority="cwrc" type="subgenre">genre_subgenre</genre>
+    <genre>genre_without</genre>
+
+    <originInfo>
+        <place>
+            <placeTerm valueURI="originInfo_placeterm_valueURI">originInfo placeTerm</placeTerm>
+        </place>
+        <publisher valueURI="originInfo_pub_valueURI">originInfo publisher</publisher>
+        <edition>originInfo edition</edition>
+        <issuance>multipart monograph</issuance>
+    </originInfo>
+
+    <language>
+        <languageTerm type="code" authority="iso639-2b">eng</languageTerm>
+        <scriptTerm type="code" authority="iso15924">Latn</scriptTerm>
+    </language>
+    
+    <physicalDescription>
+        <form authority="marcform">print</form>
+        <form authority="marccategory">text</form>
+        <internetMediaType>physicalDesc internetmediatype</internetMediaType>
+        <note>physicaldesc note</note>
+        <digitalOrigin>reformatted digital</digitalOrigin>
+    </physicalDescription>
+    
+    <abstract>abstract</abstract>
+    
+    <note type="scholarNote">scholar_note_type</note>
+    <note type="researchNote">research_note_type</note>
+    
+    <subject>
+        <topic valueURI="subject_topic_uri">subject_topic</topic>
+        <geographic valueURI="subject_geo_uri">subject_geo</geographic>
+        <titleInfo valueURI="subject_titleInfo_uri">subject_titleInfo</titleInfo>
+        <name><namePart valueURI="subject_name_value_url">subject_name_value</namePart></name>
+    </subject>
+    
+    <relatedItem type="original">
+        <titleInfo>
+            <title>related_item_not_host_title</title>
+            <subTitle>related_item_not_host_subtitle</subTitle>
+        </titleInfo>
+    </relatedItem>
+    
+    <relatedItem type="host">
+        <titleInfo>
+            <title>related_item_not_host_title</title>
+        </titleInfo>
+        <name type="personal">
+            <namePart type="family">relatedItem_family</namePart>
+            <namePart type="given">relatedItem_given</namePart>
+            <role>
+                <roleTerm type="code" authority="marcrelator">edt</roleTerm>
+            </role>
+        </name>
+        <name type="personal" valueURI="{value_url_ri_2}">
+            <namePart type="family">{Family_name_5}</namePart>
+            <namePart type="given">{Given_name_5}</namePart>
+            <namePart>{Pseudonym_5}</namePart>
+            <role>
+                <roleTerm type="code" authority="marcrelator">aut</roleTerm>
+            </role>
+        </name>
+        <name type="corporate" valueURI="{value_url_ri_3}">
+            <namePart>corporate_ri_1</namePart>
+            <role>
+                <roleTerm type="code" authority="marcrelator">aut</roleTerm>
+            </role>
+        </name>
+        <classification>relatedItem_classification</classification>
+        <identifier type="issue-number">ri_id_issue_num</identifier>
+        <identifier type="matrix-number">ri_id_matrix_num</identifier>
+        <identifier type="ean">ri_id_ean</identifier>
+        <identifier type="isbn">ri_id_isbn</identifier>
+        <identifier type="upc">ri_id_upc</identifier>
+        <location>ri_location</location>
+        <originInfo>
+            <place>
+                <placeTerm type="text">Peterborough, Ontario</placeTerm>
+            </place>
+            <publisher>Broadview Press</publisher>
+            <dateIssued encoding="w3cdtf">2001</dateIssued>
+            <issuance>monographic</issuance>
+        </originInfo>
+        <part>
+            <extent unit="pages">
+                <list>{Pages}</list>
+            </extent>
+        </part>
+    </relatedItem>
+    
+    <identifier type="uri">id_uri</identifier>
+    <identifier>id_uri_2</identifier>
+
+    <location>
+        <url>location_url</url>
+    </location>
+    <location>
+        <physicalLocation>location_physical</physicalLocation>
+        <shelfLocator>location_shelf</shelfLocator>
+    </location>
+    
+    <accessCondition type="use and reproduction">This work is licensed under a <a rel="license"
+        href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">Creative
+        Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a> (CC BY-NC-SA
+        4.0).</accessCondition>
+    <accessCondition type="asd">accessCond_type</accessCondition>
+    <accessCondition>accessCond_no_type</accessCondition>
+    
+    <recordInfo>
+        <recordIdentifier>recordinfo_id</recordIdentifier>
+        <recordCreationDate>recordInfo_creation_date</recordCreationDate>
+        <recordOrigin>recordInfo_origin</recordOrigin>
+        <recordContentSource>Canadian Writing Research Collaboratory</recordContentSource>
+        <recordCreationDate encoding="w3cdtf">2016-09-18</recordCreationDate>
+        <recordOrigin>The bibliographic data were downloaded from a Google Sheet spreadsheet
+            as a CSV file, and then transformed into MODS files using custom PHP code.</recordOrigin>
+        <languageOfCataloging>
+            <languageTerm type="code" authority="iso639-2b">eng</languageTerm>
+            <scriptTerm type="code" authority="iso15924">Latn</scriptTerm>
+        </languageOfCataloging>
+    </recordInfo>
+
+    <tableOfContents>table_of_contents</tableOfContents>
+
+    <classification>classification</classification>
+    
+    <identifier>id</identifier>
+
+    <identifier type="doi">id_doi</identifier>
+    <identifier type="isbn">id_isbn</identifier>
+    <identifier type="lccn">id_lccn</identifier>
+    <identifier type="isan">id_isan</identifier>
+    <identifier type="videorecording-identifier">id_videorecording</identifier>
+    <identifier type="ean">id_ean</identifier>
+    <identifier type="upc">id_upc</identifier>
+    <identifier type="issue-number">id_issue-number</identifier>
+    <identifier type="matrix-number">id_matrix-number</identifier>
+    <identifier type="isrc">id_isrc</identifier>
+    <identifier type="iswc">id_iswc</identifier>
+    <identifier type="grid">id_grid</identifier>
+    
+    <part>
+        <detail type='volume'>part_volume</detail>
+        <detail><number>part_detail_number</number></detail>
+        <detail type='number'>part_detail_num_2</detail>
+        <extent>part_extent</extent>
+    </part>
+
+    <!-- automatically generated -->
+    <name type="personal">
+        <namePart>C1</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">abr</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T1</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Abridger</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C2</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">acp</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T2</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Art copyist</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C3</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">act</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T3</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Actor</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C4</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">adi</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T4</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Art director</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C5</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">adp</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T5</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Adapter</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C6</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">aft</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T6</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Author of afterword, colophon, etc.</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C7</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">anl</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T7</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Analyst</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C8</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">anm</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T8</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Animator</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C9</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">ann</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T9</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Annotator</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C10</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">ant</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T10</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Bibliographic antecedent</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C11</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">ape</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T11</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Appellee</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C12</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">apl</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T12</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Appellant</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C13</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">app</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T13</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Applicant</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C14</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">aqt</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T14</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Author in quotations or text abstracts</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C15</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">arc</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T15</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Architect</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C16</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">ard</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T16</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Artistic director</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C17</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">arr</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T17</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Arranger</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C18</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">art</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T18</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Artist</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C19</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">asg</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T19</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Assignee</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C20</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">asn</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T20</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Associated name</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C21</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">ato</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T21</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Autographer</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C22</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">att</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T22</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Attributed name</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C23</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">auc</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T23</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Auctioneer</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C24</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">aud</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T24</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Author of dialog</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C25</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">aui</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T25</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Author of introduction, etc.</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C26</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">aus</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T26</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Screenwriter</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C27</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">aut</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T27</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Author</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C28</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">bdd</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T28</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Binding designer</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C29</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">bjd</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T29</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Bookjacket designer</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C30</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">bkd</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T30</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Book designer</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C31</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">bkp</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T31</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Book producer</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C32</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">blw</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T32</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Blurb writer</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C33</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">bnd</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T33</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Binder</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C34</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">bpd</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T34</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Bookplate designer</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C35</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">brd</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T35</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Broadcaster</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C36</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">brl</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T36</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Braille embosser</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C37</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">bsl</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T37</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Bookseller</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C38</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">cas</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T38</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Caster</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C39</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">ccp</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T39</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Conceptor</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C40</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">chr</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T40</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Choreographer</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C41</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">-clb</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T41</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Collaborator</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C42</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">cli</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T42</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Client</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C43</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">cll</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T43</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Calligrapher</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C44</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">clr</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T44</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Colorist</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C45</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">clt</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T45</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Collotyper</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C46</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">cmm</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T46</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Commentator</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C47</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">cmp</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T47</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Composer</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C48</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">cmt</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T48</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Compositor</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C49</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">cnd</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T49</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Conductor</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C50</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">cng</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T50</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Cinematographer</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C51</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">cns</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T51</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Censor</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C52</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">coe</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T52</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Contestant-appellee</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C53</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">col</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T53</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Collector</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C54</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">com</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T54</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Compiler</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C55</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">con</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T55</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Conservator</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C56</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">cor</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T56</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Collection registrar</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C57</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">cos</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T57</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Contestant</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C58</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">cot</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T58</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Contestant-appellant</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C59</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">cou</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T59</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Court governed</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C60</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">cov</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T60</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Cover designer</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C61</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">cpc</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T61</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Copyright claimant</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C62</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">cpe</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T62</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Complainant-appellee</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C63</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">cph</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T63</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Copyright holder</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C64</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">cpl</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T64</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Complainant</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C65</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">cpt</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T65</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Complainant-appellant</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C66</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">cre</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T66</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Creator</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C67</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">crp</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T67</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Correspondent</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C68</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">crr</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T68</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Corrector</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C69</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">crt</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T69</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Court reporter</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C70</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">csl</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T70</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Consultant</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C71</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">csp</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T71</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Consultant to a project</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C72</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">cst</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T72</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Costume designer</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C73</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">ctb</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T73</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Contributor</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C74</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">cte</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T74</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Contestee-appellee</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C75</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">ctg</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T75</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Cartographer</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C76</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">ctr</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T76</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Contractor</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C77</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">cts</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T77</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Contestee</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C78</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">ctt</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T78</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Contestee-appellant</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C79</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">cur</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T79</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Curator</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C80</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">cwt</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T80</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Commentator for written text</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C81</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">dbp</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T81</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Distribution place</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C82</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">dfd</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T82</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Defendant</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C83</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">dfe</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T83</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Defendant-appellee</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C84</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">dft</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T84</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Defendant-appellant</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C85</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">dgg</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T85</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Degree granting institution</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C86</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">dgs</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T86</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Degree supervisor</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C87</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">dis</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T87</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Dissertant</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C88</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">dln</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T88</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Delineator</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C89</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">dnc</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T89</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Dancer</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C90</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">dnr</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T90</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Donor</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C91</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">dpc</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T91</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Depicted</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C92</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">dpt</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T92</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Depositor</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C93</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">drm</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T93</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Draftsman</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C94</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">drt</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T94</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Director</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C95</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">dsr</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T95</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Designer</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C96</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">dst</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T96</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Distributor</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C97</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">dtc</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T97</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Data contributor</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C98</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">dte</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T98</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Dedicatee</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C99</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">dtm</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T99</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Data manager</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C100</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">dto</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T100</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Dedicator</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C101</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">dub</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T101</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Dubious author</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C102</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">edc</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T102</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Editor of compilation</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C103</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">edm</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T103</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Editor of moving image work</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C104</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">edt</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T104</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Editor</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C105</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">egr</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T105</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Engraver</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C106</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">elg</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T106</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Electrician</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C107</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">elt</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T107</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Electrotyper</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C108</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">eng</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T108</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Engineer</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C109</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">enj</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T109</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Enacting jurisdiction</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C110</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">etr</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T110</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Etcher</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C111</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">evp</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T111</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Event place</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C112</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">exp</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T112</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Expert</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C113</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">fac</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T113</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Facsimilist</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C114</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">fds</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T114</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Film distributor</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C115</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">fld</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T115</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Field director</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C116</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">flm</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T116</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Film editor</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C117</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">fmd</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T117</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Film director</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C118</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">fmk</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T118</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Filmmaker</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C119</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">fmo</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T119</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Former owner</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C120</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">fmp</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T120</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Film producer</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C121</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">fnd</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T121</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Funder</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C122</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">fpy</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T122</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">First party</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C123</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">frg</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T123</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Forger</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C124</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">gis</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T124</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Geographic information specialist</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C125</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">-grt</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T125</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Graphic technician</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C126</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">his</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T126</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Host institution</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C127</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">hnr</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T127</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Honoree</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C128</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">hst</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T128</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Host</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C129</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">ill</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T129</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Illustrator</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C130</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">ilu</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T130</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Illuminator</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C131</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">ins</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T131</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Inscriber</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C132</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">inv</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T132</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Inventor</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C133</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">isb</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T133</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Issuing body</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C134</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">itr</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T134</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Instrumentalist</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C135</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">ive</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T135</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Interviewee</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C136</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">ivr</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T136</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Interviewer</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C137</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">jud</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T137</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Judge</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C138</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">jug</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T138</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Jurisdiction governed</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C139</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">lbr</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T139</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Laboratory</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C140</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">lbt</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T140</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Librettist</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C141</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">ldr</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T141</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Laboratory director</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C142</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">led</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T142</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Lead</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C143</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">lee</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T143</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Libelee-appellee</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C144</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">lel</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T144</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Libelee</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C145</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">len</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T145</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Lender</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C146</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">let</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T146</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Libelee-appellant</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C147</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">lgd</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T147</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Lighting designer</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C148</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">lie</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T148</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Libelant-appellee</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C149</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">lil</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T149</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Libelant</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C150</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">lit</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T150</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Libelant-appellant</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C151</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">lsa</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T151</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Landscape architect</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C152</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">lse</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T152</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Licensee</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C153</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">lso</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T153</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Licensor</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C154</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">ltg</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T154</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Lithographer</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C155</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">lyr</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T155</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Lyricist</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C156</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">mcp</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T156</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Music copyist</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C157</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">mdc</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T157</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Metadata contact</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C158</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">med</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T158</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Medium</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C159</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">mfp</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T159</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Manufacture place</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C160</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">mfr</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T160</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Manufacturer</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C161</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">mod</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T161</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Moderator</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C162</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">mon</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T162</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Monitor</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C163</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">mrb</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T163</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Marbler</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C164</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">mrk</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T164</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Markup editor</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C165</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">msd</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T165</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Musical director</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C166</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">mte</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T166</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Metal-engraver</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C167</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">mtk</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T167</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Minute taker</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C168</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">mus</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T168</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Musician</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C169</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">nrt</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T169</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Narrator</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C170</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">opn</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T170</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Opponent</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C171</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">org</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T171</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Originator</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C172</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">orm</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T172</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Organizer</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C173</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">osp</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T173</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Onscreen presenter</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C174</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">oth</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T174</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Other</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C175</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">own</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T175</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Owner</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C176</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">pan</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T176</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Panelist</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C177</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">pat</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T177</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Patron</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C178</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">pbd</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T178</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Publishing director</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C179</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">pbl</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T179</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Publisher</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C180</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">pdr</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T180</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Project director</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C181</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">pfr</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T181</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Proofreader</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C182</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">pht</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T182</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Photographer</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C183</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">plt</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T183</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Platemaker</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C184</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">pma</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T184</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Permitting agency</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C185</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">pmn</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T185</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Production manager</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C186</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">pop</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T186</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Printer of plates</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C187</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">ppm</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T187</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Papermaker</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C188</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">ppt</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T188</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Puppeteer</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C189</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">pra</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T189</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Praeses</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C190</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">prc</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T190</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Process contact</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C191</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">prd</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T191</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Production personnel</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C192</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">pre</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T192</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Presenter</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C193</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">prf</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T193</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Performer</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C194</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">prg</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T194</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Programmer</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C195</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">prm</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T195</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Printmaker</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C196</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">prn</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T196</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Production company</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C197</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">pro</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T197</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Producer</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C198</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">prp</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T198</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Production place</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C199</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">prs</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T199</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Production designer</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C200</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">prt</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T200</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Printer</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C201</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">prv</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T201</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Provider</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C202</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">pta</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T202</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Patent applicant</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C203</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">pte</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T203</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Plaintiff-appellee</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C204</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">ptf</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T204</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Plaintiff</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C205</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">pth</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T205</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Patent holder</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C206</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">ptt</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T206</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Plaintiff-appellant</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C207</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">pup</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T207</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Publication place</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C208</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">rbr</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T208</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Rubricator</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C209</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">rcd</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T209</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Recordist</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C210</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">rce</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T210</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Recording engineer</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C211</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">rcp</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T211</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Addressee</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C212</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">rdd</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T212</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Radio director</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C213</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">red</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T213</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Redaktor</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C214</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">ren</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T214</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Renderer</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C215</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">res</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T215</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Researcher</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C216</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">rev</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T216</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Reviewer</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C217</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">rpc</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T217</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Radio producer</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C218</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">rps</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T218</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Repository</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C219</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">rpt</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T219</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Reporter</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C220</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">rpy</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T220</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Responsible party</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C221</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">rse</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T221</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Respondent-appellee</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C222</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">rsg</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T222</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Restager</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C223</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">rsp</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T223</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Respondent</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C224</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">rsr</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T224</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Restorationist</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C225</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">rst</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T225</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Respondent-appellant</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C226</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">rth</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T226</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Research team head</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C227</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">rtm</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T227</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Research team member</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C228</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">sad</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T228</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Scientific advisor</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C229</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">sce</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T229</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Scenarist</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C230</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">scl</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T230</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Sculptor</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C231</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">scr</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T231</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Scribe</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C232</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">sds</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T232</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Sound designer</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C233</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">sec</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T233</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Secretary</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C234</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">sgd</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T234</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Stage director</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C235</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">sgn</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T235</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Signer</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C236</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">sht</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T236</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Supporting host</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C237</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">sll</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T237</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Seller</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C238</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">sng</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T238</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Singer</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C239</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">spk</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T239</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Speaker</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C240</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">spn</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T240</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Sponsor</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C241</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">spy</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T241</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Second party</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C242</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">srv</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T242</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Surveyor</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C243</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">std</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T243</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Set designer</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C244</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">stg</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T244</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Setting</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C245</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">stl</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T245</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Storyteller</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C246</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">stm</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T246</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Stage manager</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C247</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">stn</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T247</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Standards body</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C248</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">str</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T248</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Stereotyper</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C249</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">tcd</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T249</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Technical director</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C250</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">tch</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T250</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Teacher</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C251</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">ths</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T251</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Thesis advisor</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C252</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">tld</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T252</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Television director</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C253</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">tlp</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T253</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Television producer</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C254</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">trc</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T254</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Transcriber</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C255</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">trl</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T255</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Translator</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C256</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">tyd</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T256</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Type designer</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C257</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">tyg</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T257</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Typographer</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C258</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">uvp</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T258</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">University place</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C259</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">vac</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T259</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Voice actor</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C260</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">vdg</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T260</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Videographer</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C261</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">-voc</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T261</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Vocalist</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C262</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">wac</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T262</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Writer of added commentary</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C263</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">wal</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T263</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Writer of added lyrics</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C264</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">wam</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T264</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Writer of accompanying material</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C265</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">wat</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T265</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Writer of added text</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C266</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">wdc</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T266</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Woodcutter</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C267</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">wde</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T267</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Wood engraver</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C268</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">win</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T268</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Writer of introduction</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C269</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">wit</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T269</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Witness</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C270</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">wpr</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T270</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Writer of preface</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>C271</namePart>
+        <role>
+            <roleTerm type="code" authority="marcrelator">wst</roleTerm>
+        </role>
+    </name>
+    <name type="personal">
+        <namePart>T271</namePart>
+        <role>
+            <roleTerm type="text" authority="marcrelator">Writer of supplementary textual content</roleTerm>
+        </role>
+    </name>
+
+
+</mods>
