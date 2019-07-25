@@ -36,7 +36,8 @@
 
         <!-- handle typeOfResource -->
         <xsl:apply-templates select="mods:mods/mods:typeOfResource" mode="cwrc_entities_mods">
-            <xsl:with-param name="local_field_name" select="'mods_typeOfResource'" />
+            <xsl:with-param name="local_prefix" select="'mods'" />
+            <xsl:with-param name="local_field_root" select="'_typeOfResource'" />
         </xsl:apply-templates>
         <xsl:apply-templates select="mods:mods/mods:typeOfResource | mods:mods/mods:genre[@type='formatType']" mode="cwrc_entities_mods">
             <xsl:with-param name="local_prefix" select="'mods'" />
@@ -306,7 +307,7 @@
 
     <!-- name affiliation -->
     <xsl:template match="mods:affiliation" mode="cwrc_entities_mods">
-        <xsl:param name="local_prefix"></xsl:param>
+        <xsl:param name="local_prefix" />
 
         <xsl:call-template name="add_solr_field">
             <xsl:with-param name="solr_field_key" select="concat($local_prefix, '_affiliation', '_s')" />
@@ -317,7 +318,7 @@
 
     <!-- name part -->
     <xsl:template match="mods:namePart" mode="cwrc_entities_mods">
-        <xsl:param name="local_prefix"></xsl:param>
+        <xsl:param name="local_prefix" />
 
         <!-- full name of person or organization -->
         <xsl:if test="(parent::mods:name/@type = 'personal' or parent::mods:name/@type = 'corporate') and not(@type)">
