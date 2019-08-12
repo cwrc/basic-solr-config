@@ -1290,7 +1290,7 @@
         </xsl:apply-templates>
 
         <xsl:apply-templates select="mods:titleInfo/@valueURI" mode="cwrc_entities_mods">
-            <xsl:with-param name="local_field_name" select="concat($local_prefix, '_titleInfo-URI')"/>
+            <xsl:with-param name="local_prefix" select="concat($local_prefix, '_titleInfo')"/>
         </xsl:apply-templates>
 
         <xsl:apply-templates select="mods:namePart" mode="cwrc_entities_mods">
