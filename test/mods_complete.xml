@@ -67,7 +67,7 @@
     
     <typeOfResource>text</typeOfResource>
     
-    <genre authority="cwrc" type="format">genre_format</genre>
+    <genre authority="cwrc" type="formatType">genre_format</genre>
     <genre authority="cwrc" type="primaryGenre">{Primary_genres}</genre>
     <genre authority="cwrc" type="subgenre">genre_subgenre</genre>
     <genre>genre_without</genre>
@@ -79,6 +79,7 @@
         <publisher valueURI="originInfo_pub_valueURI">originInfo publisher</publisher>
         <edition>originInfo edition</edition>
         <issuance>multipart monograph</issuance>
+        <dateIssued>originInfo_date_issued</dateIssued>
     </originInfo>
 
     <language>
@@ -102,6 +103,7 @@
     <subject>
         <topic valueURI="subject_topic_uri">subject_topic</topic>
         <geographic valueURI="subject_geo_uri">subject_geo</geographic>
+        <temporal>subject_temporal</temporal>
         <titleInfo valueURI="subject_titleInfo_uri">subject_titleInfo</titleInfo>
         <name><namePart valueURI="subject_name_value_url">subject_name_value</namePart></name>
     </subject>
@@ -147,9 +149,9 @@
         <location>ri_location</location>
         <originInfo>
             <place>
-                <placeTerm type="text">Peterborough, Ontario</placeTerm>
+                <placeTerm type="text" valueURI="originInfo_place_term">Peterborough, Ontario</placeTerm>
             </place>
-            <publisher>Broadview Press</publisher>
+            <publisher valueURI="originInfo_publisher_uri">Broadview Press</publisher>
             <dateIssued encoding="w3cdtf">2001</dateIssued>
             <issuance>monographic</issuance>
         </originInfo>
