@@ -124,7 +124,7 @@
 
         <!-- handle identifier -->
         <xsl:apply-templates select="mods:mods/mods:identifier" mode="cwrc_entities_mods">
-            <xsl:with-param name="local_prefix" select="'mods_identifier'" />
+            <xsl:with-param name="local_field_name" select="'mods_identifier'" />
         </xsl:apply-templates>
 
         <xsl:apply-templates select="mods:mods/mods:identifier[@type='uri']" mode="cwrc_entities_mods">
@@ -1342,28 +1342,16 @@
                 | mods:identifier[@type='isbn']
                 | mods:identifier[@type='upc']
             " mode="cwrc_entities_mods">
-            <xsl:with-param name="local_prefix" select="concat($local_prefix,'_uniqueIdentifier')" />
+            <xsl:with-param name="local_field_name" select="concat($local_prefix,'_uniqueIdentifier')" />
         </xsl:apply-templates>
 
         <xsl:apply-templates select="mods:identifier[@type='issue-number']"  mode="cwrc_entities_mods">
-            <xsl:with-param name="local_prefix" select="concat($local_prefix, '_issueNumber')"/>
+            <xsl:with-param name="local_field_name" select="concat($local_prefix, '_issueNumber')"/>
         </xsl:apply-templates>
 
         <xsl:apply-templates select="mods:location" mode="cwrc_entities_mods">
-            <xsl:with-param name="local_field_name" select="concat($local_prefix, '_location')"/>
+            <xsl:with-param name="local_prefix" select="concat($local_prefix, '_location')"/>
         </xsl:apply-templates>
-
-    </xsl:template>
-
-
-    <!-- handle identifier section -->
-    <xsl:template match="mods:identifier" mode="cwrc_entities_mods">
-        <xsl:param name="local_prefix" />
-
-        <xsl:call-template name="add_solr_field">
-            <xsl:with-param name="solr_field_key" select="concat($local_prefix,'_identifier')" />
-            <xsl:with-param name="solr_field_value" select="text()" />
-        </xsl:call-template>
 
     </xsl:template>
 
@@ -1393,7 +1381,7 @@
 
     <!-- handle location section -->
     <xsl:template match="mods:location" mode="cwrc_entities_mods">
-        <xsl:param name="local_prefix" />
+        <xsl:param name="local_prefix" select="'unknown_location'"/>
 
         <xsl:apply-templates select="mods:url" mode="cwrc_entities_mods">
             <xsl:with-param name="local_field_name" select="concat($local_prefix,'-url')" />

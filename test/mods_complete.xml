@@ -147,6 +147,7 @@
         <identifier type="isbn">ri_id_isbn</identifier>
         <identifier type="upc">ri_id_upc</identifier>
         <location>ri_location</location>
+        <location><physicalLocation>related item phys loc</physicalLocation></location>
         <originInfo>
             <place>
                 <placeTerm type="text" valueURI="originInfo_place_term">Peterborough, Ontario</placeTerm>
