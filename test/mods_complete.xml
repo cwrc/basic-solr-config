@@ -104,7 +104,7 @@
         <topic valueURI="subject_topic_uri">subject_topic</topic>
         <geographic valueURI="subject_geo_uri">subject_geo</geographic>
         <temporal>subject_temporal</temporal>
-        <titleInfo valueURI="subject_titleInfo_uri">subject_titleInfo</titleInfo>
+        <titleInfo valueURI="subject_titleInfo_uri"><title>subject_titleInfo_title</title></titleInfo>
         <name><namePart valueURI="subject_name_value_url">subject_name_value</namePart></name>
     </subject>
     
