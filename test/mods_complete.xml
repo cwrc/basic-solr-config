@@ -147,8 +147,7 @@
         <identifier type="ean">ri_id_ean</identifier>
         <identifier type="isbn">ri_id_isbn</identifier>
         <identifier type="upc">ri_id_upc</identifier>
-        <location>ri_location</location>
-        <location><physicalLocation>related item phys loc</physicalLocation></location>
+        <location><physicalLocation>related item phys loc</physicalLocation><shelfLocator>related_item_shelf_loc</shelfLocator></location>
         <originInfo>
             <place>
                 <placeTerm type="text" valueURI="originInfo_place_term">Peterborough, Ontario</placeTerm>
@@ -216,10 +215,10 @@
     <identifier type="grid">id_grid</identifier>
     
     <part>
-        <detail type='volume'>part_volume</detail>
         <detail><number>part_detail_number</number></detail>
-        <detail type='number'>part_detail_num_2</detail>
-        <extent>part_extent</extent>
+        <detail type="number"><number>part_number_val</number></detail>
+        <detail type="volume"><number>part_volume_number</number></detail>
+        <extent><start>part_extent_start_val</start></extent>
     </part>
 
     <!-- automatically generated -->
