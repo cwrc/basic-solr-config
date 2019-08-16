@@ -1426,16 +1426,6 @@
 
     </xsl:template>
 
-    <!-- generic field -->
-    <xsl:template match="text()" mode="cwrc_entities_mods">
-        <xsl:param name="local_field_name" select="'unknown'" />
-
-        <xsl:call-template name="add_solr_field">
-            <xsl:with-param name="solr_field_key" select="$local_field_name" />
-            <xsl:with-param name="solr_field_value" select="." />
-        </xsl:call-template>
-
-    </xsl:template>
 
     <!-- generic field -->
     <xsl:template name="add_solr_field">
