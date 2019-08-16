@@ -1377,12 +1377,8 @@
             <xsl:with-param name="local_field_name" select="concat($local_prefix,'-url')" />
         </xsl:apply-templates>
 
-        <xsl:apply-templates select="mods:physicalLocation" mode="cwrc_entities_mods">
-            <xsl:with-param name="local_field_name" select="concat($local_prefix,'_physicalLocation')" />
-        </xsl:apply-templates>
-
-        <xsl:apply-templates select="mods:shelfLocator" mode="cwrc_entities_mods">
-            <xsl:with-param name="local_field_name" select="concat($local_prefix,'_shelfLocator')" />
+        <xsl:apply-templates select="mods:physicalLocation | mods:shelfLocator" mode="cwrc_entities_mods">
+            <xsl:with-param name="local_field_name" select="$local_prefix" />
         </xsl:apply-templates>
 
     </xsl:template>
