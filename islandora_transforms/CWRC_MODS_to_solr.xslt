@@ -1389,11 +1389,11 @@
         <xsl:param name="local_prefix" />
 
         <xsl:apply-templates select="mods:detail[@type='volume']" mode="cwrc_entities_mods">
-            <xsl:with-param name="local_field_name" select="concat($local_prefix,'detail-volume')" />
+            <xsl:with-param name="local_field_name" select="concat($local_prefix,'_detail-volume')" />
         </xsl:apply-templates>
 
         <xsl:apply-templates select="mods:detail[@type='number'] | mods:detail/mods:number" mode="cwrc_entities_mods">
-            <xsl:with-param name="local_field_name" select="concat($local_prefix,'detail-number')" />
+            <xsl:with-param name="local_field_name" select="concat($local_prefix,'_detail-number')" />
         </xsl:apply-templates>
 
         <xsl:apply-templates select="mods:extent" mode="cwrc_entities_mods">
