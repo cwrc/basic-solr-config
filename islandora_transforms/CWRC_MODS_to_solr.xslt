@@ -1305,12 +1305,12 @@
             <xsl:with-param name="local_prefix" select="$local_prefix"/>
         </xsl:apply-templates>
 
-        <xsl:apply-templates select="mods:namePart" mode="cwrc_entities_mods">
-            <xsl:with-param name="local_field_name" select="concat($local_prefix, '_namePart')"/>
+        <xsl:apply-templates select="mods:name" mode="cwrc_entities_mods">
+            <xsl:with-param name="local_prefix" select="concat($local_prefix, '_personal')"/>
         </xsl:apply-templates>
 
-        <xsl:apply-templates select="mods:namePart/@valueURI" mode="cwrc_entities_mods">
-            <xsl:with-param name="local_field_name" select="concat($local_prefix, '_namePart-URI')"/>
+        <xsl:apply-templates select="mods:name/@valueURI" mode="cwrc_entities_mods">
+            <xsl:with-param name="local_field_name" select="concat($local_prefix, '_personal-valueURI')"/>
         </xsl:apply-templates>
 
     </xsl:template>

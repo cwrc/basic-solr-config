@@ -106,6 +106,7 @@
         <temporal>subject_temporal</temporal>
         <titleInfo valueURI="subject_titleInfo_uri"><title>subject_titleInfo_title</title></titleInfo>
         <name><namePart valueURI="subject_name_value_url">subject_name_value</namePart></name>
+        <name valueURI="subject_name_value2_uri"><namePart>subject_name_value_2</namePart></name>
     </subject>
     
     <relatedItem type="original">
