@@ -1427,6 +1427,13 @@
 
             <xsl:value-of select="normalize-space($solr_field_value)" />
         </field>
+        <field>
+            <xsl:attribute name="name">
+                <xsl:value-of select="concat($solr_field_key,'_et')" />
+            </xsl:attribute>
+            
+            <xsl:value-of select="normalize-space($solr_field_value)" />
+        </field>
 
     </xsl:template>
 
