@@ -89,7 +89,7 @@
 
         <!-- physicalDescription internetMediaType -->
         <xsl:apply-templates select="mods:mods/mods:physicalDescription/mods:internetMediaType" mode="cwrc_entities_mods">
-            <xsl:with-param name="local_field_name" select="'mods_physicalDescription_internetMediaType'" />
+            <xsl:with-param name="local_field_name" select="'mods_physicalDescription_mimeType'" />
         </xsl:apply-templates>
 
         <!-- abstract -->
@@ -108,7 +108,7 @@
         </xsl:apply-templates>
 
         <!-- note -->
-        <xsl:apply-templates select="mods:mods/mods:note[@type='scholarNote'] | mods:note[@type='researchNote']" mode="cwrc_entities_mods">
+        <xsl:apply-templates select="mods:mods/mods:note[@type='scholarNote'] | mods:mods/mods:note[@type='researchNote']" mode="cwrc_entities_mods">
             <xsl:with-param name="local_field_name" select="'mods_note'"/>
         </xsl:apply-templates>
 
@@ -238,7 +238,7 @@
 
         <xsl:apply-templates select="mods:title[../@type = 'alternative']" mode="cwrc_entities_mods">
             <xsl:with-param name="local_prefix" select="concat($local_prefix, '_titleInfo')" />
-            <xsl:with-param name="field_root" select="'_alternative_subTitle'" />
+            <xsl:with-param name="field_root" select="'-alternative_subTitle'" />
         </xsl:apply-templates>
 
         <xsl:apply-templates select="mods:subTitle" mode="cwrc_entities_mods">
@@ -268,7 +268,7 @@
         <xsl:param name="local_prefix" select="'mods_titleInfo'" />
 
         <xsl:call-template name="add_solr_field">
-            <xsl:with-param name="solr_field_key" select="concat($local_prefix, '_URI', '_s')" />
+            <xsl:with-param name="solr_field_key" select="concat($local_prefix, '-valueURI', '_s')" />
             <xsl:with-param name="solr_field_value" select="." />
         </xsl:call-template>
 
@@ -285,7 +285,7 @@
         </xsl:variable>
 
         <xsl:apply-templates select="@valueURI" mode="cwrc_entities_mods">
-            <xsl:with-param name="local_field_name" select="concat($local_prefix, '_name-URI')" />
+            <xsl:with-param name="local_field_name" select="concat($local_prefix, '_name-valueURI')" />
         </xsl:apply-templates>
 
         <!-- use build the full name and output -->
@@ -298,7 +298,7 @@
 
             <xsl:apply-templates select="mods:role" mode="cwrc_entities_mods">
                 <xsl:with-param name="cwrc_author_name" select="$cwrc_author_name" />
-                <xsl:with-param name="local_prefix" select="'mods'"></xsl:with-param>
+                <xsl:with-param name="local_prefix" select="$local_prefix" />
             </xsl:apply-templates>
 
         </xsl:if>
@@ -1282,7 +1282,7 @@
         </xsl:apply-templates>
 
         <xsl:apply-templates select="mods:topic/@valueURI" mode="cwrc_entities_mods">
-            <xsl:with-param name="local_field_name" select="concat($local_prefix,'_topic-URI')" />
+            <xsl:with-param name="local_field_name" select="concat($local_prefix,'_topic-valueURI')" />
         </xsl:apply-templates>
 
         <xsl:apply-templates select="mods:geographic" mode="cwrc_entities_mods">
@@ -1290,7 +1290,7 @@
         </xsl:apply-templates>
 
         <xsl:apply-templates select="mods:geographic/@valueURI" mode="cwrc_entities_mods">
-            <xsl:with-param name="local_field_name" select="concat($local_prefix, '_geographic-URI')"/>
+            <xsl:with-param name="local_field_name" select="concat($local_prefix, '_geographic-valueURI')"/>
         </xsl:apply-templates>
 
         <xsl:apply-templates select="mods:temporal" mode="cwrc_entities_mods">
@@ -1312,17 +1312,17 @@
     <xsl:template match="mods:relatedItem" mode="cwrc_entities_mods">
         <xsl:param name="local_prefix" />
 
-        <xsl:apply-templates select=" current()[@type='host']/mods:titleInfo/mods:title" mode="cwrc_entities_mods">
-            <xsl:with-param name="local_field_name" select="concat($local_prefix,'_ContainerOrHost')" />
+        <xsl:apply-templates select=" current()[@type='host']/mods:titleInfo" mode="cwrc_entities_mods">
+            <xsl:with-param name="local_prefix" select="concat($local_prefix,'_ContainerOrHost')" />
         </xsl:apply-templates>
 
-        <xsl:apply-templates select="current()[not(@type='host')]/mods:titleInfo/mods:title" mode="cwrc_entities_mods">
-            <xsl:with-param name="local_field_name" select="$local_prefix" />
+        <xsl:apply-templates select="current()[not(@type='host')]/mods:titleInfo" mode="cwrc_entities_mods">
+            <xsl:with-param name="local_prefix" select="$local_prefix" />
         </xsl:apply-templates>
 
         <!-- handle name section -->
         <xsl:apply-templates select="mods:name" mode="cwrc_entities_mods">
-            <xsl:with-param name="local_prefix" select="concat($local_prefix,'_name')" />
+            <xsl:with-param name="local_prefix" select="concat($local_prefix,'')" />
         </xsl:apply-templates>
 
         <xsl:apply-templates select="
@@ -1374,7 +1374,7 @@
         <xsl:param name="local_prefix" select="'unknown_location'"/>
 
         <xsl:apply-templates select="mods:url" mode="cwrc_entities_mods">
-            <xsl:with-param name="local_field_name" select="concat($local_prefix,'-url')" />
+            <xsl:with-param name="local_field_name" select="concat($local_prefix,'-URL')" />
         </xsl:apply-templates>
 
         <xsl:apply-templates select="mods:physicalLocation | mods:shelfLocator" mode="cwrc_entities_mods">

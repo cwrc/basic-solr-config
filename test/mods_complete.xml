@@ -118,7 +118,7 @@
     
     <relatedItem type="host">
         <titleInfo>
-            <title>related_item_not_host_title</title>
+            <title>related_item_host_title</title>
         </titleInfo>
         <name type="personal">
             <namePart type="family">relatedItem_family</namePart>
