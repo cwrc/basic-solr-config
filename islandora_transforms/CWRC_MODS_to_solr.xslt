@@ -258,7 +258,7 @@
         <xsl:param name="field_root" select="'field_root'" />
 
         <xsl:apply-templates select="text()" mode="cwrc_entities_mods">
-            <xsl:with-param name="local_field_name" select="concat($local_prefix, $field_root, '_s')" />
+            <xsl:with-param name="local_field_name" select="concat($local_prefix, $field_root)" />
         </xsl:apply-templates>
 
     </xsl:template>
@@ -268,7 +268,7 @@
         <xsl:param name="local_prefix" select="'mods_titleInfo'" />
 
         <xsl:call-template name="add_solr_field">
-            <xsl:with-param name="solr_field_key" select="concat($local_prefix, '-valueURI', '_s')" />
+            <xsl:with-param name="solr_field_key" select="concat($local_prefix, '-valueURI')" />
             <xsl:with-param name="solr_field_value" select="." />
         </xsl:call-template>
 
@@ -292,7 +292,7 @@
         <xsl:if test="$cwrc_author_name">
 
             <xsl:call-template name="add_solr_field">
-                <xsl:with-param name="solr_field_key" select="concat($local_prefix, '_name_loc_mods2dc', '_s')" />
+                <xsl:with-param name="solr_field_key" select="concat($local_prefix, '_name_loc_mods2dc')" />
                 <xsl:with-param name="solr_field_value" select="$cwrc_author_name" />
             </xsl:call-template>
 
@@ -318,7 +318,7 @@
         <xsl:param name="local_prefix" />
 
         <xsl:call-template name="add_solr_field">
-            <xsl:with-param name="solr_field_key" select="concat($local_prefix, '_affiliation', '_s')" />
+            <xsl:with-param name="solr_field_key" select="concat($local_prefix, '_affiliation')" />
             <xsl:with-param name="solr_field_value" select="text()" />
         </xsl:call-template>
 
@@ -331,7 +331,7 @@
         <!-- full name of person or organization -->
         <xsl:if test="(parent::mods:name/@type = 'personal' or parent::mods:name/@type = 'corporate') and not(@type)">
             <xsl:call-template name="add_solr_field">
-                <xsl:with-param name="solr_field_key" select="concat($local_prefix, '-', parent::mods:name/@type, '_namePart-noType', '_s')" />
+                <xsl:with-param name="solr_field_key" select="concat($local_prefix, '-', parent::mods:name/@type, '_namePart-noType')" />
                 <xsl:with-param name="solr_field_value" select="current()[not(@type)]/text()" />
             </xsl:call-template>
         </xsl:if>
@@ -339,7 +339,7 @@
         <!-- name part -->
         <xsl:if test="@type = 'family' or @type = 'given'">
             <xsl:call-template name="add_solr_field">
-                <xsl:with-param name="solr_field_key" select="concat($local_prefix, '_namePart-', @type, '_s')" />
+                <xsl:with-param name="solr_field_key" select="concat($local_prefix, '_namePart-', @type)" />
                 <xsl:with-param name="solr_field_value" select="text()" />
             </xsl:call-template>
         </xsl:if>
@@ -350,7 +350,7 @@
         <xsl:if test="parent::mods:name[@type = 'personal']/mods:namePart[not(@type)] or parent::mods:name[@type = 'corporate']/mods:namePart[not(@type)] or @type = 'family' or @type = 'given'">
 
             <xsl:call-template name="add_solr_field">
-                <xsl:with-param name="solr_field_key" select="concat($local_prefix, '_anyName', '_s')" />
+                <xsl:with-param name="solr_field_key" select="concat($local_prefix, '_anyName')" />
                 <xsl:with-param name="solr_field_value" select="text()" />
             </xsl:call-template>
 
@@ -378,12 +378,12 @@
         </xsl:variable>
 
         <xsl:call-template name="add_solr_field">
-            <xsl:with-param name="solr_field_key" select="concat($local_prefix, '_name_role_', $cwrc_role_root, '_s')" />
+            <xsl:with-param name="solr_field_key" select="concat($local_prefix, '_name_role_', $cwrc_role_root)" />
             <xsl:with-param name="solr_field_value" select="$cwrc_author_name" />
         </xsl:call-template>
 
         <xsl:apply-templates select="mods:roleTerm" mode="cwrc_entities_mods">
-            <xsl:with-param name="solr_field_key" select="concat($local_prefix, '_name_anyrole', '_s')" />
+            <xsl:with-param name="solr_field_key" select="concat($local_prefix, '_name_anyrole')" />
         </xsl:apply-templates>
 
     </xsl:template>
@@ -1231,7 +1231,7 @@
         <xsl:param name="local_field_root" />
 
         <xsl:call-template name="add_solr_field">
-            <xsl:with-param name="solr_field_key" select="concat($local_prefix, $local_field_root, '_s')" />
+            <xsl:with-param name="solr_field_key" select="concat($local_prefix, $local_field_root)" />
             <xsl:with-param name="solr_field_value" select="text()" />
         </xsl:call-template>
 
@@ -1422,7 +1422,7 @@
 
         <field>
             <xsl:attribute name="name">
-                <xsl:value-of select="$solr_field_key" />
+                <xsl:value-of select="concat($solr_field_key,'_s')" />
             </xsl:attribute>
 
             <xsl:value-of select="normalize-space($solr_field_value)" />
