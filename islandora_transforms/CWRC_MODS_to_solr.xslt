@@ -27,15 +27,15 @@
     <xsl:template match="/">
         <xsl:param name="prefix" select="'mods'" />
         <xsl:param name="suffix" select="'ms'" />
-        
+
         <xsl:apply-templates select="mods:mods" mode="cwrc_entities_mods">
             <xsl:with-param name="prefix" select="$prefix"/>
             <xsl:with-param name="suffix" select="$suffix"/>
             <xsl:with-param name="pid" select="'test_01'"/>
-            <xsl:with-param name="datastream" select="'MODS'"/>            
+            <xsl:with-param name="datastream" select="'MODS'"/>
         </xsl:apply-templates>
     </xsl:template>
-    
+
     <!-- incorperate with fedoragsearch -->
     <xsl:template match="foxml:datastream[@ID='MODS']/foxml:datastreamVersion[last()]" mode="cwrc_entities_mods">
         <xsl:param name="content" />
@@ -47,10 +47,10 @@
             <xsl:with-param name="suffix" select="$suffix"/>
             <xsl:with-param name="pid" select="../../@PID"/>
             <xsl:with-param name="datastream" select="../@ID"/>
-        </xsl:apply-templates> 
+        </xsl:apply-templates>
     </xsl:template>
-    
-    
+
+
     <xsl:template match="mods:mods" mode="cwrc_entities_mods">
         <xsl:param name="prefix" />
         
