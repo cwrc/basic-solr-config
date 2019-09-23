@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<!-- Convert MODS to a CWRC-specific set of Solr fields as part of FedoraGSearch Islandora 7 toolkit -->
+
 <xsl:stylesheet
     version="1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -12,18 +14,14 @@
 
     <xsl:include href="CWRC_Helpers_MODS.xslt" />
 
-    <!--
-        * MARC Relator
-        * Foreach MARC Relator, create a Solr field with a key_name based on the relator term and value based on the person name
-
-    -->
 
     <!-- XSLT 1.0 toLower -->
     <xsl:variable name="lowercase" select="'abcdefghijklmnopqrstuvwxyz'" />
     <xsl:variable name="uppercase" select="'ABCDEFGHIJKLMNOPQRSTUVWXYZ'" />
 
 
-    <!-- MODS root -->
+    <!-- Testing outside FedoraGSearch: MODS root -->
+    <!--
     <xsl:template match="/">
         <xsl:param name="prefix" select="'mods'" />
         <xsl:param name="suffix" select="'ms'" />
@@ -35,8 +33,9 @@
             <xsl:with-param name="datastream" select="'MODS'"/>
         </xsl:apply-templates>
     </xsl:template>
+    -->
 
-    <!-- incorperate with fedoragsearch -->
+    <!-- incorporate with fedoragsearch -->
     <xsl:template match="foxml:datastream[@ID='MODS']/foxml:datastreamVersion[last()]" mode="cwrc_entities_mods">
         <xsl:param name="content" />
         <xsl:param name="prefix" select="'mods'"/>
@@ -44,9 +43,9 @@
         
         <xsl:apply-templates select="$content//mods:mods[1]" mode="cwrc_entities_mods">
             <xsl:with-param name="prefix" select="$prefix"/>
-            <xsl:with-param name="suffix" select="$suffix"/>
+	    <!-- <xsl:with-param name="suffix" select="$suffix"/>
             <xsl:with-param name="pid" select="../../@PID"/>
-            <xsl:with-param name="datastream" select="../@ID"/>
+	    <xsl:with-param name="datastream" select="../@ID"/> -->
         </xsl:apply-templates>
     </xsl:template>
 
@@ -388,6 +387,10 @@
         -->
     </xsl:template>
 
+    <!--
+        * MARC Relator
+        * Foreach MARC Relator, create a Solr field with a key_name based on the relator term and value based on the person name
+    -->
     <!-- convert MARC relator to Solr field name -->
     <xsl:template match="mods:role" mode="cwrc_entities_mods">
         <xsl:param name="cwrc_author_name" select="'unknown'" />
