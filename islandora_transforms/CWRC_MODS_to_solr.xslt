@@ -12,7 +12,9 @@
 
     <xsl:output indent='yes'/>
 
-    <xsl:include href="CWRC_Helpers_MODS.xslt" />
+    <!--
+      <xsl:include href="CWRC_Helpers_MODS.xslt" />
+    -->
 
 
     <!-- XSLT 1.0 toLower -->
@@ -36,7 +38,8 @@
     -->
 
     <!-- incorporate with fedoragsearch -->
-    <xsl:template match="foxml:datastream[@ID='MODS']/foxml:datastreamVersion[last()]" mode="cwrc_entities_mods">
+    <xsl:template match="foxml:datastream[@ID='MODS']/foxml:datastreamVersion[last()]" name="index_MODS">
+
         <xsl:param name="content" />
         <xsl:param name="prefix" select="'mods'"/>
         <xsl:param name="suffix" select="'ms'" />
@@ -1455,7 +1458,7 @@
 
         <field>
             <xsl:attribute name="name">
-                <xsl:value-of select="concat($solr_field_key,'_s')" />
+                <xsl:value-of select="concat($solr_field_key,'_ms')" />
             </xsl:attribute>
 
             <xsl:value-of select="normalize-space($solr_field_value)" />
