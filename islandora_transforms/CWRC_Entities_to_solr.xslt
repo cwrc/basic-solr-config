@@ -53,12 +53,12 @@
 
         <!-- TEI preferred name: ensure that the preferred name is first - cwrc_entity_place_preferredForm_et  -->
         <xsl:apply-templates select="$base_xpath/tei:placeName[@type='standard']" mode="cwrc_tei_place_entities">
-            <xsl:with-param name="field_name" select="concat($prefix, 'preferredForm', $suffix)"/>
+            <xsl:with-param name="field_name" select="concat($local_prefix, 'preferredForm', $suffix)"/>
         </xsl:apply-templates>
 
         <!-- TEI: variant forms of the name - cwrc_entity_place_variantForm_et  -->
         <xsl:apply-templates select="$base_xpath/tei:placeName[@type='variant']" mode="cwrc_tei_place_entities">
-            <xsl:with-param name="field_name" select="concat($prefix, 'variantForm', $suffix)"/>
+            <xsl:with-param name="field_name" select="concat($local_prefix, 'variantForm', $suffix)"/>
         </xsl:apply-templates>
 
         <!-- TEI: Combination of the preferred and variants - place only -  cwrc_entity_place_combined_et -->
@@ -243,12 +243,12 @@
 
         <!-- TEI preferred name: ensure that the preferred name is first - cwrc_entity_org_preferredForm_et  -->
         <xsl:apply-templates select="$base_xpath/tei:orgName[@type='standard']" mode="cwrc_tei_org_entities">
-            <xsl:with-param name="field_name" select="concat($prefix, 'preferredForm', $suffix)"/>
+            <xsl:with-param name="field_name" select="concat($local_prefix, 'preferredForm', $suffix)"/>
         </xsl:apply-templates>
 
         <!-- TEI: variant forms of the name - cwrc_entity_org_variantForm_et  -->
         <xsl:apply-templates select="$base_xpath/tei:orgName[@type='variant']" mode="cwrc_tei_org_entities">
-            <xsl:with-param name="field_name" select="concat($prefix, 'variantForm', $suffix)"/>
+            <xsl:with-param name="field_name" select="concat($local_prefix, 'variantForm', $suffix)"/>
         </xsl:apply-templates>
 
         <!-- TEI: Combination of the preferred and variants - org only -  cwrc_entity_org_combined_et -->
@@ -368,7 +368,6 @@
                 </xsl:for-each>
             </xsl:otherwise>
         </xsl:choose>
-
 
 
     </xsl:template>
@@ -653,12 +652,12 @@
 
         <!-- TEI preferred name: ensure that the preferred name is first - cwrc_entity_person_preferredForm_et  -->
         <xsl:apply-templates select="$base_xpath/tei:persName[@type='standard']" mode="cwrc_tei_person_entities">
-            <xsl:with-param name="field_name" select="concat($prefix, 'preferredForm', $suffix)"/>
+            <xsl:with-param name="field_name" select="concat($local_prefix, 'preferredForm', $suffix)"/>
         </xsl:apply-templates>
 
         <!-- TEI: variant forms of the name - cwrc_entity_person_variantForm_et  -->
         <xsl:apply-templates select="$base_xpath/tei:persName[@type='variant']" mode="cwrc_tei_person_entities">
-            <xsl:with-param name="field_name" select="concat($prefix, 'variantForm', $suffix)"/>
+            <xsl:with-param name="field_name" select="concat($local_prefix, 'variantForm', $suffix)"/>
         </xsl:apply-templates>
 
         <!-- TEI: Combination of the preferred and variants - person only -  cwrc_entity_person_combined_et -->
