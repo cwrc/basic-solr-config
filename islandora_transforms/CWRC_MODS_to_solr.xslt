@@ -81,7 +81,7 @@
             <xsl:with-param name="local_prefix" select="$prefix" />
             <xsl:with-param name="local_field_root" select="'_genre_subgenre'" />
         </xsl:apply-templates>
-        <xsl:apply-templates select="mods:genre[not(@type='primaryGenre') and not(@type='subgenre')]" mode="cwrc_entities_mods">
+        <xsl:apply-templates select="mods:genre[not(@type='formatType') and not(@type='primaryGenre') and not(@type='subgenre')]" mode="cwrc_entities_mods">
             <xsl:with-param name="local_prefix" select="$prefix" />
             <xsl:with-param name="local_field_root" select="'_genre-folksonomic'" />
         </xsl:apply-templates>
