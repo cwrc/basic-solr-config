@@ -1387,13 +1387,13 @@
     <xsl:variable name="local_language_text" select="(.)[@type='text']/text()" />
     <xsl:if test="$local_language_code">
         <xsl:call-template name="assemble_cwrc_basic_field">
-            <xsl:with-param name="field_name" select="concat($prefix, 'language_code', '_s')"/>
+            <xsl:with-param name="field_name" select="concat($prefix, 'language_code', '_ms')"/>
             <xsl:with-param name="field_value" select="$local_language_code"/>
         </xsl:call-template>
     </xsl:if>
     <xsl:if test="$local_language_text">
         <xsl:call-template name="assemble_cwrc_basic_field">
-            <xsl:with-param name="field_name" select="concat($prefix, 'language_text', '_s')"/>
+            <xsl:with-param name="field_name" select="concat($prefix, 'language_text', '_ms')"/>
             <xsl:with-param name="field_value" select="$local_language_text"/>
         </xsl:call-template>
     </xsl:if>
